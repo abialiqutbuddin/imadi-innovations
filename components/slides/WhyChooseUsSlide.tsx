@@ -28,9 +28,9 @@ export default function WhyChooseUsSlide({ disableAnimations = false }: { disabl
     ];
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-brand-dark bg-grid-pattern px-5 sm:px-6 py-16 sm:py-20 relative overflow-x-hidden overflow-y-auto">
+        <div className="w-full md:min-h-screen flex flex-col justify-center items-center px-5 sm:px-6 py-10 sm:py-20 relative overflow-x-hidden md:overflow-y-auto">
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/20 to-brand-dark pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/20 to-transparent pointer-events-none" />
 
             <div className="relative z-10 max-w-6xl w-full flex flex-col md:flex-row gap-12 items-center">
 

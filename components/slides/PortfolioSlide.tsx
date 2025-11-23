@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowDown } from "lucide-react";
 import { useState } from "react";
 
 interface PortfolioSlideProps {
@@ -33,7 +33,7 @@ export default function PortfolioSlide({
     const [mobileError, setMobileError] = useState(false);
 
     return (
-        <div className="w-full min-h-screen flex flex-col lg:flex-row bg-brand-dark bg-grid-pattern overflow-x-hidden overflow-y-auto lg:overflow-y-hidden">
+        <div className="w-full h-full flex flex-col lg:flex-row bg-brand-dark bg-grid-pattern overflow-x-hidden overflow-y-auto lg:overflow-y-hidden">
             {/* Content Side */}
             <div className="w-full lg:w-1/2 h-full flex flex-col px-6 md:px-12 lg:px-16 pt-28 pb-24 z-10 bg-brand-dark/90 backdrop-blur-sm overflow-y-auto no-scrollbar">
                 <motion.div
@@ -57,7 +57,7 @@ export default function PortfolioSlide({
                         </span>
                     </div>
 
-                    <p className="text-gray-300 text-sm sm:text-base lg:text-base xl:text-lg mb-4 md:mb-6 lg:mb-8 leading-relaxed">
+                    <p className="text-gray-300 text-xs sm:text-xs lg:text-sm mb-4 md:mb-6 lg:mb-8 leading-relaxed">
                         {description}
                     </p>
 
@@ -73,6 +73,14 @@ export default function PortfolioSlide({
                     <div className="inline-block bg-white/5 rounded-lg px-4 py-2 border border-white/10">
                         <span className="text-gray-400 text-sm">Tech Stack: </span>
                         <span className="text-[rgba(245,158,11,1)] font-medium text-sm">{techStack}</span>
+                    </div>
+
+                    {/* Mobile Visuals Toggle Hint */}
+                    <div className="lg:hidden mt-6">
+                        <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">
+                            Scroll down to see visuals
+                        </p>
+                        <ArrowDown className="w-5 h-5 text-brand-orange animate-bounce" />
                     </div>
                 </motion.div>
             </div>

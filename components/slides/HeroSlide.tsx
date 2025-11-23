@@ -5,7 +5,7 @@ import { ShieldCheck, Timer, Sparkles } from "lucide-react";
 
 export default function HeroSlide({ disableAnimations = false }: { disableAnimations?: boolean }) {
     return (
-        <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-x-hidden overflow-y-auto bg-brand-dark bg-grid-pattern px-5 pt-28 pb-24 sm:px-6 sm:pb-28 md:pt-28 lg:pt-32 text-left">
+        <div className="relative flex min-h-auto md:min-h-screen w-full flex-col items-center justify-center overflow-x-hidden md:overflow-y-auto px-5 pt-0 pb-4 sm:px-6 sm:pb-28 md:pt-28 lg:pt-32 text-left">
             {/* Background Elements - Simplified for cleaner look */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 {!disableAnimations && (
@@ -33,7 +33,7 @@ export default function HeroSlide({ disableAnimations = false }: { disableAnimat
             {/* Soft vignette behind content for lift */}
             <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_40%_40%,rgba(0,0,0,0.35),transparent_45%),radial-gradient(circle_at_70%_60%,rgba(0,0,0,0.3),transparent_50%)]" />
 
-            <div className="relative z-10 mx-auto flex w-full max-w-4xl flex-col gap-6 md:flex-row md:items-center md:gap-12">
+            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 md:flex-row md:items-center md:gap-12">
                 <motion.div
                     initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                     animate={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}

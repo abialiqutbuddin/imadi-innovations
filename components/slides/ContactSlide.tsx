@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function ContactSlide({ disableAnimations = false }: { disableAnimations?: boolean }) {
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-brand-dark bg-grid-pattern px-5 sm:px-6 py-16 sm:py-20 relative overflow-x-hidden overflow-y-auto">
+        <div className="w-full md:min-h-screen flex flex-col justify-center items-center px-5 sm:px-6 py-10 sm:py-20 relative overflow-x-hidden md:overflow-y-auto">
             {/* Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {!disableAnimations && (
@@ -19,7 +19,7 @@ export default function ContactSlide({ disableAnimations = false }: { disableAni
                 )}
             </div>
 
-            <div className="relative z-10 max-w-4xl w-full text-center">
+            <div className="relative z-10 max-w-7xl w-full text-center">
                 <motion.div
                     initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     whileInView={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}

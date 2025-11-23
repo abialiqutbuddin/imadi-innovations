@@ -28,7 +28,7 @@ export default function ProcessSlide({ disableAnimations = false }: { disableAni
     ];
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-brand-dark bg-grid-pattern px-5 sm:px-6 py-16 sm:py-20 relative overflow-x-hidden overflow-y-auto">
+        <div className="w-full md:h-full flex flex-col justify-center items-center px-5 sm:px-6 py-10 sm:py-20 relative overflow-x-hidden md:overflow-y-auto">
             <div className="relative z-10 max-w-6xl w-full space-y-12">
                 <motion.div
                     initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
