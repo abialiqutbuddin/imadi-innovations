@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/imadi-favicon.png",
+    icon: "/imadi-favicon-round.png",
   },
 };
 
