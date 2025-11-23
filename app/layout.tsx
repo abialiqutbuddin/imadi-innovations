@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "black-translucent",
   },
+  icons: {
+    icon: "/imadi-favicon.png",
+  },
 };
 
 export default function RootLayout({
