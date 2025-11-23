@@ -15,13 +15,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Imadi Innovations",
-  description: "Modern Company Profile",
+  description: "Company Profile",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/imadi-favicon-round.png",
+    icon: "/public/imadi-favicon.png",
   },
 };
 
