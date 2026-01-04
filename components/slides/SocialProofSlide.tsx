@@ -38,13 +38,13 @@ export default function SocialProofSlide({ disableAnimations = false }: { disabl
                     <h2 className="text-brand-orange uppercase tracking-widest text-[11px] font-semibold">
                         Our Impact
                     </h2>
-                    <h1 className="text-2xl md:text-3xl font-bold font-outfit text-white">
+                    <h1 className="text-2xl md:text-3xl font-bold font-outfit text-gray-900 dark:text-white">
                         Trusted By Businesses Across Industries
                     </h1>
 
                     <div className="flex flex-wrap justify-center gap-3 md:gap-4">
                         {industries.map((industry, index) => (
-                            <span key={index} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 text-sm">
+                            <span key={index} className="px-4 py-2 rounded-full bg-white/60 dark:bg-white/5 backdrop-blur-sm border border-brand-navy/5 dark:border-white/10 text-brand-navy dark:text-gray-200 text-sm shadow-sm group-hover:bg-white/80 transition-colors">
                                 {industry}
                             </span>
                         ))}
@@ -58,15 +58,15 @@ export default function SocialProofSlide({ disableAnimations = false }: { disabl
                             initial={disableAnimations ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                             whileInView={disableAnimations ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 p-5 md:p-6 rounded-2xl flex flex-col items-center justify-center group hover:bg-white/10 transition-colors"
+                            className="bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-gray-200 dark:border-white/10 p-5 md:p-6 rounded-2xl flex flex-col items-center justify-center group hover:bg-white/70 dark:hover:bg-white/10 transition-colors"
                         >
-                            <div className="mb-3 p-2.5 bg-brand-navy/50 rounded-full group-hover:scale-110 transition-transform">
+                            <div className="mb-3 p-2.5 bg-brand-orange/10 dark:bg-brand-navy/50 rounded-full group-hover:scale-110 transition-transform">
                                 {stat.icon}
                             </div>
-                            <h3 className="text-2xl md:text-3xl font-bold text-white mb-1 font-outfit">
+                            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-1 font-outfit">
                                 {stat.value}
                             </h3>
-                            <p className="text-gray-400 font-medium uppercase tracking-wider text-[11px]">
+                            <p className="text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider text-[11px]">
                                 {stat.label}
                             </p>
                         </motion.div>

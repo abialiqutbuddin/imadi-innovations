@@ -33,9 +33,9 @@ export default function PortfolioSlide({
     const [mobileError, setMobileError] = useState(false);
 
     return (
-        <div className="w-full h-full flex flex-col lg:flex-row bg-brand-dark bg-grid-pattern overflow-x-hidden overflow-y-auto lg:overflow-y-hidden">
+        <div className="w-full h-full flex flex-col lg:flex-row bg-transparent overflow-x-hidden overflow-y-auto lg:overflow-y-hidden">
             {/* Content Side */}
-            <div className="w-full lg:w-1/2 h-full flex flex-col px-6 md:px-12 lg:px-16 pt-28 pb-24 z-10 bg-brand-dark/90 backdrop-blur-sm overflow-y-auto no-scrollbar">
+            <div className="w-full lg:w-1/2 h-full flex flex-col px-6 md:px-12 lg:px-16 pt-28 pb-24 z-10 bg-transparent overflow-y-auto no-scrollbar">
                 <motion.div
                     initial={disableAnimations ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
                     whileInView={disableAnimations ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
@@ -45,33 +45,33 @@ export default function PortfolioSlide({
                     <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-2 block">
                         {title}
                     </span>
-                    <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-3xl font-bold font-outfit text-white mb-3 lg:mb-4">
+                    <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-2xl xl:text-3xl font-bold font-outfit text-foreground mb-3 lg:mb-4">
                         {headline}
                     </h2>
 
                     {/* Project Type Badge */}
                     <div className="mb-6">
-                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-medium tracking-wide uppercase">
+                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-brand-navy/5 dark:border-white/20 text-brand-navy dark:text-gray-200 text-xs font-medium tracking-wide uppercase shadow-sm">
                             <span className="w-1.5 h-1.5 rounded-full bg-[rgba(245,158,11,1)] animate-pulse" />
                             {type} Application
                         </span>
                     </div>
 
-                    <p className="text-gray-300 text-xs sm:text-xs lg:text-sm mb-4 md:mb-6 lg:mb-8 leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-xs lg:text-sm mb-4 md:mb-6 lg:mb-8 leading-relaxed">
                         {description}
                     </p>
 
                     <div className="space-y-4 md:space-y-5 lg:space-y-6 mb-6 lg:mb-8">
-                        {features.map((feature, index) => (
+                        {features?.map((feature, index) => (
                             <div key={index} className="border-l-2 border-[rgba(245,158,11,0.3)] pl-4">
-                                <h4 className="text-white font-semibold mb-1 text-base">{feature.title}</h4>
-                                <p className="text-gray-400 text-sm">{feature.desc}</p>
+                                <h4 className="text-foreground font-semibold mb-1 text-base">{feature.title}</h4>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
 
-                    <div className="inline-block bg-white/5 rounded-lg px-4 py-2 border border-white/10">
-                        <span className="text-gray-400 text-sm">Tech Stack: </span>
+                    <div className="inline-block bg-white/60 dark:bg-white/5 backdrop-blur-sm rounded-xl px-4 py-2 border border-brand-navy/5 dark:border-white/10 shadow-sm">
+                        <span className="text-gray-600 dark:text-gray-400 text-sm font-medium">Tech Stack: </span>
                         <span className="text-[rgba(245,158,11,1)] font-medium text-sm">{techStack}</span>
                     </div>
 
@@ -86,11 +86,11 @@ export default function PortfolioSlide({
             </div>
 
             {/* Visual Side with Device Frames */}
-            <div className={`w-full lg:w-1/2 relative flex items-center justify-center p-8 lg:p-12 ${disableAnimations ? 'bg-[#102a43]' : 'bg-gradient-to-br from-brand-navy to-black'}`}>
+            <div className={`w-full lg:w-1/2 relative flex items-center justify-center p-8 lg:p-12 ${disableAnimations ? 'bg-transparent' : 'bg-transparent'}`}>
                 {/* Abstract Background */}
-                <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[rgba(245,158,11,0.1)] rounded-full blur-[100px]" />
-                    <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-[rgba(16,42,67,0.2)] rounded-full blur-[80px]" />
+                    <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-brand-navy/10 dark:bg-[rgba(16,42,67,0.2)] rounded-full blur-[80px]" />
                 </div>
 
                 <div className="relative w-full max-w-2xl h-[50vh] lg:h-[60vh] flex items-center justify-center">

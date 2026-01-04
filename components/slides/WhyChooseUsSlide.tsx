@@ -13,7 +13,7 @@ export default function WhyChooseUsSlide({ disableAnimations = false }: { disabl
         {
             icon: <Clock className="w-6 h-6 text-brand-orange" />,
             title: "Fast execution",
-            desc: "Weekly demos, predictable sprints, and clear communication so you always know what’s happening."
+            desc: "Weekly demos, predictable sprints, and clear communication so you always know what's happening."
         },
         {
             icon: <Layout className="w-6 h-6 text-brand-orange" />,
@@ -30,7 +30,8 @@ export default function WhyChooseUsSlide({ disableAnimations = false }: { disabl
     return (
         <div className="w-full md:min-h-screen flex flex-col justify-center items-center px-5 sm:px-6 py-10 sm:py-20 relative overflow-x-hidden md:overflow-y-auto">
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/20 to-transparent pointer-events-none" />
+            {/* Background Gradient - Removed for consistency */}
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/10 dark:from-brand-navy/20 to-transparent pointer-events-none" /> */}
 
             <div className="relative z-10 max-w-6xl w-full flex flex-col md:flex-row gap-12 items-center">
 
@@ -44,10 +45,10 @@ export default function WhyChooseUsSlide({ disableAnimations = false }: { disabl
                         <h2 className="text-brand-orange uppercase tracking-widest text-[11px] font-semibold mb-2">
                             Why Choose Us
                         </h2>
-                        <h1 className="text-2xl md:text-3xl font-bold font-outfit text-white mb-3">
+                        <h1 className="text-2xl md:text-3xl font-bold font-outfit text-foreground mb-3">
                             Why Businesses Work With Us
                         </h1>
-                        <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
+                        <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-sm sm:text-base">
                             We don&apos;t just write code; we solve business problems with technology that works in the real world.
                         </p>
                     </motion.div>
@@ -61,17 +62,17 @@ export default function WhyChooseUsSlide({ disableAnimations = false }: { disabl
                             initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             whileInView={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 p-5 sm:p-6 rounded-xl hover:bg-white/10 transition-colors"
+                            className="bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-gray-200 dark:border-white/10 p-5 sm:p-6 rounded-xl hover:bg-white/70 dark:hover:bg-white/10 transition-colors"
                         >
                             <div className="flex items-start gap-4">
-                                <div className="mt-1 bg-brand-navy/50 p-2 rounded-lg">
+                                <div className="mt-1 bg-brand-orange/10 dark:bg-brand-navy/50 p-2 rounded-lg">
                                     {reason.icon}
                                 </div>
                                 <div>
-                                    <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-outfit">
+                                    <h3 className="text-base sm:text-lg font-bold text-foreground mb-2 font-outfit">
                                         {reason.title}
                                     </h3>
-                                    <p className="text-gray-400 text-sm leading-relaxed">
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                         {reason.desc}
                                     </p>
                                 </div>

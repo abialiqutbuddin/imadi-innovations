@@ -22,7 +22,7 @@ export default function TechStackSlide({ disableAnimations = false }: { disableA
                     <h2 className="text-brand-orange uppercase tracking-widest text-[11px] font-semibold">
                         Our Toolkit
                     </h2>
-                    <h1 className="text-2xl md:text-3xl font-bold font-outfit text-white">
+                    <h1 className="text-2xl md:text-3xl font-bold font-outfit text-foreground">
                         Technologies We Work With
                     </h1>
                 </motion.div>
@@ -34,14 +34,14 @@ export default function TechStackSlide({ disableAnimations = false }: { disableA
                             initial={disableAnimations ? { opacity: 1, scale: 0.95 } : { opacity: 0, scale: 0.9 }}
                             whileInView={disableAnimations ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
                             transition={{ duration: 0.4, delay: index * 0.1 }}
-                            className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-xl hover:bg-white/10 transition-colors text-center flex flex-col items-center w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm"
+                            className="bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-gray-200 dark:border-white/10 p-6 rounded-xl hover:bg-white/70 dark:hover:bg-white/10 transition-colors text-center flex flex-col items-center w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-sm"
                         >
                             <h3 className="text-brand-orange font-bold mb-3 font-outfit">
                                 {item.category}
                             </h3>
                             <div className="flex flex-wrap justify-center gap-2">
                                 {item.techs.map((tech, i) => (
-                                    <span key={i} className="px-3 py-1 bg-brand-navy/50 rounded text-gray-300 text-sm border border-white/5">
+                                    <span key={i} className="px-3 py-1 bg-white/60 dark:bg-white/5 backdrop-blur-sm rounded-full text-brand-navy dark:text-gray-300 text-sm border border-brand-navy/5 dark:border-white/10 shadow-sm">
                                         {tech}
                                     </span>
                                 ))}
