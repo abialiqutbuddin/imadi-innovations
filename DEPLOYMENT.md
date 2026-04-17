@@ -15,9 +15,6 @@ The production workflow lives at `.github/workflows/deploy-production.yml`.
 Add these repository secrets before the first deploy:
 
 - `CPANEL_FTP_PASSWORD`
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`
-- `NEXT_PUBLIC_SANITY_DATASET`
-- `NEXT_PUBLIC_SANITY_API_VERSION`
 
 ## Values For This Site
 
@@ -34,3 +31,4 @@ Do not commit the FTP password or Sanity values into the repository.
 
 - The site is configured as a static Next.js export, so each deploy uploads the generated `out/` directory.
 - Sanity content is fetched during the build. Content changes in Sanity require a new deploy to appear on the live site.
+- The public Sanity values are now defaulted in code, so GitHub does not need separate Sanity build secrets for this frontend.
