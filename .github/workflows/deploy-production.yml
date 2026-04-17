@@ -1,0 +1,48 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: imadi-production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          NEXT_PUBLIC_SANITY_API_VERSION: ${{ secrets.NEXT_PUBLIC_SANITY_API_VERSION }}
+        run: npm run build
+
+      - name: Deploy export to cPanel FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: server14.hndservers.net
+          port: 21
+          username: imadi-innovations@magnetcargouae.com
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: /home4/magnetcargouae/domains/imadi-innovations.com/public_html/
+          state-name: .ftp-deploy-sync-state-imadi-production.json
+          log-level: standard
