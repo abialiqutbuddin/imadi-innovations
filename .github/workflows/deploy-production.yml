@@ -39,6 +39,6 @@ jobs:
           username: imadi-innovations@magnetcargouae.com
           password: ${{ secrets.CPANEL_FTP_PASSWORD }}
           local-dir: ./out/
-          server-dir: /home4/magnetcargouae/domains/imadi-innovations.com/public_html/
+          server-dir: /public_html/
           state-name: .ftp-deploy-sync-state-imadi-production.json
           log-level: standard
