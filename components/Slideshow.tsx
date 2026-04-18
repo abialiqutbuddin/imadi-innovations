@@ -3,11 +3,12 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperClass } from "swiper";
 import { Mousewheel, Pagination, Keyboard } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { ArrowDown, PhoneCall } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import HeroSlide from "./slides/HeroSlide";
 import ParticleBackground from "./visuals/ParticleBackground";
 import ServicesSlide from "./slides/ServicesSlide";
@@ -19,14 +20,20 @@ import AboutSlide from "./slides/AboutSlide";
 import TechStackSlide from "./slides/TechStackSlide";
 import ContactSlide from "./slides/ContactSlide";
 import MobileLayout from "./MobileLayout";
-import { Project } from "@/types";
+import { Project, SocialProofContent, Testimonial } from "@/types";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface SlideshowProps {
     projects?: Project[];
+    socialProof?: SocialProofContent;
+    testimonials?: Testimonial[];
 }
 
-export default function Slideshow({ projects = [] }: SlideshowProps) {
+export default function Slideshow({
+    projects = [],
+    socialProof,
+    testimonials = [],
+}: SlideshowProps) {
     const slides = useMemo(
         () => [
             { label: "Overview", note: "Introduction" },
@@ -42,7 +49,7 @@ export default function Slideshow({ projects = [] }: SlideshowProps) {
         []
     );
     const [activeIndex, setActiveIndex] = useState(0);
-    const [swiperRef, setSwiperRef] = useState<any>(null);
+    const [swiperRef, setSwiperRef] = useState<SwiperClass | null>(null);
     const progress = Math.max(0, Math.min(100, (activeIndex / (slides.length - 1)) * 100));
 
     const scrollToProjects = () => {
@@ -55,7 +62,11 @@ export default function Slideshow({ projects = [] }: SlideshowProps) {
         <>
             {/* Mobile Layout (Vertical Scroll) */}
             <div className="block md:hidden">
-                <MobileLayout projects={projects} />
+                <MobileLayout
+                    projects={projects}
+                    socialProof={socialProof}
+                    testimonials={testimonials}
+                />
             </div>
 
             {/* Desktop Layout (Swiper Slideshow) */}
@@ -165,7 +176,10 @@ export default function Slideshow({ projects = [] }: SlideshowProps) {
 
                     {/* 5. Social Proof */}
                     <SwiperSlide>
-                        <SocialProofSlide />
+                        <SocialProofSlide
+                            socialProof={socialProof}
+                            testimonials={testimonials}
+                        />
                     </SwiperSlide>
 
                     {/* 6. Our Process */}

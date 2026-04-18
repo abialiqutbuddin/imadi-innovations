@@ -11,14 +11,20 @@ import AboutSlide from "./slides/AboutSlide";
 import TechStackSlide from "./slides/TechStackSlide";
 import ContactSlide from "./slides/ContactSlide";
 
-import { Project } from "@/types";
+import { Project, SocialProofContent, Testimonial } from "@/types";
 import { ThemeToggle } from "./ThemeToggle";
 
 interface MobileLayoutProps {
     projects: Project[];
+    socialProof?: SocialProofContent;
+    testimonials?: Testimonial[];
 }
 
-export default function MobileLayout({ projects }: MobileLayoutProps) {
+export default function MobileLayout({
+    projects,
+    socialProof,
+    testimonials = [],
+}: MobileLayoutProps) {
     return (
         <div className="w-full min-h-screen bg-transparent text-foreground overflow-x-hidden">
             {/* Mobile Header - Floating */}
@@ -75,7 +81,10 @@ export default function MobileLayout({ projects }: MobileLayoutProps) {
                 </section>
 
                 <section id="social-proof">
-                    <SocialProofSlide />
+                    <SocialProofSlide
+                        socialProof={socialProof}
+                        testimonials={testimonials}
+                    />
                 </section>
 
                 <section id="process">

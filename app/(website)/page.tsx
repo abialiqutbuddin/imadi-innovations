@@ -1,33 +1,17 @@
 import Slideshow from "@/components/Slideshow";
-import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
-import { Project } from "@/types";
-
-async function getProjects(): Promise<Project[]> {
-  const query = `*[_type == "project"] {
-    title,
-    headline,
-    description,
-    type,
-    features,
-    techStack,
-    desktopImg,
-    mobileImg,
-    hideDesktop
-  }`;
-
-  const projects = await client.fetch(query);
-
-  // Map images to URLs
-  return projects.map((p: any) => ({
-    ...p,
-    desktopImg: p.desktopImg ? urlFor(p.desktopImg).url() : null,
-    mobileImg: p.mobileImg ? urlFor(p.mobileImg).url() : null,
-  }));
-}
+import {
+  getWordPressProjects,
+  getWordPressSocialProof,
+  getWordPressTestimonials,
+} from "@/lib/wordpress";
 
 export default async function Home() {
-  const projects = await getProjects();
+  const [projects, socialProof, testimonials] = await Promise.all([
+    getWordPressProjects(),
+    getWordPressSocialProof(),
+    getWordPressTestimonials(),
+  ]);
+
   return (
     <main className="relative w-full min-h-screen md:h-screen md:overflow-hidden bg-transparent text-foreground">
       {/* Soft gradient + grid backdrop for depth */}
@@ -36,7 +20,11 @@ export default async function Home() {
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:120px_120px] opacity-30" />
       </div>
 
-      <Slideshow projects={projects} />
+      <Slideshow
+        projects={projects}
+        socialProof={socialProof}
+        testimonials={testimonials}
+      />
     </main>
   );
 }

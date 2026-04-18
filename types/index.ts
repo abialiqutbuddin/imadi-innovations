@@ -10,3 +10,25 @@ export interface Project {
     hideDesktop?: boolean;
     _id?: string;
 }
+
+export interface Testimonial {
+    id?: number;
+    name: string;
+    company?: string;
+    role?: string;
+    quote: string;
+    rating?: number;
+    image?: string | null;
+}
+
+export interface SocialProofStat {
+    value: string;
+    label: string;
+}
+
+export interface SocialProofContent {
+    eyebrow: string;
+    heading: string;
+    stats: SocialProofStat[];
+    industries: string[];
+}
