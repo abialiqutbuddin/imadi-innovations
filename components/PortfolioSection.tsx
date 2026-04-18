@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Keyboard } from "swiper/modules";
+import { Navigation, Keyboard, Mousewheel } from "swiper/modules";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -56,10 +56,15 @@ export default function PortfolioSection({ projects = [] }: PortfolioSectionProp
                     slidesPerView={1}
                     spaceBetween={0}
                     nested={true}
+                    mousewheel={{
+                        forceToAxis: true,
+                        sensitivity: 0.55,
+                        thresholdDelta: 12,
+                    }}
                     keyboard={{ enabled: true }}
                     onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                     navigation={{ prevEl, nextEl }}
-                    modules={[Navigation, Keyboard]}
+                    modules={[Navigation, Keyboard, Mousewheel]}
                     className="h-full w-full portfolio-swiper"
                 >
                     <SwiperSlide>

@@ -30,10 +30,10 @@
 
   /* Text Colors */
   --text-primary: #1a1a2e;
-  --text-secondary: #6b7280;
-  /* Gray-500 */
-  --text-muted: #9ca3af;
-  /* Gray-400 */
+  --text-secondary: #334155;
+  /* Slate-700 */
+  --text-muted: #475569;
+  /* Slate-600 */
   --text-on-dark: #f1f5f9;
   --text-on-primary: #ffffff;
 
@@ -69,6 +69,19 @@
   --transition-fast: 150ms ease;
   --transition-base: 300ms ease;
   --transition-slow: 500ms ease;
+}
+
+/* Improve light-mode readability for existing Tailwind gray utility usage. */
+html:not(.dark) .text-gray-400 {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-gray-500 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-gray-600 {
+  color: #243244 !important;
 }
 
 .dark {

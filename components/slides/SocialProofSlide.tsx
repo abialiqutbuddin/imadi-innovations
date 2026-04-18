@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building2, Globe2, Quote, Repeat, Star } from "lucide-react";
+import { Building2, ChevronLeft, ChevronRight, Globe2, Quote, Repeat, Star } from "lucide-react";
+import { useRef } from "react";
 import { SocialProofContent, Testimonial } from "@/types";
 
 const defaultSocialProof: SocialProofContent = {
@@ -43,10 +44,17 @@ export default function SocialProofSlide({
     socialProof = defaultSocialProof,
     testimonials = [],
 }: SocialProofSlideProps) {
+    const testimonialsRef = useRef<HTMLDivElement | null>(null);
     const stats = socialProof.stats?.length ? socialProof.stats : defaultSocialProof.stats;
     const industries = socialProof.industries?.length
         ? socialProof.industries
         : defaultSocialProof.industries;
+    const scrollTestimonials = (direction: "left" | "right") => {
+        testimonialsRef.current?.scrollBy({
+            left: direction === "left" ? -420 : 420,
+            behavior: "smooth",
+        });
+    };
 
     return (
         <div className="w-full md:h-full flex flex-col justify-center items-center px-5 sm:px-6 py-10 sm:py-20 relative overflow-x-hidden md:overflow-y-auto">
@@ -96,49 +104,89 @@ export default function SocialProofSlide({
                 </div>
 
                 {testimonials.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 text-left">
-                        {testimonials.slice(0, 2).map((testimonial, index) => (
-                            <motion.article
-                                key={testimonial.id ?? index}
-                                initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-                                whileInView={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white/55 p-5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/5"
-                            >
-                                <Quote className="absolute right-5 top-5 h-10 w-10 text-brand-orange/15" />
-                                <div className="mb-4 flex items-center gap-1 text-brand-orange">
-                                    {Array.from({ length: testimonial.rating || 5 }).map((_, starIndex) => (
-                                        <Star key={starIndex} className="h-3.5 w-3.5 fill-current" />
-                                    ))}
-                                </div>
-                                <p className="relative text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-                                    &quot;{testimonial.quote}&quot;
+                    <div className="relative left-1/2 w-[calc(100vw-2rem)] max-w-[1500px] -translate-x-1/2 space-y-4 text-left md:w-[calc(100vw-8rem)]">
+                        <div className="flex items-center justify-between gap-4">
+                            <div>
+                                <p className="text-brand-orange uppercase tracking-widest text-[11px] font-semibold">
+                                    Testimonials
                                 </p>
-                                <div className="mt-5 flex items-center gap-3">
-                                    {testimonial.image ? (
-                                        <img
-                                            src={testimonial.image}
-                                            alt={testimonial.name}
-                                            className="h-11 w-11 rounded-full object-cover"
-                                        />
-                                    ) : (
-                                        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-orange/10 text-sm font-bold text-brand-orange">
-                                            {testimonial.name.slice(0, 1)}
-                                        </div>
-                                    )}
-                                    <div>
-                                        <h3 className="text-sm font-bold text-gray-900 dark:text-white">
-                                            {testimonial.name}
-                                        </h3>
-                                        {(testimonial.role || testimonial.company) && (
-                                            <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                {[testimonial.role, testimonial.company].filter(Boolean).join(", ")}
-                                            </p>
-                                        )}
+                                <h2 className="text-xl md:text-2xl font-bold font-outfit text-gray-900 dark:text-white">
+                                    What clients say
+                                </h2>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => scrollTestimonials("left")}
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-navy/10 bg-white/80 text-brand-navy shadow-sm transition hover:-translate-y-0.5 hover:border-brand-orange hover:text-brand-orange dark:border-white/10 dark:bg-white/5 dark:text-white"
+                                    aria-label="Previous testimonial"
+                                >
+                                    <ChevronLeft className="h-5 w-5" />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => scrollTestimonials("right")}
+                                    className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-navy/10 bg-white/80 text-brand-navy shadow-sm transition hover:-translate-y-0.5 hover:border-brand-orange hover:text-brand-orange dark:border-white/10 dark:bg-white/5 dark:text-white"
+                                    aria-label="Next testimonial"
+                                >
+                                    <ChevronRight className="h-5 w-5" />
+                                </button>
+                            </div>
+                        </div>
+
+                        <div
+                            ref={testimonialsRef}
+                            onWheel={(event) => {
+                                if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+                                    event.stopPropagation();
+                                }
+                            }}
+                            className="testimonial-carousel flex snap-x snap-mandatory items-stretch gap-5 overflow-x-auto overscroll-x-contain scroll-smooth pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                        >
+                            {testimonials.map((testimonial, index) => (
+                                <motion.article
+                                    key={testimonial.id ?? index}
+                                    initial={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+                                    whileInView={disableAnimations ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.08 }}
+                                    className="relative flex min-h-[210px] min-w-[82%] snap-start flex-col overflow-hidden rounded-3xl border border-brand-navy/10 bg-white/85 p-5 shadow-sm backdrop-blur-sm sm:min-w-[460px] md:min-w-[520px] lg:min-w-[560px] dark:border-white/10 dark:bg-white/5"
+                                >
+                                    <Quote className="absolute right-5 top-5 h-10 w-10 text-brand-orange/15" />
+                                    <div className="mb-4 flex items-center gap-1 text-brand-orange">
+                                        {Array.from({ length: testimonial.rating || 5 }).map((_, starIndex) => (
+                                            <Star key={starIndex} className="h-3.5 w-3.5 fill-current" />
+                                        ))}
                                     </div>
-                                </div>
-                            </motion.article>
-                        ))}
+                                    <p className="relative line-clamp-3 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                                        &quot;{testimonial.quote}&quot;
+                                    </p>
+                                    <div className="mt-auto flex items-center gap-3 pt-6">
+                                        {testimonial.image ? (
+                                            <img
+                                                src={testimonial.image}
+                                                alt={testimonial.name}
+                                                className="h-11 w-11 shrink-0 rounded-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-sm font-bold text-brand-orange">
+                                                {testimonial.name.slice(0, 1)}
+                                            </div>
+                                        )}
+                                        <div className="min-w-0">
+                                            <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+                                                {testimonial.name}
+                                            </h3>
+                                            {(testimonial.role || testimonial.company) && (
+                                                <p className="text-xs text-gray-600 dark:text-gray-400">
+                                                    {[testimonial.role, testimonial.company].filter(Boolean).join(", ")}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </motion.article>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

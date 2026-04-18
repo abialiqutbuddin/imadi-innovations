@@ -143,7 +143,13 @@ export default function Slideshow({
                     direction="vertical"
                     slidesPerView={1}
                     spaceBetween={0}
-                    mousewheel={true}
+                    mousewheel={{
+                        forceToAxis: true,
+                        sensitivity: 0.5,
+                        thresholdDelta: 36,
+                        thresholdTime: 280,
+                    }}
+                    noSwipingSelector=".testimonial-carousel"
                     keyboard={{ enabled: true }}
                     onSwiper={setSwiperRef}
                     onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
