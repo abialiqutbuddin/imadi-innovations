@@ -25,10 +25,10 @@ Use the cPanel FTP values you created for the `imadi-innovations.com` site:
 - FTP username: `imadi-innovations@magnetcargouae.com`
 - FTP target directory: `/home4/magnetcargouae/domains/imadi-innovations.com/public_html/`
 
-Do not commit the FTP password or Sanity values into the repository.
+Do not commit the FTP password into the repository.
 
 ## Notes
 
 - The site is configured as a static Next.js export, so each deploy uploads the generated `out/` directory.
-- Sanity content is fetched during the build. Content changes in Sanity require a new deploy to appear on the live site.
-- The public Sanity values are now defaulted in code, so GitHub does not need separate Sanity build secrets for this frontend.
+- WordPress content is fetched during the build. Content changes in WordPress require a new deploy to appear on the live static site.
+- The frontend reads content from `https://wordpress.imadi-innovations.com` by default. Set `WORDPRESS_API_URL` only if the CMS URL changes.
