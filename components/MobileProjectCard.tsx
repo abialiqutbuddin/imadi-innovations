@@ -1,6 +1,4 @@
 "use client";
-
-import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
@@ -8,7 +6,7 @@ interface MobileProjectCardProps {
     title: string;
     headline: string;
     description: string;
-    type: string;
+    type: "Web" | "Mobile" | "Web & Mobile";
     techStack: string;
     desktopImg?: string;
     mobileImg?: string;
@@ -26,6 +24,7 @@ export default function MobileProjectCard({
     hideDesktop = false,
 }: MobileProjectCardProps) {
     const [imgError, setImgError] = useState(false);
+    const showDesktopFrame = type === "Web" || !hideDesktop;
 
     return (
         <div className="w-[85vw] sm:w-[350px] flex-shrink-0 bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden snap-center flex flex-col">
@@ -34,7 +33,7 @@ export default function MobileProjectCard({
                 {/* Background Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-brand-orange/10 rounded-full blur-[40px]" />
 
-                {!hideDesktop ? (
+                {showDesktopFrame ? (
                     // Laptop Frame
                     <div className="relative w-full aspect-video bg-gray-200 dark:bg-gray-800 rounded-lg border-[4px] border-gray-300 dark:border-gray-700 shadow-xl flex flex-col">
                         {/* Screen */}
