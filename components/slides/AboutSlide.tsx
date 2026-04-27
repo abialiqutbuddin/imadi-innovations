@@ -21,7 +21,7 @@ export default function AboutSlide({ disableAnimations = false }: { disableAnima
                             Imadi Innovations
                         </h1>
                         <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed mb-4">
-                            Founded in 2024, we're a Pakistan-based remote team that builds custom digital systems for clients around the world.
+                            Founded in 2024, we&apos;re a Pakistan-based remote team that builds custom digital systems for clients around the world.
                         </p>
                         <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">
                             Our focus is simple: combine strong engineering with a deep understanding of real business operations.

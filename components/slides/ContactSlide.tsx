@@ -30,7 +30,7 @@ export default function ContactSlide({ disableAnimations = false }: { disableAni
                         Ready to Build or Automate Your Next Big Project?
                     </h1>
                     <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                        Send us your goals, screenshots, or a Loom—we'll map a clear path, timeline, and a realistic first milestone before we write a line of code.
+                        Send us your goals, screenshots, or a Loom—we&apos;ll map a clear path, timeline, and a realistic first milestone before we write a line of code.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">

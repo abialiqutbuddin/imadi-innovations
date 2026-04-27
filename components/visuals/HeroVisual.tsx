@@ -1,18 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BarChart3, Bot, Code2, Globe2, ShieldCheck, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
+import { BarChart3, Bot, Code2, Globe2, Zap } from "lucide-react";
 
 export default function HeroVisual() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted) return null;
-
     return (
         <div className="relative w-full h-[500px] flex items-center justify-center perspective-1000">
             {/* Background Glow */}
