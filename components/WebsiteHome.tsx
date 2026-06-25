@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { ElementType, RefObject } from "react";
+import type { ElementType, FormEvent, RefObject } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import {
     ArrowRight,
@@ -10,14 +10,17 @@ import {
     CalendarDays,
     CheckCircle2,
     ChevronRight,
+    Clock,
     Cloud,
     Code2,
     Gauge,
     Globe2,
     Layers3,
+    Loader2,
     Link2,
     Mail,
     MapPin,
+    Phone,
     Menu,
     PanelTop,
     Play,
@@ -203,6 +206,8 @@ const staggerGroup: Variants = {
     },
 };
 
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
 function decodeText(value = "") {
     return value
         .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
@@ -361,8 +366,8 @@ function HeroDashboard() {
     const workflows = ["Order Processing", "Invoice Automation", "Customer Onboarding", "Data Sync"];
 
     return (
-        <div className="relative mx-auto w-full max-w-[620px] lg:mx-0">
-            <div className="absolute -left-10 top-48 z-20 hidden rounded-xl border border-white/15 bg-[#0b1635]/90 px-4 py-3 shadow-2xl backdrop-blur md:block">
+        <div className="relative mx-auto w-full max-w-[600px] lg:mx-0 xl:max-w-[620px] [@media(max-height:760px)]:lg:max-w-[560px]">
+            <div className="absolute -left-10 top-48 z-20 hidden rounded-xl border border-white/15 bg-[#0b1635]/90 px-4 py-3 shadow-2xl backdrop-blur md:block [@media(max-height:760px)]:lg:top-40">
                 <div className="flex items-center gap-3">
                     <IconBadge icon={Cloud} tone="violet" className="h-9 w-9 rounded-lg" />
                     <div>
@@ -391,7 +396,7 @@ function HeroDashboard() {
             </div>
 
             <div className="relative z-10 rounded-2xl border border-white/14 bg-[#080f2b]/82 p-4 shadow-[0_34px_100px_rgba(0,0,0,0.42)] backdrop-blur-xl">
-                <div className="flex min-h-[360px] gap-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-4">
+                <div className="flex min-h-[360px] gap-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-4 [@media(max-height:760px)]:lg:min-h-[320px] [@media(max-height:760px)]:lg:p-3">
                     <div className="hidden w-12 shrink-0 flex-col items-center gap-5 rounded-lg border border-white/10 bg-white/[0.04] py-4 sm:flex">
                         <Image src="/logo.jpg" alt="" width={26} height={26} className="rounded-full" />
                         {[Workflow, Gauge, Users, ShieldCheck, Cloud, Code2].map((Icon, index) => (
@@ -414,21 +419,21 @@ function HeroDashboard() {
                                 ["1,248h", "Time Saved", "+32.1%"],
                                 ["99.9%", "System Health", "Excellent"],
                             ].map(([value, label, delta]) => (
-                                <div key={label} className="rounded-lg border border-white/10 bg-white/[0.05] p-4">
+                                <div key={label} className="rounded-lg border border-white/10 bg-white/[0.05] p-4 [@media(max-height:760px)]:lg:p-3">
                                     <p className="text-[10px] text-white/50">{label}</p>
-                                    <p className="mt-2 text-xl font-extrabold text-white">{value}</p>
+                                    <p className="mt-2 text-xl font-extrabold text-white [@media(max-height:760px)]:lg:text-lg">{value}</p>
                                     <p className="mt-1 text-[10px] text-emerald-300">{delta}</p>
                                 </div>
                             ))}
                         </div>
 
                         <div className="grid gap-3 lg:grid-cols-[1.1fr_1fr]">
-                            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+                            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 [@media(max-height:760px)]:lg:p-3">
                                 <p className="text-xs font-extrabold text-white">AI Insights</p>
-                                <p className="mt-3 max-w-[220px] text-[11px] leading-5 text-white/65">
+                                <p className="mt-3 max-w-[220px] text-[11px] leading-5 text-white/65 [@media(max-height:760px)]:lg:mt-2">
                                     Demand is predicted to increase 24% in the next 30 days.
                                 </p>
-                                <div className="mt-5 h-24 overflow-hidden rounded-md bg-gradient-to-t from-violet-500/25 to-transparent">
+                                <div className="mt-5 h-24 overflow-hidden rounded-md bg-gradient-to-t from-violet-500/25 to-transparent [@media(max-height:760px)]:lg:mt-3 [@media(max-height:760px)]:lg:h-20">
                                     <svg viewBox="0 0 300 110" className="h-full w-full" role="img" aria-label="Growth chart">
                                         <path
                                             d="M0 92 C28 44 48 96 78 64 C110 30 128 76 158 46 C190 12 208 54 232 22 C254 -4 270 34 300 6"
@@ -450,9 +455,9 @@ function HeroDashboard() {
                                 </div>
                             </div>
 
-                            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4">
+                            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-4 [@media(max-height:760px)]:lg:p-3">
                                 <p className="text-xs font-extrabold text-white">Active Workflows</p>
-                                <div className="mt-4 space-y-4">
+                                <div className="mt-4 space-y-4 [@media(max-height:760px)]:lg:mt-3 [@media(max-height:760px)]:lg:space-y-3">
                                     {workflows.map((workflow, index) => (
                                         <div key={workflow} className="flex items-center justify-between gap-3">
                                             <span className="text-[11px] font-semibold text-white/82">{workflow}</span>
@@ -474,50 +479,50 @@ function HeroDashboard() {
 
 function HeroSection({ socialProof }: { socialProof: SocialProofContent }) {
     return (
-        <section id="home" className="relative overflow-hidden bg-[#020919] pt-20 text-white">
+        <section id="home" className="relative min-h-svh overflow-hidden bg-[#020919] pt-20 text-white">
             <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(2,9,25,0.98)_0%,rgba(4,12,35,0.92)_42%,rgba(28,14,76,0.72)_70%,rgba(255,145,35,0.12)_100%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(124,58,237,0.35),transparent_30%),linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:auto,80px_80px,80px_80px]" />
 
-            <div className="relative mx-auto grid max-w-7xl gap-12 px-5 pb-24 pt-16 lg:grid-cols-[0.92fr_1.08fr] lg:px-8 lg:pb-32 lg:pt-20">
+            <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-10 sm:pt-12 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-8 lg:px-8 lg:py-10 xl:gap-10 [@media(max-height:760px)]:lg:py-7">
                 <motion.div
                     className="flex flex-col justify-center"
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                    <div className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/86 backdrop-blur">
+                    <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/86 backdrop-blur [@media(max-height:760px)]:lg:mb-4 [@media(max-height:760px)]:lg:py-1.5">
                         <Sparkles className="h-4 w-4 text-violet-300" />
                         AI-powered software solutions
                     </div>
 
-                    <h1 className="max-w-3xl text-4xl font-black leading-[1.08] tracking-normal sm:text-5xl md:text-[64px]">
+                    <h1 className="max-w-3xl text-4xl font-black leading-[1.06] tracking-normal sm:text-5xl md:text-[56px] xl:text-[60px] [@media(max-height:760px)]:lg:text-[50px]">
                         We build intelligent software that drives{" "}
                         <span className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-orange-300 bg-clip-text text-transparent">
                             real business outcomes.
                         </span>
                     </h1>
-                    <p className="mt-6 max-w-2xl text-base font-medium leading-8 text-white/78 md:text-lg">
+                    <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-white/78 md:text-lg md:leading-8 [@media(max-height:760px)]:lg:mt-4 [@media(max-height:760px)]:lg:text-base [@media(max-height:760px)]:lg:leading-7">
                         We design, build, and scale AI-powered systems that automate workflows, connect data, and help teams move faster.
                     </p>
 
-                    <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <div className="mt-7 flex flex-col gap-3 sm:flex-row [@media(max-height:760px)]:lg:mt-5">
                         <a
                             href="#contact"
-                            className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-400 px-6 py-4 text-sm font-extrabold text-[#160d02] transition hover:-translate-y-0.5 hover:bg-orange-300"
+                            className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-400 px-6 py-3.5 text-sm font-extrabold text-[#160d02] transition hover:-translate-y-0.5 hover:bg-orange-300 [@media(max-height:760px)]:lg:py-3"
                         >
                             Start a Project
                             <ArrowRight className="h-4 w-4" />
                         </a>
                         <a
                             href="mailto:abialigadi@gmail.com"
-                            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/18 bg-white/[0.04] px-6 py-4 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.09]"
+                            className="inline-flex items-center justify-center gap-2 rounded-md border border-white/18 bg-white/[0.04] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.09] [@media(max-height:760px)]:lg:py-3"
                         >
                             <CalendarDays className="h-4 w-4" />
                             Book a Discovery Call
                         </a>
                     </div>
 
-                    <div className="mt-10">
+                    <div className="mt-8 [@media(max-height:760px)]:lg:mt-6 [@media(max-height:700px)]:lg:hidden">
                         <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-white/50">
                             Trusted by innovative teams
                         </p>
@@ -547,21 +552,39 @@ function HeroSection({ socialProof }: { socialProof: SocialProofContent }) {
 
 function StatStrip({ stats }: { stats: SocialProofContent["stats"] }) {
     const icons = [BriefcaseBusiness, Globe2, ShieldCheck, Gauge];
+    const visibleStats = stats.slice(0, 4);
+
+    if (!visibleStats.length) {
+        return null;
+    }
 
     return (
-        <section className="relative -mt-10 px-5">
+        <section className="relative -mt-8 px-5 sm:-mt-10">
             <motion.div
-                className="mx-auto grid max-w-6xl gap-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.11)] md:grid-cols-4 dark:border-white/10 dark:bg-slate-900"
+                className={cx(
+                    "mx-auto grid max-w-6xl gap-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)] dark:border-white/10 dark:bg-slate-900",
+                    visibleStats.length === 1 && "md:grid-cols-1",
+                    visibleStats.length === 2 && "md:grid-cols-2",
+                    visibleStats.length === 3 && "md:grid-cols-3",
+                    visibleStats.length >= 4 && "md:grid-cols-2 lg:grid-cols-4"
+                )}
                 initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.55, ease: "easeOut" }}
             >
-                {stats.slice(0, 4).map((stat, index) => {
+                {visibleStats.map((stat, index) => {
                     const Icon = icons[index % icons.length];
+                    const isLast = index === visibleStats.length - 1;
 
                     return (
-                        <div key={stat.label} className="flex items-center gap-5 border-b border-slate-200 px-7 py-7 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 dark:border-white/10">
+                        <div
+                            key={stat.label}
+                            className={cx(
+                                "flex items-center gap-5 border-b border-slate-200 px-6 py-6 last:border-b-0 md:border-b-0 lg:px-7 dark:border-white/10",
+                                !isLast && "md:border-r"
+                            )}
+                        >
                             <Icon className={cx("h-10 w-10", index === 0 && "text-violet-600", index === 1 && "text-blue-600", index === 2 && "text-emerald-600", index === 3 && "text-orange-500")} />
                             <div>
                                 <p className="text-2xl font-black text-slate-950 dark:text-white">{stat.value}</p>
@@ -754,9 +777,7 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
                         const imageSrc = project.desktopImg || project.mobileImg;
                         const title = decodeText(project.title);
                         const headline = decodeText(project.headline || project.description);
-                        const description = decodeText(project.description);
                         const techItems = splitTechStack(project.techStack);
-                        const previewFeatures = project.features?.slice(0, 2) ?? [];
                         const projectKey = project._id ?? project.title;
                         const isSelected = selectedProjectKey === projectKey;
 
@@ -774,14 +795,26 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
                                 <div className="flex w-full flex-col">
                                     <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800">
                                         {imageSrc ? (
-                                            <Image
-                                                src={imageSrc}
-                                                alt={`${title} project preview`}
-                                                fill
-                                                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                                                className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
-                                                unoptimized
-                                            />
+                                            <>
+                                                <Image
+                                                    src={imageSrc}
+                                                    alt=""
+                                                    fill
+                                                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                                                    className="scale-110 object-cover object-center blur-xl"
+                                                    aria-hidden="true"
+                                                    unoptimized
+                                                />
+                                                <div className="absolute inset-0 bg-white/35 dark:bg-slate-950/25" />
+                                                <Image
+                                                    src={imageSrc}
+                                                    alt={`${title} project preview`}
+                                                    fill
+                                                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                                                    className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
+                                                    unoptimized
+                                                />
+                                            </>
                                         ) : (
                                             <div className="flex h-full items-center justify-center">
                                                 <PanelTop className="h-12 w-12 text-slate-300" />
@@ -801,19 +834,9 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
                                             )}
                                         </div>
                                         <h3 className="text-xl font-extrabold leading-tight text-slate-950 dark:text-white">{title}</h3>
-                                        <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                                            {description || headline}
+                                        <p className="mt-3 line-clamp-2 text-sm font-semibold leading-6 text-slate-500 dark:text-slate-300">
+                                            {headline}
                                         </p>
-                                        {previewFeatures.length > 0 && (
-                                            <div className="mt-5 grid gap-2">
-                                                {previewFeatures.map((feature) => (
-                                                    <div key={`${title}-${feature.title}`} className="flex items-start gap-2 text-xs leading-5 text-slate-500 dark:text-slate-400">
-                                                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-500" />
-                                                        <span>{decodeText(feature.title)}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
                                         <button
                                             type="button"
                                             onClick={() => handleSelectProject(project)}
@@ -1061,7 +1084,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 
 function AboutSection() {
     return (
-        <section id="about" className="bg-white px-5 py-24 dark:bg-slate-950">
+        <section id="about" className="bg-white px-5 py-20 dark:bg-slate-950">
             <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
                     <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-600 dark:text-violet-300">About Us</p>
@@ -1096,9 +1119,241 @@ function AboutSection() {
     );
 }
 
+function ContactSection() {
+    const [contactStatus, setContactStatus] = useState<SubmitStatus>("idle");
+    const [contactMessage, setContactMessage] = useState("");
+
+    const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formElement = event.currentTarget;
+        const formData = new FormData(formElement);
+        const fullName = String(formData.get("fullName") || "");
+        const email = String(formData.get("email") || "");
+        const company = String(formData.get("company") || "");
+        const projectType = String(formData.get("projectType") || "");
+        const budget = String(formData.get("budget") || "");
+        const message = String(formData.get("message") || "");
+        const website = String(formData.get("website") || "");
+
+        setContactStatus("submitting");
+        setContactMessage("");
+
+        try {
+            const response = await fetch("/api/contact-submissions", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    company,
+                    projectType,
+                    budget,
+                    message,
+                    website,
+                }),
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                setContactStatus("error");
+                setContactMessage(data.message || "We could not send your message right now.");
+                return;
+            }
+
+            setContactStatus("success");
+            setContactMessage(data.message || "Thank you. Your message has been sent.");
+            formElement.reset();
+        } catch {
+            setContactStatus("error");
+            setContactMessage("The contact service is unavailable right now.");
+        }
+    };
+
+    return (
+        <section id="contact" className="relative scroll-mt-20 overflow-hidden border-t border-slate-100 bg-white px-5 py-20 dark:border-white/10 dark:bg-slate-950">
+            <div className="pointer-events-none absolute right-0 top-10 h-72 w-72 rounded-full bg-orange-200/25 blur-3xl dark:bg-orange-400/10" />
+            <div className="pointer-events-none absolute left-0 bottom-10 h-72 w-72 rounded-full bg-violet-200/25 blur-3xl dark:bg-violet-400/10" />
+            <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+                <div>
+                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-500">Get in touch</p>
+                    <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-950 dark:text-white md:text-4xl">
+                        Let&apos;s Talk About Your Project
+                    </h2>
+                    <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
+                        Tell us what you&apos;re building. We&apos;ll help turn your ideas into powerful software solutions.
+                    </p>
+
+                    <div className="mt-7 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
+                        <div className="space-y-4">
+                            {[
+                                { icon: Mail, title: "Email Us", text: "hello@imadi-innovations.com", href: "mailto:hello@imadi-innovations.com" },
+                                { icon: Phone, title: "Call Us", text: "+92 333 036 5252", href: "https://wa.me/923330365252" },
+                                { icon: Clock, title: "Working Hours", text: "Mon - Fri\n9:00 AM - 6:00 PM PKT" },
+                            ].map((item) => {
+                                const Icon = item.icon;
+                                const content = (
+                                    <>
+                                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-500 dark:bg-orange-400/10 dark:text-orange-300">
+                                            <Icon className="h-5 w-5" />
+                                        </span>
+                                        <span>
+                                            <span className="block text-sm font-extrabold text-slate-950 dark:text-white">{item.title}</span>
+                                            <span className="mt-1 block text-sm text-slate-600 dark:text-slate-300">
+                                                {item.text.split("\n").map((line) => (
+                                                    <span key={line} className="block">
+                                                        {line}
+                                                    </span>
+                                                ))}
+                                            </span>
+                                        </span>
+                                    </>
+                                );
+
+                                return item.href ? (
+                                    <a key={item.title} href={item.href} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:border-orange-200 hover:bg-orange-50 dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-orange-400/10">
+                                        {content}
+                                    </a>
+                                ) : (
+                                    <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/[0.04]">
+                                        {content}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-white/10 dark:bg-white/[0.04]">
+                            <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">What happens next?</h3>
+                            <div className="mt-5 space-y-4">
+                                {[
+                                    ["1", "We review your requirements", "Our team will analyze your needs and project scope."],
+                                    ["2", "We'll get back to you", "Expect a response within 24 hours to discuss details."],
+                                    ["3", "Proposal & next steps", "You'll receive a tailored proposal and clear roadmap."],
+                                ].map(([step, title, desc]) => (
+                                    <div key={step} className="flex gap-3">
+                                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-600 dark:bg-orange-400/15 dark:text-orange-200">
+                                            {step}
+                                        </span>
+                                        <span>
+                                            <span className="block text-sm font-extrabold text-slate-950 dark:text-white">{title}</span>
+                                            <span className="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400">{desc}</span>
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form onSubmit={handleContactSubmit} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-white/[0.04] md:p-8">
+                    <h3 className="text-2xl font-extrabold text-slate-950 dark:text-white">Send Us a Message</h3>
+                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Fill out the form below and we&apos;ll get back to you shortly.</p>
+
+                    <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+                        <ContactField label="Full Name" name="fullName" placeholder="Your full name" required className="lg:col-span-3" />
+                        <ContactField label="Email Address" name="email" type="email" placeholder="you@example.com" required className="lg:col-span-3" />
+                        <ContactField label="Company Name" name="company" placeholder="Your company" className="lg:col-span-2" />
+                        <label className="text-sm font-bold text-slate-950 dark:text-white lg:col-span-2">
+                            Project Type
+                            <span className="relative mt-2 block">
+                                <select name="projectType" className="field-input appearance-none pr-12">
+                                    <option value="">Select project type</option>
+                                    <option>AI-Powered Platform</option>
+                                    <option>Internal Tool / Dashboard</option>
+                                    <option>SaaS Product</option>
+                                    <option>Website / Web App</option>
+                                    <option>Mobile App</option>
+                                    <option>Integration / Automation</option>
+                                </select>
+                                <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-slate-500 dark:text-slate-300" />
+                            </span>
+                        </label>
+                        <label className="text-sm font-bold text-slate-950 dark:text-white lg:col-span-2">
+                            Budget Range
+                            <span className="relative mt-2 block">
+                                <select name="budget" className="field-input appearance-none pr-12">
+                                    <option value="">Select budget range</option>
+                                    <option>Under $2,500</option>
+                                    <option>$2,500 - $5,000</option>
+                                    <option>$5,000 - $10,000</option>
+                                    <option>$10,000+</option>
+                                </select>
+                                <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-slate-500 dark:text-slate-300" />
+                            </span>
+                        </label>
+                        <label className="text-sm font-bold text-slate-950 dark:text-white md:col-span-2 lg:col-span-6">
+                            Message <span className="text-orange-500">*</span>
+                            <textarea name="message" required minLength={10} maxLength={2000} className="field-input mt-2 min-h-32 resize-y" placeholder="Tell us about your project, goals, and any specific requirements..." />
+                        </label>
+                    </div>
+
+                    <div className="hidden" aria-hidden="true">
+                        <label htmlFor="contact-website">Website</label>
+                        <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
+                    </div>
+
+                    {contactMessage && (
+                        <div className={cx(
+                            "mt-5 flex items-start gap-3 rounded-xl border p-3 text-sm font-semibold",
+                            contactStatus === "success"
+                                ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-300/20 dark:bg-emerald-400/10 dark:text-emerald-200"
+                                : "border-red-200 bg-red-50 text-red-700 dark:border-red-300/20 dark:bg-red-400/10 dark:text-red-200"
+                        )}>
+                            {contactStatus === "success" && <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />}
+                            <span>{contactMessage}</span>
+                        </div>
+                    )}
+
+                    <button type="submit" disabled={contactStatus === "submitting"} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-orange-500 px-6 py-4 text-sm font-extrabold text-white shadow-[0_16px_35px_rgba(249,115,22,0.25)] transition hover:-translate-y-0.5 hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-70">
+                        {contactStatus === "submitting" ? (
+                            <>
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Sending...
+                            </>
+                        ) : (
+                            <>
+                                Send Message
+                                <Send className="h-4 w-4" />
+                            </>
+                        )}
+                    </button>
+                    <p className="mt-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+                        We usually reply within 24 hours.
+                    </p>
+                </form>
+            </div>
+        </section>
+    );
+}
+
+function ContactField({
+    label,
+    name,
+    placeholder,
+    type = "text",
+    required,
+    className,
+}: {
+    label: string;
+    name: string;
+    placeholder: string;
+    type?: string;
+    required?: boolean;
+    className?: string;
+}) {
+    return (
+        <label className={cx("text-sm font-bold text-slate-950 dark:text-white", className)}>
+            {label}
+            {required && <span className="text-orange-500"> *</span>}
+            <input name={name} type={type} placeholder={placeholder} required={required} className="field-input mt-2" />
+        </label>
+    );
+}
+
 function CTAFooter() {
     return (
-        <footer id="contact" className="bg-[#020919] text-white">
+        <footer className="bg-[#020919] text-white">
             <div className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
                 <div className="grid items-center gap-8 rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-400 p-8 md:grid-cols-[auto_1fr_auto] md:p-10">
                     <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#32148a] text-white shadow-xl">
@@ -1129,7 +1384,7 @@ function CTAFooter() {
                     </div>
 
                     <FooterColumn title="Services" links={["AI-Powered Platforms", "Internal Tools", "SaaS Products", "Integrations & Automation"]} />
-                    <FooterColumn title="Company" links={["About Us", "Our Process", "Careers", "Blog"]} />
+                    <FooterColumn title="Company" links={["About Us", "Our Process", "Careers", "Blog", "Submit Testimonial"]} />
                     <div>
                         <h3 className="font-black">Contact</h3>
                         <div className="mt-5 space-y-3 text-sm text-white/62">
@@ -1151,9 +1406,10 @@ function CTAFooter() {
 
                 <div className="flex flex-col justify-between gap-4 border-t border-white/10 py-6 text-sm text-white/46 md:flex-row">
                     <p>© 2024 Imadi Innovations. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <a href="#" className="hover:text-white">Privacy Policy</a>
-                        <a href="#" className="hover:text-white">Terms of Service</a>
+                    <div className="flex flex-wrap gap-x-6 gap-y-3">
+                        <a href="/sitemap.xml" className="hover:text-white">Sitemap</a>
+                        <a href="/privacy-policy" className="hover:text-white">Privacy Policy</a>
+                        <a href="/terms-of-service" className="hover:text-white">Terms of Service</a>
                     </div>
                 </div>
             </div>
@@ -1162,12 +1418,28 @@ function CTAFooter() {
 }
 
 function FooterColumn({ title, links }: { title: string; links: string[] }) {
+    const footerHref = (link: string) => {
+        const hrefs: Record<string, string> = {
+            "AI-Powered Platforms": "#services",
+            "Internal Tools": "#services",
+            "SaaS Products": "#services",
+            "Integrations & Automation": "#services",
+            "About Us": "#about",
+            "Our Process": "#process",
+            Careers: "#contact",
+            Blog: "#contact",
+            "Submit Testimonial": "/submit-testimonial",
+        };
+
+        return hrefs[link] ?? "#contact";
+    };
+
     return (
         <div>
             <h3 className="font-black">{title}</h3>
             <div className="mt-5 grid gap-3 text-sm text-white/62">
                 {links.map((link) => (
-                    <a key={link} href="#contact" className="hover:text-orange-300">
+                    <a key={link} href={footerHref(link)} className="hover:text-orange-300">
                         {link}
                     </a>
                 ))}
@@ -1202,6 +1474,7 @@ export default function WebsiteHome({
             <ProcessSection />
             <TestimonialsSection testimonials={quotes} />
             <AboutSection />
+            <ContactSection />
             <CTAFooter />
         </main>
     );

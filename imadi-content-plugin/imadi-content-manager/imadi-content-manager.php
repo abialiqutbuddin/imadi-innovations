@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: IMADI Content Manager
- * Description: Adds portfolio projects, testimonials, and social proof content endpoints for the IMADI Innovations website.
- * Version: 1.0.0
+ * Description: Adds portfolio projects, testimonials, contact messages, and social proof content endpoints for the IMADI Innovations website.
+ * Version: 1.2.0
  * Author: IMADI Innovations
  */
 
@@ -14,6 +14,7 @@ class Imadi_Content_Manager
 {
     const PROJECT_TYPE = 'imadi_project';
     const TESTIMONIAL_TYPE = 'imadi_testimonial';
+    const CONTACT_TYPE = 'imadi_contact_msg';
     const OPTION_KEY = 'imadi_social_proof';
 
     public function __construct()
@@ -22,6 +23,11 @@ class Imadi_Content_Manager
         add_action('add_meta_boxes', [$this, 'register_meta_boxes']);
         add_action('save_post_' . self::PROJECT_TYPE, [$this, 'save_project']);
         add_action('save_post_' . self::TESTIMONIAL_TYPE, [$this, 'save_testimonial']);
+        add_action('save_post_' . self::CONTACT_TYPE, [$this, 'save_contact_message']);
+        add_filter('manage_' . self::TESTIMONIAL_TYPE . '_posts_columns', [$this, 'testimonial_columns']);
+        add_action('manage_' . self::TESTIMONIAL_TYPE . '_posts_custom_column', [$this, 'render_testimonial_column'], 10, 2);
+        add_filter('manage_' . self::CONTACT_TYPE . '_posts_columns', [$this, 'contact_message_columns']);
+        add_action('manage_' . self::CONTACT_TYPE . '_posts_custom_column', [$this, 'render_contact_message_column'], 10, 2);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('admin_menu', [$this, 'register_settings_page']);
         add_action('admin_init', [$this, 'register_settings']);
@@ -63,6 +69,23 @@ class Imadi_Content_Manager
             'rest_base' => 'imadi-testimonials',
             'has_archive' => false,
         ]);
+
+        register_post_type(self::CONTACT_TYPE, [
+            'labels' => [
+                'name' => 'Contact Messages',
+                'singular_name' => 'Contact Message',
+                'add_new_item' => 'Add New Contact Message',
+                'edit_item' => 'View Contact Message',
+            ],
+            'public' => false,
+            'show_ui' => true,
+            'show_in_menu' => true,
+            'menu_icon' => 'dashicons-email-alt2',
+            'supports' => ['title'],
+            'show_in_rest' => true,
+            'rest_base' => 'imadi-contact-messages',
+            'has_archive' => false,
+        ]);
     }
 
     public function register_meta_boxes()
@@ -84,12 +107,21 @@ class Imadi_Content_Manager
             'normal',
             'high'
         );
+
+        add_meta_box(
+            'imadi_contact_message_details',
+            'Contact Message Details',
+            [$this, 'render_contact_message_meta_box'],
+            self::CONTACT_TYPE,
+            'normal',
+            'high'
+        );
     }
 
     public function enqueue_admin_assets($hook)
     {
         $screen = get_current_screen();
-        if (!$screen || !in_array($screen->post_type, [self::PROJECT_TYPE, self::TESTIMONIAL_TYPE], true)) {
+        if (!$screen || !in_array($screen->post_type, [self::PROJECT_TYPE, self::TESTIMONIAL_TYPE, self::CONTACT_TYPE], true)) {
             return;
         }
 
@@ -232,7 +264,11 @@ class Imadi_Content_Manager
         $quote = get_post_meta($post->ID, 'quote', true);
         $rating = get_post_meta($post->ID, 'rating', true) ?: '5';
         $logo_id = absint(get_post_meta($post->ID, 'logoImgId', true));
+        $email = get_post_meta($post->ID, 'email', true);
+        $consent = (bool) get_post_meta($post->ID, 'consent', true);
+        $submitted_at = get_post_meta($post->ID, 'submittedAt', true);
 
+        $this->text_field('Submitter Email', 'imadi_email', $email);
         $this->text_field('Company', 'imadi_company', $company);
         $this->text_field('Role / Designation', 'imadi_role', $role);
         $this->textarea_field('Quote', 'imadi_quote', $quote);
@@ -243,6 +279,43 @@ class Imadi_Content_Manager
         </div>
         <?php
         $this->image_field('Client Image / Logo', 'imadi_logo_img_id', $logo_id, 'logo');
+        ?>
+        <div class="imadi-field">
+            <label>
+                <input type="checkbox" name="imadi_consent" value="1" <?php checked($consent); ?> />
+                Client consented to publish this testimonial
+            </label>
+            <?php if ($submitted_at) : ?>
+                <div class="imadi-help">Submitted at: <?php echo esc_html($submitted_at); ?></div>
+            <?php endif; ?>
+        </div>
+        <?php
+    }
+
+    public function render_contact_message_meta_box($post)
+    {
+        wp_nonce_field('imadi_contact_message_save', 'imadi_contact_message_nonce');
+
+        $full_name = get_post_meta($post->ID, 'fullName', true);
+        $email = get_post_meta($post->ID, 'email', true);
+        $company = get_post_meta($post->ID, 'company', true);
+        $project_type = get_post_meta($post->ID, 'projectType', true);
+        $budget = get_post_meta($post->ID, 'budget', true);
+        $message = get_post_meta($post->ID, 'message', true);
+        $submitted_at = get_post_meta($post->ID, 'submittedAt', true);
+
+        $this->text_field('Full Name', 'imadi_contact_full_name', $full_name);
+        $this->text_field('Email Address', 'imadi_contact_email', $email);
+        $this->text_field('Company', 'imadi_contact_company', $company);
+        $this->text_field('Project Type', 'imadi_contact_project_type', $project_type);
+        $this->text_field('Budget Range', 'imadi_contact_budget', $budget);
+        $this->textarea_field('Message', 'imadi_contact_message', $message);
+        if ($submitted_at) : ?>
+            <div class="imadi-field">
+                <label>Submitted At</label>
+                <div><?php echo esc_html($submitted_at); ?></div>
+            </div>
+        <?php endif;
     }
 
     private function text_field($label, $name, $value, $help = '')
@@ -321,6 +394,98 @@ class Imadi_Content_Manager
         update_post_meta($post_id, 'quote', sanitize_textarea_field($_POST['imadi_quote'] ?? ''));
         update_post_meta($post_id, 'rating', min(5, max(1, absint($_POST['imadi_rating'] ?? 5))));
         update_post_meta($post_id, 'logoImgId', absint($_POST['imadi_logo_img_id'] ?? 0));
+        update_post_meta($post_id, 'email', sanitize_email($_POST['imadi_email'] ?? ''));
+        update_post_meta($post_id, 'consent', isset($_POST['imadi_consent']) ? '1' : '0');
+    }
+
+    public function save_contact_message($post_id)
+    {
+        if (!$this->can_save($post_id, 'imadi_contact_message_nonce', 'imadi_contact_message_save')) {
+            return;
+        }
+
+        update_post_meta($post_id, 'fullName', sanitize_text_field($_POST['imadi_contact_full_name'] ?? ''));
+        update_post_meta($post_id, 'email', sanitize_email($_POST['imadi_contact_email'] ?? ''));
+        update_post_meta($post_id, 'company', sanitize_text_field($_POST['imadi_contact_company'] ?? ''));
+        update_post_meta($post_id, 'projectType', sanitize_text_field($_POST['imadi_contact_project_type'] ?? ''));
+        update_post_meta($post_id, 'budget', sanitize_text_field($_POST['imadi_contact_budget'] ?? ''));
+        update_post_meta($post_id, 'message', sanitize_textarea_field($_POST['imadi_contact_message'] ?? ''));
+    }
+
+    public function testimonial_columns($columns)
+    {
+        $columns['imadi_rating'] = 'Rating';
+        $columns['imadi_company'] = 'Company';
+        $columns['imadi_email'] = 'Email';
+        $columns['imadi_consent'] = 'Consent';
+        $columns['imadi_submitted_at'] = 'Submitted';
+
+        return $columns;
+    }
+
+    public function render_testimonial_column($column, $post_id)
+    {
+        if ($column === 'imadi_rating') {
+            echo esc_html(get_post_meta($post_id, 'rating', true) ?: '5');
+            return;
+        }
+
+        if ($column === 'imadi_company') {
+            echo esc_html(get_post_meta($post_id, 'company', true));
+            return;
+        }
+
+        if ($column === 'imadi_email') {
+            echo esc_html(get_post_meta($post_id, 'email', true));
+            return;
+        }
+
+        if ($column === 'imadi_consent') {
+            echo get_post_meta($post_id, 'consent', true) ? 'Yes' : 'No';
+            return;
+        }
+
+        if ($column === 'imadi_submitted_at') {
+            echo esc_html(get_post_meta($post_id, 'submittedAt', true));
+        }
+    }
+
+    public function contact_message_columns($columns)
+    {
+        $columns['imadi_contact_email'] = 'Email';
+        $columns['imadi_contact_company'] = 'Company';
+        $columns['imadi_contact_project_type'] = 'Project Type';
+        $columns['imadi_contact_budget'] = 'Budget';
+        $columns['imadi_contact_submitted_at'] = 'Submitted';
+
+        return $columns;
+    }
+
+    public function render_contact_message_column($column, $post_id)
+    {
+        if ($column === 'imadi_contact_email') {
+            echo esc_html(get_post_meta($post_id, 'email', true));
+            return;
+        }
+
+        if ($column === 'imadi_contact_company') {
+            echo esc_html(get_post_meta($post_id, 'company', true));
+            return;
+        }
+
+        if ($column === 'imadi_contact_project_type') {
+            echo esc_html(get_post_meta($post_id, 'projectType', true));
+            return;
+        }
+
+        if ($column === 'imadi_contact_budget') {
+            echo esc_html(get_post_meta($post_id, 'budget', true));
+            return;
+        }
+
+        if ($column === 'imadi_contact_submitted_at') {
+            echo esc_html(get_post_meta($post_id, 'submittedAt', true));
+        }
     }
 
     private function can_save($post_id, $nonce_name, $action)
@@ -459,6 +624,18 @@ class Imadi_Content_Manager
             'callback' => [$this, 'rest_social_proof'],
             'permission_callback' => '__return_true',
         ]);
+
+        register_rest_route('imadi/v1', '/testimonial-submissions', [
+            'methods' => 'POST',
+            'callback' => [$this, 'rest_create_testimonial_submission'],
+            'permission_callback' => '__return_true',
+        ]);
+
+        register_rest_route('imadi/v1', '/contact-submissions', [
+            'methods' => 'POST',
+            'callback' => [$this, 'rest_create_contact_submission'],
+            'permission_callback' => '__return_true',
+        ]);
     }
 
     public function rest_projects()
@@ -515,6 +692,194 @@ class Imadi_Content_Manager
     public function rest_social_proof()
     {
         return rest_ensure_response(wp_parse_args(get_option(self::OPTION_KEY, []), $this->default_social_proof()));
+    }
+
+    public function rest_create_testimonial_submission(WP_REST_Request $request)
+    {
+        $honeypot = sanitize_text_field($request->get_param('website') ?? '');
+        if ($honeypot !== '') {
+            return rest_ensure_response([
+                'success' => true,
+                'message' => 'Thank you for your testimonial.',
+            ]);
+        }
+
+        $ip = $this->request_ip();
+        $rate_key = 'imadi_testimonial_submission_' . md5($ip);
+        if (get_transient($rate_key)) {
+            return new WP_Error(
+                'imadi_rate_limited',
+                'Please wait a few minutes before submitting another testimonial.',
+                ['status' => 429]
+            );
+        }
+
+        $name = sanitize_text_field($request->get_param('name') ?? '');
+        $email = sanitize_email($request->get_param('email') ?? '');
+        $company = sanitize_text_field($request->get_param('company') ?? '');
+        $role = sanitize_text_field($request->get_param('role') ?? '');
+        $quote = sanitize_textarea_field($request->get_param('quote') ?? '');
+        $rating = min(5, max(1, absint($request->get_param('rating') ?? 5)));
+        $consent = filter_var($request->get_param('consent'), FILTER_VALIDATE_BOOLEAN);
+
+        if ($name === '' || $email === '' || $quote === '') {
+            return new WP_Error(
+                'imadi_missing_fields',
+                'Name, email, and testimonial are required.',
+                ['status' => 400]
+            );
+        }
+
+        if (!is_email($email)) {
+            return new WP_Error(
+                'imadi_invalid_email',
+                'Please provide a valid email address.',
+                ['status' => 400]
+            );
+        }
+
+        if (!$consent) {
+            return new WP_Error(
+                'imadi_missing_consent',
+                'Consent is required before submitting a testimonial.',
+                ['status' => 400]
+            );
+        }
+
+        if (strlen($quote) < 20 || strlen($quote) > 1200) {
+            return new WP_Error(
+                'imadi_invalid_quote_length',
+                'Testimonials must be between 20 and 1200 characters.',
+                ['status' => 400]
+            );
+        }
+
+        $post_id = wp_insert_post([
+            'post_type' => self::TESTIMONIAL_TYPE,
+            'post_status' => 'pending',
+            'post_title' => $name,
+            'meta_input' => [
+                'email' => $email,
+                'company' => $company,
+                'role' => $role,
+                'quote' => $quote,
+                'rating' => $rating,
+                'consent' => '1',
+                'submittedAt' => current_time('mysql'),
+                'submissionIpHash' => md5($ip),
+            ],
+        ], true);
+
+        if (is_wp_error($post_id)) {
+            return new WP_Error(
+                'imadi_submission_failed',
+                'We could not save your testimonial right now.',
+                ['status' => 500]
+            );
+        }
+
+        set_transient($rate_key, '1', 10 * MINUTE_IN_SECONDS);
+
+        return rest_ensure_response([
+            'success' => true,
+            'message' => 'Thank you. Your testimonial has been submitted for review.',
+            'id' => $post_id,
+        ]);
+    }
+
+    public function rest_create_contact_submission(WP_REST_Request $request)
+    {
+        $honeypot = sanitize_text_field($request->get_param('website') ?? '');
+        if ($honeypot !== '') {
+            return rest_ensure_response([
+                'success' => true,
+                'message' => 'Thank you. Your message has been sent.',
+            ]);
+        }
+
+        $ip = $this->request_ip();
+        $rate_key = 'imadi_contact_submission_' . md5($ip);
+        if (get_transient($rate_key)) {
+            return new WP_Error(
+                'imadi_contact_rate_limited',
+                'Please wait a few minutes before sending another message.',
+                ['status' => 429]
+            );
+        }
+
+        $full_name = sanitize_text_field($request->get_param('fullName') ?? '');
+        $email = sanitize_email($request->get_param('email') ?? '');
+        $company = sanitize_text_field($request->get_param('company') ?? '');
+        $project_type = sanitize_text_field($request->get_param('projectType') ?? '');
+        $budget = sanitize_text_field($request->get_param('budget') ?? '');
+        $message = sanitize_textarea_field($request->get_param('message') ?? '');
+
+        if ($full_name === '' || $email === '' || $message === '') {
+            return new WP_Error(
+                'imadi_contact_missing_fields',
+                'Full name, email, and message are required.',
+                ['status' => 400]
+            );
+        }
+
+        if (!is_email($email)) {
+            return new WP_Error(
+                'imadi_contact_invalid_email',
+                'Please provide a valid email address.',
+                ['status' => 400]
+            );
+        }
+
+        if (strlen($message) < 10 || strlen($message) > 2000) {
+            return new WP_Error(
+                'imadi_contact_invalid_message_length',
+                'Messages must be between 10 and 2000 characters.',
+                ['status' => 400]
+            );
+        }
+
+        $post_id = wp_insert_post([
+            'post_type' => self::CONTACT_TYPE,
+            'post_status' => 'private',
+            'post_title' => sprintf('Project inquiry from %s', $full_name),
+            'meta_input' => [
+                'fullName' => $full_name,
+                'email' => $email,
+                'company' => $company,
+                'projectType' => $project_type,
+                'budget' => $budget,
+                'message' => $message,
+                'submittedAt' => current_time('mysql'),
+                'submissionIpHash' => md5($ip),
+            ],
+        ], true);
+
+        if (is_wp_error($post_id)) {
+            return new WP_Error(
+                'imadi_contact_submission_failed',
+                'We could not save your message right now.',
+                ['status' => 500]
+            );
+        }
+
+        set_transient($rate_key, '1', 10 * MINUTE_IN_SECONDS);
+
+        return rest_ensure_response([
+            'success' => true,
+            'message' => 'Thank you. Your message has been sent.',
+            'id' => $post_id,
+        ]);
+    }
+
+    private function request_ip()
+    {
+        $forwarded_for = sanitize_text_field($_SERVER['HTTP_X_FORWARDED_FOR'] ?? '');
+        if ($forwarded_for !== '') {
+            $ips = explode(',', $forwarded_for);
+            return trim($ips[0]);
+        }
+
+        return sanitize_text_field($_SERVER['REMOTE_ADDR'] ?? 'unknown');
     }
 
     private function image_url($attachment_id)
