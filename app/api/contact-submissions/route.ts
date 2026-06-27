@@ -11,6 +11,14 @@ function cleanString(value: unknown) {
     return typeof value === "string" ? value.trim() : "";
 }
 
+function isMissingWordPressRoute(response: Response, data: Record<string, unknown>) {
+    const message = cleanString(data.message);
+    return response.status === 404 && (
+        data.code === "rest_no_route" ||
+        message.toLowerCase().includes("no route was found")
+    );
+}
+
 export async function POST(request: Request) {
     let payload: Record<string, unknown>;
 
@@ -63,8 +71,15 @@ export async function POST(request: Request) {
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
+            if (isMissingWordPressRoute(response, data)) {
+                return NextResponse.json(
+                    { message: "The contact form is not connected right now. Please email us at hello@imadi-innovations.com or message us on WhatsApp." },
+                    { status: 503 }
+                );
+            }
+
             return NextResponse.json(
-                { message: data.message || "We could not send your message right now." },
+                { message: "We could not send your message right now." },
                 { status: response.status }
             );
         }

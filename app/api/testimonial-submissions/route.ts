@@ -11,6 +11,30 @@ function cleanString(value: unknown) {
     return typeof value === "string" ? value.trim() : "";
 }
 
+async function postToWordPress(path: string, request: Request, body: Record<string, unknown>) {
+    const response = await fetch(endpoint(path), {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Forwarded-For": request.headers.get("x-forwarded-for") || "",
+        },
+        body: JSON.stringify(body),
+        cache: "no-store",
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    return { response, data };
+}
+
+function isMissingWordPressRoute(response: Response, data: Record<string, unknown>) {
+    const message = cleanString(data.message);
+    return response.status === 404 && (
+        data.code === "rest_no_route" ||
+        message.toLowerCase().includes("no route was found")
+    );
+}
+
 export async function POST(request: Request) {
     let payload: Record<string, unknown>;
 
@@ -50,30 +74,58 @@ export async function POST(request: Request) {
     }
 
     try {
-        const response = await fetch(endpoint("testimonial-submissions"), {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Forwarded-For": request.headers.get("x-forwarded-for") || "",
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                company: cleanString(payload.company),
-                role: cleanString(payload.role),
-                quote,
-                rating: Number(payload.rating) || 5,
-                consent,
-                website: cleanString(payload.website),
-            }),
-            cache: "no-store",
-        });
+        const testimonialBody = {
+            name,
+            email,
+            company: cleanString(payload.company),
+            role: cleanString(payload.role),
+            quote,
+            rating: Number(payload.rating) || 5,
+            consent,
+            website: cleanString(payload.website),
+        };
 
-        const data = await response.json().catch(() => ({}));
+        const { response, data } = await postToWordPress("testimonial-submissions", request, testimonialBody);
 
         if (!response.ok) {
+            if (isMissingWordPressRoute(response, data)) {
+                const fallbackMessage = [
+                    "Testimonial submission",
+                    `Name: ${name}`,
+                    `Email: ${email}`,
+                    testimonialBody.company ? `Company: ${testimonialBody.company}` : "",
+                    testimonialBody.role ? `Role: ${testimonialBody.role}` : "",
+                    `Rating: ${testimonialBody.rating}`,
+                    "",
+                    quote,
+                ].filter(Boolean).join("\n");
+
+                const fallback = await postToWordPress("contact-submissions", request, {
+                    fullName: name,
+                    email,
+                    company: testimonialBody.company,
+                    projectType: "Testimonial submission",
+                    budget: "",
+                    message: fallbackMessage,
+                    website: testimonialBody.website,
+                });
+
+                if (fallback.response.ok) {
+                    return NextResponse.json({
+                        message: "Thank you. Your testimonial has been submitted for review.",
+                    });
+                }
+
+                if (isMissingWordPressRoute(fallback.response, fallback.data)) {
+                    return NextResponse.json(
+                        { message: "The testimonial form is not connected to WordPress right now. Please update or activate the IMADI Content Manager plugin." },
+                        { status: 503 }
+                    );
+                }
+            }
+
             return NextResponse.json(
-                { message: data.message || "We could not submit your testimonial right now." },
+                { message: "We could not submit your testimonial right now." },
                 { status: response.status }
             );
         }

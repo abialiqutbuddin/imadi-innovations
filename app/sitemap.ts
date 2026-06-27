@@ -23,6 +23,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.3,
         },
         {
+            url: "https://imadi-innovations.com/contact",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.6,
+        },
+        {
+            url: "https://imadi-innovations.com/free-demo-app",
+            lastModified: new Date(),
+            changeFrequency: "yearly",
+            priority: 0.3,
+        },
+        {
             url: "https://imadi-innovations.com/submit-testimonial",
             lastModified: new Date(),
             changeFrequency: "monthly",

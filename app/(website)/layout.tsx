@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Imadi Innovations | Software Development",
-  description: "We build digital products that move your business forward.",
+  title: "Imadi Innovations | Custom Business Software",
+  description: "Custom mobile apps, web apps, desktop software, AI integrations, and automation systems built around your business workflow.",
   keywords: [
     "Software Development",
     "AI Automation",
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Imadi Innovations | Custom Software & AI Automation",
-    description: "Building custom software and AI automations for modern businesses. We combine strong engineering with deep business understanding.",
+    title: "Imadi Innovations | Custom Business Software",
+    description: "We build practical software for businesses that want to reduce manual work, connect scattered data, and manage operations more clearly.",
     url: "https://imadi-innovations.com",
     siteName: "Imadi Innovations",
     images: [
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Imadi Innovations | Custom Software & AI Automation",
-    description: "Building custom software and AI automations for modern businesses.",
+    title: "Imadi Innovations | Custom Business Software",
+    description: "Practical mobile apps, web apps, desktop software, AI integrations, and automation systems built around your workflow.",
     images: ["/favicon.ico"], // Using favicon as placeholder
   },
   robots: {

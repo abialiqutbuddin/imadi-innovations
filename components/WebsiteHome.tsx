@@ -1,26 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import type { ElementType, FormEvent, RefObject } from "react";
+import type { ElementType, RefObject } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import {
     ArrowRight,
-    Bot,
     BriefcaseBusiness,
-    CalendarDays,
     CheckCircle2,
-    ChevronRight,
-    Clock,
-    Cloud,
     Code2,
     Gauge,
     Globe2,
     Layers3,
-    Loader2,
     Link2,
     Mail,
     MapPin,
-    Phone,
     Menu,
     PanelTop,
     Play,
@@ -29,6 +22,7 @@ import {
     Search,
     Send,
     ShieldCheck,
+    Smartphone,
     Sparkles,
     Star,
     Timer,
@@ -39,6 +33,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 
+import ContactSection from "@/components/ContactSection";
 import SmoothPageScroller from "@/components/SmoothPageScroller";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Project, SocialProofContent, Testimonial } from "@/types";
@@ -52,7 +47,7 @@ interface WebsiteHomeProps {
 const navItems = [
     { label: "Home", href: "#home" },
     { label: "Services", href: "#services" },
-    { label: "Solutions", href: "#solutions" },
+    { label: "Problems", href: "#problems" },
     { label: "Work", href: "#work" },
     { label: "Process", href: "#process" },
     { label: "About Us", href: "#about" },
@@ -61,54 +56,60 @@ const navItems = [
 
 const services = [
     {
-        icon: Bot,
+        icon: Smartphone,
         tone: "violet",
-        title: "AI-Powered Platforms",
-        desc: "Intelligent systems that learn, predict, and automate complex workflows.",
+        title: "Mobile Apps",
+        desc: "Android and iOS apps for customers, staff, delivery teams, field teams, and internal operations.",
     },
     {
         icon: PanelTop,
         tone: "blue",
-        title: "Internal Tools & Dashboards",
-        desc: "Custom tools that simplify operations and boost team productivity.",
+        title: "Web Apps",
+        desc: "Dashboards, portals, admin panels, booking systems, CRMs, and reporting platforms.",
     },
     {
-        icon: Cloud,
+        icon: Code2,
         tone: "green",
-        title: "SaaS Products",
-        desc: "Scalable, secure, and user-friendly products built for growth.",
+        title: "Desktop Apps",
+        desc: "Windows software for billing, inventory, printing, offline workflows, shops, and offices.",
+    },
+    {
+        icon: Sparkles,
+        tone: "violet",
+        title: "AI Integrations",
+        desc: "AI features for smart search, document reading, reports, summaries, and workflow assistance.",
     },
     {
         icon: Link2,
         tone: "orange",
-        title: "Integrations & Automation",
-        desc: "Connect apps and automate workflows end-to-end.",
+        title: "Automation & Integrations",
+        desc: "Connect your apps, forms, databases, APIs, CRMs, payment systems, and internal tools.",
     },
 ];
 
 const reasons = [
     {
         icon: Rocket,
-        title: "Built for real operations",
-        desc: "Intelligent systems your team can actually use, not features that get ignored.",
+        title: "Built around your process",
+        desc: "We study your current workflow and build software that matches how your business actually operates.",
         tone: "violet",
     },
     {
         icon: Timer,
-        title: "Fast execution",
-        desc: "Weekly demos, predictable sprints, and clear communication.",
+        title: "Clear communication",
+        desc: "You get proper updates, demos, and simple explanations throughout the project.",
         tone: "orange",
     },
     {
         icon: Users,
-        title: "Full-stack, remote team",
-        desc: "Scalable engineering, QA, and PMs working together as one unit.",
+        title: "Practical design",
+        desc: "Your software will be clean, easy to use, and made for real users, not just for looks.",
         tone: "green",
     },
     {
         icon: ShieldCheck,
-        title: "Secure & scalable",
-        desc: "Security and performance are built in from day one, not added later.",
+        title: "Scalable development",
+        desc: "We build systems that can grow with your users, data, features, and business needs.",
         tone: "blue",
     },
 ];
@@ -116,29 +117,66 @@ const reasons = [
 const processSteps = [
     {
         icon: Search,
-        title: "Discover",
-        desc: "We understand your goals, challenges, and users.",
+        title: "Understand",
+        desc: "We discuss your business, current workflow, users, and the problem you want to solve.",
         tone: "violet",
     },
     {
         icon: Layers3,
-        title: "Design",
-        desc: "We plan the solution, architecture, and UX.",
+        title: "Plan",
+        desc: "We define the features, screens, user roles, and project scope before development.",
         tone: "blue",
+    },
+    {
+        icon: PanelTop,
+        title: "Design",
+        desc: "We create a clean and simple interface so users can understand the system easily.",
+        tone: "violet",
     },
     {
         icon: Code2,
         title: "Build",
-        desc: "We build, test, and iterate in short cycles.",
+        desc: "We develop the app, portal, desktop software, backend, database, and integrations.",
         tone: "green",
     },
     {
         icon: Rocket,
-        title: "Deliver",
-        desc: "We launch, monitor, and continuously improve.",
+        title: "Launch",
+        desc: "We test, deploy, and help your team start using the system with confidence.",
         tone: "orange",
     },
+    {
+        icon: Gauge,
+        title: "Improve",
+        desc: "After launch, we can improve the software based on real usage and feedback.",
+        tone: "blue",
+    },
 ];
+
+const problemItems = [
+    "Manual Excel sheets",
+    "WhatsApp-based order handling",
+    "Repeated data entry",
+    "Missing reports",
+    "No central dashboard",
+    "No customer portal",
+    "No staff tracking",
+    "No proper approval process",
+    "Disconnected tools",
+    "Slow follow-ups",
+    "Paper-based records",
+];
+
+const demoFeatures = [
+    "Order form",
+    "Booking form",
+    "Product catalog",
+    "Basic dashboard",
+    "Customer inquiry form",
+    "Staff task form",
+];
+
+const heroOutcomes = ["Dashboards", "Workflows", "One system"];
 
 const fallbackSocialProof: SocialProofContent = {
     eyebrow: "Our Impact",
@@ -149,7 +187,7 @@ const fallbackSocialProof: SocialProofContent = {
         { value: "99.9%", label: "Uptime Delivered" },
         { value: "40%", label: "Avg. Cost Reduction" },
     ],
-    industries: ["PayLite", "eClinicAssist", "Restro", "Office Outlook", "Figma"],
+    industries: ["Logistics", "Education", "Healthcare", "Retail", "Services", "Community Platforms"],
 };
 
 const fallbackTestimonials: Testimonial[] = [
@@ -164,7 +202,7 @@ const fallbackTestimonials: Testimonial[] = [
         name: "Dr. Ayesha Malik",
         role: "Operations Head",
         company: "eClinicAssist",
-        quote: "Their AI automation solution saved us hundreds of hours every month. Excellent communication and top-notch engineering.",
+        quote: "They turned our manual clinic workflow into a clear system our team can actually use every day.",
         rating: 5,
     },
     {
@@ -206,8 +244,6 @@ const staggerGroup: Variants = {
     },
 };
 
-type SubmitStatus = "idle" | "submitting" | "success" | "error";
-
 function decodeText(value = "") {
     return value
         .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
@@ -244,7 +280,7 @@ function SectionHeading({
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.35 }}
+            viewport={{ once: false, amount: 0.35 }}
         >
             <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-600 dark:text-violet-300">
                 {eyebrow}
@@ -317,7 +353,7 @@ function SiteHeader() {
                         href="#contact"
                         className="inline-flex items-center gap-2 rounded-md bg-orange-400 px-5 py-3 text-sm font-extrabold text-[#160d02] shadow-[0_14px_36px_rgba(251,146,60,0.32)] transition hover:-translate-y-0.5 hover:bg-orange-300"
                     >
-                        Book a Discovery Call
+                        Contact Us
                     </a>
                 </div>
 
@@ -353,7 +389,7 @@ function SiteHeader() {
                             onClick={() => setOpen(false)}
                             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-orange-400 px-5 py-3 text-sm font-extrabold text-[#160d02]"
                         >
-                            Book a Discovery Call
+                            Contact Us
                         </a>
                     </div>
                 </div>
@@ -369,7 +405,7 @@ function HeroDashboard() {
         <div className="relative mx-auto w-full max-w-[600px] lg:mx-0 xl:max-w-[620px] [@media(max-height:760px)]:lg:max-w-[560px]">
             <div className="absolute -left-10 top-48 z-20 hidden rounded-xl border border-white/15 bg-[#0b1635]/90 px-4 py-3 shadow-2xl backdrop-blur md:block [@media(max-height:760px)]:lg:top-40">
                 <div className="flex items-center gap-3">
-                    <IconBadge icon={Cloud} tone="violet" className="h-9 w-9 rounded-lg" />
+                    <IconBadge icon={Link2} tone="violet" className="h-9 w-9 rounded-lg" />
                     <div>
                         <p className="text-xs font-extrabold text-white">Live Data Sync</p>
                         <p className="text-[10px] text-white/60">All systems connected</p>
@@ -378,10 +414,10 @@ function HeroDashboard() {
             </div>
             <div className="absolute -right-8 top-4 z-20 hidden rounded-xl border border-white/15 bg-[#181343]/90 px-4 py-3 shadow-2xl backdrop-blur md:block">
                 <div className="flex items-center gap-3">
-                    <IconBadge icon={Bot} tone="violet" className="h-9 w-9 rounded-lg" />
+                    <IconBadge icon={Sparkles} tone="violet" className="h-9 w-9 rounded-lg" />
                     <div>
-                        <p className="text-xs font-extrabold text-white">AI Predictions</p>
-                        <p className="text-[10px] text-white/60">High accuracy</p>
+                        <p className="text-xs font-extrabold text-white">Smart Reports</p>
+                        <p className="text-[10px] text-white/60">Ready when needed</p>
                     </div>
                 </div>
             </div>
@@ -399,7 +435,7 @@ function HeroDashboard() {
                 <div className="flex min-h-[360px] gap-4 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-4 [@media(max-height:760px)]:lg:min-h-[320px] [@media(max-height:760px)]:lg:p-3">
                     <div className="hidden w-12 shrink-0 flex-col items-center gap-5 rounded-lg border border-white/10 bg-white/[0.04] py-4 sm:flex">
                         <Image src="/logo.jpg" alt="" width={26} height={26} className="rounded-full" />
-                        {[Workflow, Gauge, Users, ShieldCheck, Cloud, Code2].map((Icon, index) => (
+                        {[Workflow, Gauge, Users, ShieldCheck, Link2, Code2].map((Icon, index) => (
                             <Icon key={index} className="h-4 w-4 text-white/55" />
                         ))}
                     </div>
@@ -477,7 +513,7 @@ function HeroDashboard() {
     );
 }
 
-function HeroSection({ socialProof }: { socialProof: SocialProofContent }) {
+function HeroSection() {
     return (
         <section id="home" className="relative min-h-svh overflow-hidden bg-[#020919] pt-20 text-white">
             <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(2,9,25,0.98)_0%,rgba(4,12,35,0.92)_42%,rgba(28,14,76,0.72)_70%,rgba(255,145,35,0.12)_100%)]" />
@@ -492,17 +528,17 @@ function HeroSection({ socialProof }: { socialProof: SocialProofContent }) {
                 >
                     <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white/86 backdrop-blur [@media(max-height:760px)]:lg:mb-4 [@media(max-height:760px)]:lg:py-1.5">
                         <Sparkles className="h-4 w-4 text-violet-300" />
-                        AI-powered software solutions
+                        Practical software for business operations
                     </div>
 
                     <h1 className="max-w-3xl text-4xl font-black leading-[1.06] tracking-normal sm:text-5xl md:text-[56px] xl:text-[60px] [@media(max-height:760px)]:lg:text-[50px]">
-                        We build intelligent software that drives{" "}
+                        Software built around{" "}
                         <span className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-orange-300 bg-clip-text text-transparent">
-                            real business outcomes.
+                            your workflow.
                         </span>
                     </h1>
                     <p className="mt-5 max-w-2xl text-base font-medium leading-7 text-white/78 md:text-lg md:leading-8 [@media(max-height:760px)]:lg:mt-4 [@media(max-height:760px)]:lg:text-base [@media(max-height:760px)]:lg:leading-7">
-                        We design, build, and scale AI-powered systems that automate workflows, connect data, and help teams move faster.
+                        Replace spreadsheets, WhatsApp follow-ups, and scattered tools with simple apps, dashboards, and automations.
                     </p>
 
                     <div className="mt-7 flex flex-col gap-3 sm:flex-row [@media(max-height:760px)]:lg:mt-5">
@@ -510,30 +546,24 @@ function HeroSection({ socialProof }: { socialProof: SocialProofContent }) {
                             href="#contact"
                             className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-400 px-6 py-3.5 text-sm font-extrabold text-[#160d02] transition hover:-translate-y-0.5 hover:bg-orange-300 [@media(max-height:760px)]:lg:py-3"
                         >
-                            Start a Project
+                            Start Your Project
                             <ArrowRight className="h-4 w-4" />
                         </a>
                         <a
-                            href="mailto:abialigadi@gmail.com"
+                            href="#work"
                             className="inline-flex items-center justify-center gap-2 rounded-md border border-white/18 bg-white/[0.04] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.09] [@media(max-height:760px)]:lg:py-3"
                         >
-                            <CalendarDays className="h-4 w-4" />
-                            Book a Discovery Call
+                            View Our Work
                         </a>
                     </div>
 
-                    <div className="mt-8 [@media(max-height:760px)]:lg:mt-6 [@media(max-height:700px)]:lg:hidden">
-                        <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-white/50">
-                            Trusted by innovative teams
-                        </p>
-                        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-bold text-white/62">
-                            {socialProof.industries.slice(0, 5).map((industry) => (
-                                <span key={industry} className="inline-flex items-center gap-2">
-                                    <CheckCircle2 className="h-4 w-4 text-white/45" />
-                                    {industry}
-                                </span>
-                            ))}
-                        </div>
+                    <div className="mt-7 flex max-w-2xl flex-wrap gap-3 [@media(max-height:700px)]:lg:hidden">
+                        {heroOutcomes.map((outcome) => (
+                            <div key={outcome} className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.055] px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur">
+                                <CheckCircle2 className="h-4 w-4 text-orange-300" />
+                                {outcome}
+                            </div>
+                        ))}
                     </div>
                 </motion.div>
 
@@ -570,7 +600,7 @@ function StatStrip({ stats }: { stats: SocialProofContent["stats"] }) {
                 )}
                 initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
+                viewport={{ once: false, amount: 0.4 }}
                 transition={{ duration: 0.55, ease: "easeOut" }}
             >
                 {visibleStats.map((stat, index) => {
@@ -604,17 +634,17 @@ function ServicesSection() {
             <div className="mx-auto max-w-7xl">
                 <SectionHeading
                     eyebrow="What We Build"
-                    title="Software solutions that solve"
+                    title="Software that solves"
                     highlight="real business problems."
-                    description="From AI automation to full-scale platforms, we build systems that are secure, scalable, and designed for impact."
+                    description="We do not build random apps. We first understand how your business works, then build software that fits your process."
                 />
 
                 <motion.div
-                    className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-4"
+                    className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-5"
                     variants={staggerGroup}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.18 }}
+                    viewport={{ once: false, amount: 0.18 }}
                 >
                     {services.map((service) => (
                         <motion.article key={service.title} variants={fadeUp} className="group rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.045)] transition hover:-translate-y-1 hover:shadow-[0_24px_65px_rgba(15,23,42,0.09)] dark:border-white/10 dark:bg-white/[0.04]">
@@ -635,16 +665,20 @@ function ServicesSection() {
 
 function WhySection() {
     return (
-        <section id="solutions" className="bg-white px-5 pb-24 dark:bg-slate-950">
+        <section id="why" className="bg-white px-5 pb-24 dark:bg-slate-950">
             <div className="mx-auto max-w-7xl">
-                <SectionHeading eyebrow="Why Businesses Work With Us" title="We focus on what" highlight="matters most." />
+                <SectionHeading
+                    eyebrow="Why Businesses Work With Us"
+                    title="We keep software simple,"
+                    highlight="useful, and business-focused."
+                />
 
                 <motion.div
                     className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4"
                     variants={staggerGroup}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.18 }}
+                    viewport={{ once: false, amount: 0.18 }}
                 >
                     {reasons.map((reason, index) => (
                         <motion.article key={reason.title} variants={fadeUp} className="relative pr-6">
@@ -660,23 +694,56 @@ function WhySection() {
     );
 }
 
+function ProblemsSection() {
+    return (
+        <section id="problems" className="bg-slate-50 px-5 py-24 dark:bg-slate-900">
+            <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+                <div>
+                    <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-500">Problems We Solve</p>
+                    <h2 className="max-w-xl text-3xl font-black leading-tight text-slate-950 dark:text-white md:text-4xl">
+                        Still managing business through manual work?
+                    </h2>
+                    <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
+                        We help businesses replace slow, scattered processes with custom software that keeps work organized and easier to manage.
+                    </p>
+                </div>
+
+                <motion.div
+                    className="grid gap-3 sm:grid-cols-2"
+                    variants={staggerGroup}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.18 }}
+                >
+                    {problemItems.map((problem) => (
+                        <motion.div key={problem} variants={fadeUp} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-700 shadow-[0_12px_34px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200">
+                            <CheckCircle2 className="h-4 w-4 shrink-0 text-orange-500" />
+                            {problem}
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
+        </section>
+    );
+}
+
 function CaseStudySection() {
     return (
-        <section className="bg-white px-5 pb-24 dark:bg-slate-950">
+        <section className="bg-[#020919] px-5 py-14 dark:bg-[#020919]">
             <motion.div
-                className="mx-auto grid max-w-6xl overflow-hidden rounded-xl bg-[#0d0b35] text-white shadow-[0_28px_80px_rgba(15,23,42,0.22)] lg:grid-cols-[0.9fr_1.1fr]"
+                className="mx-auto grid max-w-7xl overflow-hidden rounded-2xl bg-[#0d0b35] text-white shadow-[0_28px_80px_rgba(0,0,0,0.24)] lg:grid-cols-[0.9fr_1.1fr]"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.22 }}
+                viewport={{ once: false, amount: 0.22 }}
             >
-                <div className="p-8 md:p-10">
+                <div className="p-8 md:p-10 lg:p-12">
                     <p className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-300">Case Study</p>
                     <h2 className="max-w-md text-3xl font-black leading-tight md:text-4xl">
-                        Reduced manual work by <span className="text-violet-400">70%</span> for a fintech client.
+                        From manual process to <span className="text-violet-400">custom software.</span>
                     </h2>
                     <p className="mt-5 max-w-lg text-sm leading-7 text-white/72">
-                        We built an AI-powered automation system that streamlined transaction monitoring, reporting, and compliance.
+                        We help businesses convert daily operations into organized digital systems with less manual work, faster reporting, better team visibility, and centralized business data.
                     </p>
                     <a href="#work" className="mt-8 inline-flex items-center gap-2 rounded-md bg-violet-500 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-violet-400">
                         View Case Study
@@ -684,7 +751,7 @@ function CaseStudySection() {
                     </a>
                 </div>
 
-                <div className="p-4 md:p-6">
+                <div className="p-4 md:p-6 lg:p-8">
                     <div className="h-full rounded-lg border border-white/10 bg-white/[0.07] p-5">
                         <div className="mb-5 flex items-center gap-3">
                             <span className="h-2.5 w-2.5 rounded-full bg-violet-400" />
@@ -761,9 +828,9 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
             <div className="mx-auto max-w-7xl">
                 <SectionHeading
                     eyebrow="Selected Work"
-                    title="Practical systems shipped for"
-                    highlight="real teams."
-                    description="A sample of dashboards, platforms, and mobile products built around live operations."
+                    title="Practical systems built for"
+                    highlight="real operations."
+                    description="A few examples of custom software projects built for business management, team coordination, healthcare operations, HR workflows, and internal dashboards."
                 />
 
                 <motion.div
@@ -771,7 +838,7 @@ function ProjectsSection({ projects }: { projects: Project[] }) {
                     variants={staggerGroup}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.12 }}
+                    viewport={{ once: false, amount: 0.12 }}
                 >
                     {visibleProjects.map((project, index) => {
                         const imageSrc = project.desktopImg || project.mobileImg;
@@ -1003,36 +1070,131 @@ function ProjectDetailPanel({ project, detailRef }: { project: Project; detailRe
 
 function ProcessSection() {
     return (
-        <section id="process" className="bg-white px-5 py-24 dark:bg-slate-950">
+        <section id="process" className="bg-white px-5 py-16 dark:bg-slate-950">
             <div className="mx-auto max-w-7xl">
-                <SectionHeading eyebrow="Our Process" title="A simple, transparent process from" highlight="idea to impact." />
+                <SectionHeading eyebrow="Our Process" title="Simple process from" highlight="idea to launch." />
 
-                <motion.div
-                    className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4"
-                    variants={staggerGroup}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.18 }}
-                >
+                <div className="relative mx-auto mt-10 grid max-w-6xl gap-5 md:grid-cols-2 lg:grid-cols-3">
                     {processSteps.map((step, index) => (
-                        <motion.article key={step.title} variants={fadeUp} className="relative rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.045)] dark:border-white/10 dark:bg-white/[0.04]">
-                            <IconBadge icon={step.icon} tone={step.tone} className="h-11 w-11 rounded-xl" />
-                            <h3 className="mt-5 text-lg font-black text-slate-950 dark:text-white">{step.title}</h3>
-                            <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{step.desc}</p>
-                            {index < processSteps.length - 1 && (
-                                <ChevronRight className="absolute -right-6 top-1/2 hidden h-5 w-5 -translate-y-1/2 text-slate-300 lg:block" />
-                            )}
-                        </motion.article>
+                        <RoadmapCard key={step.title} step={step} index={index} />
                     ))}
-                </motion.div>
+                </div>
             </div>
+        </section>
+    );
+}
+
+function RoadmapCard({
+    step,
+    index,
+}: {
+    step: (typeof processSteps)[number];
+    index: number;
+}) {
+    const StepIcon = step.icon;
+
+    return (
+        <motion.article
+            className="relative"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.25 }}
+            transition={{ duration: 0.42, ease: "easeOut", delay: index * 0.05 }}
+            whileHover={{ y: -5 }}
+        >
+            <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 shadow-[0_14px_40px_rgba(15,23,42,0.055)] transition-shadow hover:shadow-[0_20px_55px_rgba(15,23,42,0.09)] dark:border-white/10 dark:bg-white/[0.04]">
+                <div className="absolute inset-x-0 top-0 h-1 bg-orange-400/70" />
+                <div className="mb-5 flex items-center justify-between gap-4">
+                    <span className="rounded-md border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-black text-orange-600 dark:border-orange-300/20 dark:bg-orange-400/10 dark:text-orange-200">
+                        {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
+                    <span className="grid h-10 w-10 place-items-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200">
+                        <StepIcon className="h-5 w-5" />
+                    </span>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                    Roadmap step
+                </span>
+                <h3 className="mt-2 text-lg font-black text-slate-950 dark:text-white">{step.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{step.desc}</p>
+            </div>
+        </motion.article>
+    );
+}
+
+function FreeDemoOfferSection() {
+    return (
+        <section className="border-t border-slate-200 bg-slate-50 px-5 py-20 dark:border-white/10 dark:bg-slate-900">
+            <motion.div
+                className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_65px_rgba(15,23,42,0.07)] dark:border-white/10 dark:bg-slate-950"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.2 }}
+            >
+                <div className="border-b border-slate-200 bg-white px-7 py-5 dark:border-white/10 dark:bg-slate-950 md:px-9">
+                    <span className="inline-flex rounded-full bg-orange-500 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white">
+                        Free Demo Offer
+                    </span>
+                </div>
+
+                <div className="grid gap-8 p-7 md:p-9 lg:grid-cols-[0.86fr_1.14fr]">
+                    <div>
+                        <h2 className="text-3xl font-black leading-tight text-slate-950 dark:text-white md:text-4xl">
+                            Get a free 1-feature demo app
+                        </h2>
+                        <p className="mt-5 max-w-xl text-sm leading-7 text-slate-600 dark:text-slate-300">
+                            Have an idea for an app or business system? We can create a simple 1-feature demo to show the core idea in action before you build the full version.
+                        </p>
+
+                        <div className="mt-6 flex flex-wrap gap-2">
+                            {["1 feature", "Simple demo", "Selected businesses"].map((item) => (
+                                <span key={item} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-extrabold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300">
+                                    {item}
+                                </span>
+                            ))}
+                        </div>
+
+                        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                            <a href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-500 px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-orange-400">
+                                Get Free Demo App
+                                <ArrowRight className="h-4 w-4" />
+                            </a>
+                            <a href="/free-demo-app" className="inline-flex items-center justify-center rounded-md border border-slate-200 px-6 py-3.5 text-sm font-extrabold text-slate-800 transition hover:border-orange-300 hover:text-orange-600 dark:border-white/10 dark:text-white dark:hover:text-orange-300">
+                                Terms & Conditions Apply
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.04]">
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <h3 className="text-base font-black text-slate-950 dark:text-white">Example demo features</h3>
+                            <span className="text-[10px] font-black uppercase tracking-[0.16em] text-orange-600 dark:text-orange-300">
+                                Pick one
+                            </span>
+                        </div>
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                            {demoFeatures.map((feature) => (
+                                <div key={feature} className="flex items-center gap-3 rounded-lg bg-white p-3 text-sm font-bold text-slate-700 ring-1 ring-slate-200 dark:bg-white/[0.04] dark:text-slate-200 dark:ring-white/10">
+                                    <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
+                                    {feature}
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-5 text-xs font-semibold leading-6 text-slate-500 dark:text-slate-400">
+                            Hosting, publishing, database, admin panel, integrations, and full app development are quoted separately.
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
         </section>
     );
 }
 
 function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
     return (
-        <section className="bg-slate-50 px-5 py-24 dark:bg-slate-900">
+        <section className="border-t border-slate-200 bg-white px-5 py-24 dark:border-white/10 dark:bg-slate-950">
             <div className="mx-auto max-w-7xl">
                 <SectionHeading eyebrow="What Our Clients Say" title="Trusted by teams" highlight="around the world." />
 
@@ -1041,7 +1203,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
                     variants={staggerGroup}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.18 }}
+                    viewport={{ once: false, amount: 0.18 }}
                 >
                     {testimonials.slice(0, 3).map((testimonial, index) => (
                         <motion.article key={testimonial.id ?? `${testimonial.name}-${index}`} variants={fadeUp} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.05)] dark:border-white/10 dark:bg-white/[0.04]">
@@ -1084,7 +1246,7 @@ function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) 
 
 function AboutSection() {
     return (
-        <section id="about" className="bg-white px-5 py-20 dark:bg-slate-950">
+        <section id="about" className="border-t border-slate-200 bg-slate-50 px-5 py-20 dark:border-white/10 dark:bg-slate-900">
             <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
                 <div>
                     <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-600 dark:text-violet-300">About Us</p>
@@ -1101,7 +1263,7 @@ function AboutSection() {
                     variants={staggerGroup}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.22 }}
+                    viewport={{ once: false, amount: 0.22 }}
                 >
                     {[
                         ["Remote-first", "A focused team that works clearly across time zones."],
@@ -1119,238 +1281,6 @@ function AboutSection() {
     );
 }
 
-function ContactSection() {
-    const [contactStatus, setContactStatus] = useState<SubmitStatus>("idle");
-    const [contactMessage, setContactMessage] = useState("");
-
-    const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const formElement = event.currentTarget;
-        const formData = new FormData(formElement);
-        const fullName = String(formData.get("fullName") || "");
-        const email = String(formData.get("email") || "");
-        const company = String(formData.get("company") || "");
-        const projectType = String(formData.get("projectType") || "");
-        const budget = String(formData.get("budget") || "");
-        const message = String(formData.get("message") || "");
-        const website = String(formData.get("website") || "");
-
-        setContactStatus("submitting");
-        setContactMessage("");
-
-        try {
-            const response = await fetch("/api/contact-submissions", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    fullName,
-                    email,
-                    company,
-                    projectType,
-                    budget,
-                    message,
-                    website,
-                }),
-            });
-
-            const data = await response.json().catch(() => ({}));
-
-            if (!response.ok) {
-                setContactStatus("error");
-                setContactMessage(data.message || "We could not send your message right now.");
-                return;
-            }
-
-            setContactStatus("success");
-            setContactMessage(data.message || "Thank you. Your message has been sent.");
-            formElement.reset();
-        } catch {
-            setContactStatus("error");
-            setContactMessage("The contact service is unavailable right now.");
-        }
-    };
-
-    return (
-        <section id="contact" className="relative scroll-mt-20 overflow-hidden border-t border-slate-100 bg-white px-5 py-20 dark:border-white/10 dark:bg-slate-950">
-            <div className="pointer-events-none absolute right-0 top-10 h-72 w-72 rounded-full bg-orange-200/25 blur-3xl dark:bg-orange-400/10" />
-            <div className="pointer-events-none absolute left-0 bottom-10 h-72 w-72 rounded-full bg-violet-200/25 blur-3xl dark:bg-violet-400/10" />
-            <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-                <div>
-                    <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-500">Get in touch</p>
-                    <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-950 dark:text-white md:text-4xl">
-                        Let&apos;s Talk About Your Project
-                    </h2>
-                    <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">
-                        Tell us what you&apos;re building. We&apos;ll help turn your ideas into powerful software solutions.
-                    </p>
-
-                    <div className="mt-7 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
-                        <div className="space-y-4">
-                            {[
-                                { icon: Mail, title: "Email Us", text: "hello@imadi-innovations.com", href: "mailto:hello@imadi-innovations.com" },
-                                { icon: Phone, title: "Call Us", text: "+92 333 036 5252", href: "https://wa.me/923330365252" },
-                                { icon: Clock, title: "Working Hours", text: "Mon - Fri\n9:00 AM - 6:00 PM PKT" },
-                            ].map((item) => {
-                                const Icon = item.icon;
-                                const content = (
-                                    <>
-                                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-50 text-orange-500 dark:bg-orange-400/10 dark:text-orange-300">
-                                            <Icon className="h-5 w-5" />
-                                        </span>
-                                        <span>
-                                            <span className="block text-sm font-extrabold text-slate-950 dark:text-white">{item.title}</span>
-                                            <span className="mt-1 block text-sm text-slate-600 dark:text-slate-300">
-                                                {item.text.split("\n").map((line) => (
-                                                    <span key={line} className="block">
-                                                        {line}
-                                                    </span>
-                                                ))}
-                                            </span>
-                                        </span>
-                                    </>
-                                );
-
-                                return item.href ? (
-                                    <a key={item.title} href={item.href} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 transition hover:-translate-y-0.5 hover:border-orange-200 hover:bg-orange-50 dark:border-white/10 dark:bg-white/[0.04] dark:hover:bg-orange-400/10">
-                                        {content}
-                                    </a>
-                                ) : (
-                                    <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/[0.04]">
-                                        {content}
-                                    </div>
-                                );
-                            })}
-                        </div>
-
-                        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] dark:border-white/10 dark:bg-white/[0.04]">
-                            <h3 className="text-sm font-extrabold text-slate-950 dark:text-white">What happens next?</h3>
-                            <div className="mt-5 space-y-4">
-                                {[
-                                    ["1", "We review your requirements", "Our team will analyze your needs and project scope."],
-                                    ["2", "We'll get back to you", "Expect a response within 24 hours to discuss details."],
-                                    ["3", "Proposal & next steps", "You'll receive a tailored proposal and clear roadmap."],
-                                ].map(([step, title, desc]) => (
-                                    <div key={step} className="flex gap-3">
-                                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-black text-orange-600 dark:bg-orange-400/15 dark:text-orange-200">
-                                            {step}
-                                        </span>
-                                        <span>
-                                            <span className="block text-sm font-extrabold text-slate-950 dark:text-white">{title}</span>
-                                            <span className="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-400">{desc}</span>
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <form onSubmit={handleContactSubmit} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_24px_70px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-white/[0.04] md:p-8">
-                    <h3 className="text-2xl font-extrabold text-slate-950 dark:text-white">Send Us a Message</h3>
-                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">Fill out the form below and we&apos;ll get back to you shortly.</p>
-
-                    <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-                        <ContactField label="Full Name" name="fullName" placeholder="Your full name" required className="lg:col-span-3" />
-                        <ContactField label="Email Address" name="email" type="email" placeholder="you@example.com" required className="lg:col-span-3" />
-                        <ContactField label="Company Name" name="company" placeholder="Your company" className="lg:col-span-2" />
-                        <label className="text-sm font-bold text-slate-950 dark:text-white lg:col-span-2">
-                            Project Type
-                            <span className="relative mt-2 block">
-                                <select name="projectType" className="field-input appearance-none pr-12">
-                                    <option value="">Select project type</option>
-                                    <option>AI-Powered Platform</option>
-                                    <option>Internal Tool / Dashboard</option>
-                                    <option>SaaS Product</option>
-                                    <option>Website / Web App</option>
-                                    <option>Mobile App</option>
-                                    <option>Integration / Automation</option>
-                                </select>
-                                <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-slate-500 dark:text-slate-300" />
-                            </span>
-                        </label>
-                        <label className="text-sm font-bold text-slate-950 dark:text-white lg:col-span-2">
-                            Budget Range
-                            <span className="relative mt-2 block">
-                                <select name="budget" className="field-input appearance-none pr-12">
-                                    <option value="">Select budget range</option>
-                                    <option>Under $2,500</option>
-                                    <option>$2,500 - $5,000</option>
-                                    <option>$5,000 - $10,000</option>
-                                    <option>$10,000+</option>
-                                </select>
-                                <ChevronRight className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-slate-500 dark:text-slate-300" />
-                            </span>
-                        </label>
-                        <label className="text-sm font-bold text-slate-950 dark:text-white md:col-span-2 lg:col-span-6">
-                            Message <span className="text-orange-500">*</span>
-                            <textarea name="message" required minLength={10} maxLength={2000} className="field-input mt-2 min-h-32 resize-y" placeholder="Tell us about your project, goals, and any specific requirements..." />
-                        </label>
-                    </div>
-
-                    <div className="hidden" aria-hidden="true">
-                        <label htmlFor="contact-website">Website</label>
-                        <input id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
-                    </div>
-
-                    {contactMessage && (
-                        <div className={cx(
-                            "mt-5 flex items-start gap-3 rounded-xl border p-3 text-sm font-semibold",
-                            contactStatus === "success"
-                                ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-300/20 dark:bg-emerald-400/10 dark:text-emerald-200"
-                                : "border-red-200 bg-red-50 text-red-700 dark:border-red-300/20 dark:bg-red-400/10 dark:text-red-200"
-                        )}>
-                            {contactStatus === "success" && <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />}
-                            <span>{contactMessage}</span>
-                        </div>
-                    )}
-
-                    <button type="submit" disabled={contactStatus === "submitting"} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-orange-500 px-6 py-4 text-sm font-extrabold text-white shadow-[0_16px_35px_rgba(249,115,22,0.25)] transition hover:-translate-y-0.5 hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-70">
-                        {contactStatus === "submitting" ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" />
-                                Sending...
-                            </>
-                        ) : (
-                            <>
-                                Send Message
-                                <Send className="h-4 w-4" />
-                            </>
-                        )}
-                    </button>
-                    <p className="mt-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">
-                        We usually reply within 24 hours.
-                    </p>
-                </form>
-            </div>
-        </section>
-    );
-}
-
-function ContactField({
-    label,
-    name,
-    placeholder,
-    type = "text",
-    required,
-    className,
-}: {
-    label: string;
-    name: string;
-    placeholder: string;
-    type?: string;
-    required?: boolean;
-    className?: string;
-}) {
-    return (
-        <label className={cx("text-sm font-bold text-slate-950 dark:text-white", className)}>
-            {label}
-            {required && <span className="text-orange-500"> *</span>}
-            <input name={name} type={type} placeholder={placeholder} required={required} className="field-input mt-2" />
-        </label>
-    );
-}
-
 function CTAFooter() {
     return (
         <footer className="bg-[#020919] text-white">
@@ -1360,11 +1290,11 @@ function CTAFooter() {
                         <Send className="h-8 w-8" />
                     </div>
                     <div>
-                        <h2 className="text-3xl font-black">Ready to build something amazing?</h2>
-                        <p className="mt-2 text-sm font-medium text-white/82">Let&apos;s turn your ideas into intelligent software solutions.</p>
+                        <h2 className="text-3xl font-black">Ready to build software for your business?</h2>
+                        <p className="mt-2 text-sm font-medium text-white/82">Tell us what you want to manage, automate, or improve. We&apos;ll help turn it into a clear software plan.</p>
                     </div>
-                    <a href="mailto:abialigadi@gmail.com" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-extrabold text-slate-950 transition hover:-translate-y-0.5">
-                        Book a Discovery Call
+                    <a href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-extrabold text-slate-950 transition hover:-translate-y-0.5">
+                        Contact Us
                         <ArrowRight className="h-4 w-4" />
                     </a>
                 </div>
@@ -1379,16 +1309,16 @@ function CTAFooter() {
                             </div>
                         </div>
                         <p className="mt-5 max-w-sm text-sm leading-7 text-white/62">
-                            We design, build, and scale AI-powered software that drives real business results.
+                            Imadi Innovations builds custom mobile apps, web apps, desktop software, AI integrations, and business automation systems for companies that want practical software built around their workflow.
                         </p>
                     </div>
 
-                    <FooterColumn title="Services" links={["AI-Powered Platforms", "Internal Tools", "SaaS Products", "Integrations & Automation"]} />
+                    <FooterColumn title="Services" links={["Mobile Apps", "Web Apps", "Desktop Apps", "AI Integrations", "Automation"]} />
                     <FooterColumn title="Company" links={["About Us", "Our Process", "Careers", "Blog", "Submit Testimonial"]} />
                     <div>
                         <h3 className="font-black">Contact</h3>
                         <div className="mt-5 space-y-3 text-sm text-white/62">
-                            <a href="mailto:abialigadi@gmail.com" className="flex items-center gap-2 hover:text-orange-300">
+                            <a href="mailto:hello@imadi-innovations.com" className="flex items-center gap-2 hover:text-orange-300">
                                 <Mail className="h-4 w-4" />
                                 hello@imadi-innovations.com
                             </a>
@@ -1420,10 +1350,11 @@ function CTAFooter() {
 function FooterColumn({ title, links }: { title: string; links: string[] }) {
     const footerHref = (link: string) => {
         const hrefs: Record<string, string> = {
-            "AI-Powered Platforms": "#services",
-            "Internal Tools": "#services",
-            "SaaS Products": "#services",
-            "Integrations & Automation": "#services",
+            "Mobile Apps": "#services",
+            "Web Apps": "#services",
+            "Desktop Apps": "#services",
+            "AI Integrations": "#services",
+            "Automation": "#services",
             "About Us": "#about",
             "Our Process": "#process",
             Careers: "#contact",
@@ -1465,13 +1396,15 @@ export default function WebsiteHome({
         <main className="min-h-screen overflow-x-hidden bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
             <SmoothPageScroller />
             <SiteHeader />
-            <HeroSection socialProof={proof} />
+            <HeroSection />
             <StatStrip stats={proof.stats} />
             <ServicesSection />
             <WhySection />
+            <ProblemsSection />
             <CaseStudySection />
             <ProjectsSection projects={projects} />
             <ProcessSection />
+            <FreeDemoOfferSection />
             <TestimonialsSection testimonials={quotes} />
             <AboutSection />
             <ContactSection />
