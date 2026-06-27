@@ -5,6 +5,13 @@ import { ArrowRight, CheckCircle2, Loader2, Quote, ShieldCheck, Star } from "luc
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
+const WORDPRESS_API_URL =
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wordpress.imadi-innovations.com";
+
+function wordpressEndpoint(path: string) {
+    return `${WORDPRESS_API_URL.replace(/\/$/, "")}/wp-json/imadi/v1/${path}`;
+}
+
 const initialForm = {
     name: "",
     email: "",
@@ -31,7 +38,7 @@ export default function TestimonialSubmissionForm() {
         setMessage("");
 
         try {
-            const response = await fetch("/api/testimonial-submissions", {
+            const response = await fetch(wordpressEndpoint("testimonial-submissions"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),

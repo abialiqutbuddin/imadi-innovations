@@ -14,6 +14,13 @@ import {
 
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
+const WORDPRESS_API_URL =
+    process.env.NEXT_PUBLIC_WORDPRESS_API_URL || "https://wordpress.imadi-innovations.com";
+
+function wordpressEndpoint(path: string) {
+    return `${WORDPRESS_API_URL.replace(/\/$/, "")}/wp-json/imadi/v1/${path}`;
+}
+
 function cx(...classes: Array<string | false | null | undefined>) {
     return classes.filter(Boolean).join(" ");
 }
@@ -69,7 +76,7 @@ export default function ContactSection({
         setContactMessage("");
 
         try {
-            const response = await fetch("/api/contact-submissions", {
+            const response = await fetch(wordpressEndpoint("contact-submissions"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
