@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import type { ElementType, RefObject } from "react";
-import { AnimatePresence, motion, type Variants } from "framer-motion";
+import type { ElementType } from "react";
+import { motion, type Variants } from "framer-motion";
 import {
     ArrowRight,
     BriefcaseBusiness,
@@ -15,6 +15,7 @@ import {
     Mail,
     MapPin,
     Menu,
+    MessageCircle,
     PanelTop,
     Play,
     Quote,
@@ -31,7 +32,7 @@ import {
     X,
     Zap,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import ContactSection from "@/components/ContactSection";
 import SmoothPageScroller from "@/components/SmoothPageScroller";
@@ -46,9 +47,10 @@ interface WebsiteHomeProps {
 
 const navItems = [
     { label: "Home", href: "#home" },
+    { label: "Products", href: "/tijarat" },
     { label: "Services", href: "#services" },
     { label: "Problems", href: "#problems" },
-    { label: "Work", href: "#work" },
+    { label: "Work", href: "/projects" },
     { label: "Process", href: "#process" },
     { label: "About Us", href: "#about" },
     { label: "Contact", href: "#contact" },
@@ -516,7 +518,7 @@ function HeroDashboard() {
 function HeroSection() {
     return (
         <section id="home" className="relative min-h-svh overflow-hidden bg-[#020919] pt-20 text-white">
-            <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(2,9,25,0.98)_0%,rgba(4,12,35,0.92)_42%,rgba(28,14,76,0.72)_70%,rgba(255,145,35,0.12)_100%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(2,9,25,0.98)_0%,rgba(4,12,35,0.94)_46%,rgba(34,24,82,0.62)_100%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_38%,rgba(124,58,237,0.35),transparent_30%),linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:auto,80px_80px,80px_80px]" />
 
             <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-10 sm:pt-12 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-8 lg:px-8 lg:py-10 xl:gap-10 [@media(max-height:760px)]:lg:py-7">
@@ -533,7 +535,7 @@ function HeroSection() {
 
                     <h1 className="max-w-3xl text-4xl font-black leading-[1.06] tracking-normal sm:text-5xl md:text-[56px] xl:text-[60px] [@media(max-height:760px)]:lg:text-[50px]">
                         Software built around{" "}
-                        <span className="bg-gradient-to-r from-violet-300 via-fuchsia-300 to-orange-300 bg-clip-text text-transparent">
+                        <span className="text-violet-300">
                             your workflow.
                         </span>
                     </h1>
@@ -550,7 +552,7 @@ function HeroSection() {
                             <ArrowRight className="h-4 w-4" />
                         </a>
                         <a
-                            href="#work"
+                            href="/projects"
                             className="inline-flex items-center justify-center gap-2 rounded-md border border-white/18 bg-white/[0.04] px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.09] [@media(max-height:760px)]:lg:py-3"
                         >
                             View Our Work
@@ -560,7 +562,7 @@ function HeroSection() {
                     <div className="mt-7 flex max-w-2xl flex-wrap gap-3 [@media(max-height:700px)]:lg:hidden">
                         {heroOutcomes.map((outcome) => (
                             <div key={outcome} className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.055] px-4 py-2.5 text-sm font-extrabold text-white backdrop-blur">
-                                <CheckCircle2 className="h-4 w-4 text-orange-300" />
+                                <CheckCircle2 className="h-4 w-4 text-violet-300" />
                                 {outcome}
                             </div>
                         ))}
@@ -699,7 +701,7 @@ function ProblemsSection() {
         <section id="problems" className="bg-slate-50 px-5 py-24 dark:bg-slate-900">
             <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
                 <div>
-                    <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-500">Problems We Solve</p>
+                    <p className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.22em] text-violet-600 dark:text-violet-300">Problems We Solve</p>
                     <h2 className="max-w-xl text-3xl font-black leading-tight text-slate-950 dark:text-white md:text-4xl">
                         Still managing business through manual work?
                     </h2>
@@ -717,7 +719,7 @@ function ProblemsSection() {
                 >
                     {problemItems.map((problem) => (
                         <motion.div key={problem} variants={fadeUp} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 text-sm font-bold text-slate-700 shadow-[0_12px_34px_rgba(15,23,42,0.04)] dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200">
-                            <CheckCircle2 className="h-4 w-4 shrink-0 text-orange-500" />
+                            <CheckCircle2 className="h-4 w-4 shrink-0 text-violet-500" />
                             {problem}
                         </motion.div>
                     ))}
@@ -727,76 +729,170 @@ function ProblemsSection() {
     );
 }
 
-function CaseStudySection() {
+function ProjectsSection({ projects }: { projects: Project[] }) {
+    if (!projects.length) {
+        return null;
+    }
+
+    const platformTypes = new Set(projects.map((project) => project.type)).size;
+    const techCount = new Set(projects.flatMap((project) => splitTechStack(project.techStack))).size;
+    const moduleCount = projects.reduce((total, project) => total + (project.features?.length ?? 0), 0);
+
+    const workStats = [
+        { icon: Layers3, value: `${projects.length}+`, label: "Successful Projects" },
+        { icon: Users, value: `${moduleCount}+`, label: "Business Modules" },
+        { icon: BriefcaseBusiness, value: `${platformTypes}`, label: "Platform Types" },
+        { icon: Gauge, value: `${techCount}+`, label: "Technologies Used" },
+    ];
+
+    const highlights = [
+        {
+            title: "In-depth case studies",
+            desc: "Detailed views of the problem, solution, platform, modules, and stack.",
+        },
+        {
+            title: "Diverse industries",
+            desc: "Healthcare, logistics, HR, hospitality, wellness, community operations, and more.",
+        },
+        {
+            title: "Practical business impact",
+            desc: "Systems built around live workflows, reporting, roles, approvals, and automation.",
+        },
+    ];
+
     return (
-        <section className="bg-[#020919] px-5 py-14 dark:bg-[#020919]">
+        <section id="work" className="bg-slate-50 px-5 py-16 dark:bg-slate-900 md:py-20">
             <motion.div
-                className="mx-auto grid max-w-7xl overflow-hidden rounded-2xl bg-[#0d0b35] text-white shadow-[0_28px_80px_rgba(0,0,0,0.24)] lg:grid-cols-[0.9fr_1.1fr]"
+                className="mx-auto max-w-7xl overflow-hidden rounded-2xl border border-violet-100 bg-[radial-gradient(circle_at_12%_18%,rgba(124,58,237,0.10),transparent_28%),#f8f7ff] px-5 py-12 shadow-[0_24px_80px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[radial-gradient(circle_at_12%_18%,rgba(124,58,237,0.16),transparent_28%),#0f172a] md:px-10 lg:px-14"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.22 }}
+                viewport={{ once: false, amount: 0.18 }}
             >
-                <div className="p-8 md:p-10 lg:p-12">
-                    <p className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-300">Case Study</p>
-                    <h2 className="max-w-md text-3xl font-black leading-tight md:text-4xl">
-                        From manual process to <span className="text-violet-400">custom software.</span>
-                    </h2>
-                    <p className="mt-5 max-w-lg text-sm leading-7 text-white/72">
-                        We help businesses convert daily operations into organized digital systems with less manual work, faster reporting, better team visibility, and centralized business data.
-                    </p>
-                    <a href="#work" className="mt-8 inline-flex items-center gap-2 rounded-md bg-violet-500 px-6 py-3 text-sm font-extrabold text-white transition hover:bg-violet-400">
-                        View Case Study
-                        <ArrowRight className="h-4 w-4" />
-                    </a>
-                </div>
+                <div className="relative">
+                    <div className="pointer-events-none absolute left-0 top-16 hidden grid-cols-4 gap-3 opacity-35 md:grid">
+                        {Array.from({ length: 24 }).map((_, index) => (
+                            <span key={`work-dot-left-${index}`} className="h-1 w-1 rounded-full bg-violet-300" />
+                        ))}
+                    </div>
+                    <div className="pointer-events-none absolute right-0 top-16 hidden grid-cols-4 gap-3 opacity-35 md:grid">
+                        {Array.from({ length: 24 }).map((_, index) => (
+                            <span key={`work-dot-right-${index}`} className="h-1 w-1 rounded-full bg-violet-300" />
+                        ))}
+                    </div>
 
-                <div className="p-4 md:p-6 lg:p-8">
-                    <div className="h-full rounded-lg border border-white/10 bg-white/[0.07] p-5">
-                        <div className="mb-5 flex items-center gap-3">
-                            <span className="h-2.5 w-2.5 rounded-full bg-violet-400" />
-                            <p className="text-sm font-extrabold">Transactions</p>
-                        </div>
-                        <div className="grid gap-3 sm:grid-cols-3">
-                            {[
-                                ["$1.24M", "Total Volume"],
-                                ["+24.6%", "Growth"],
-                                ["1,246", "Transactions"],
-                            ].map(([value, label]) => (
-                                <div key={label} className="rounded-lg border border-white/10 bg-white/[0.05] p-4">
-                                    <p className="text-xl font-black">{value}</p>
-                                    <p className="mt-1 text-[10px] text-white/55">{label}</p>
+                    <div className="relative mx-auto max-w-4xl text-center">
+                        <p className="text-[11px] font-black uppercase tracking-[0.22em] text-violet-600 dark:text-violet-300">
+                            Our Work
+                        </p>
+                        <h2 className="mt-3 text-4xl font-black leading-tight text-slate-950 dark:text-white md:text-5xl">
+                            Real Solutions.{" "}
+                            <span className="text-violet-600 dark:text-violet-300">Real Results.</span>
+                        </h2>
+                        <p className="mx-auto mt-5 max-w-2xl text-base font-semibold leading-8 text-slate-600 dark:text-slate-300">
+                            We partner with businesses across industries to build custom software that solves complex workflow problems and supports real growth.
+                        </p>
+                    </div>
+
+                    <motion.div
+                        className="relative mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-4"
+                        variants={staggerGroup}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                    >
+                        {workStats.map((stat) => {
+                            const Icon = stat.icon;
+
+                            return (
+                                <motion.div key={stat.label} variants={fadeUp} className="flex items-center gap-4 rounded-lg border border-violet-100 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/[0.05]">
+                                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-violet-100 text-violet-600 dark:bg-violet-400/10 dark:text-violet-200">
+                                        <Icon className="h-6 w-6" />
+                                    </span>
+                                    <span>
+                                        <span className="block text-2xl font-black text-slate-950 dark:text-white">{stat.value}</span>
+                                        <span className="block text-xs font-semibold text-slate-500 dark:text-slate-400">{stat.label}</span>
+                                    </span>
+                                </motion.div>
+                            );
+                        })}
+                    </motion.div>
+
+                    <div className="relative mt-12 overflow-hidden rounded-xl border border-slate-200 bg-white p-7 shadow-[0_20px_70px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-slate-950 md:p-9">
+                        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                            <div className="grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center">
+                                <div className="grid h-28 w-28 place-items-center rounded-full bg-violet-50 text-violet-600 dark:bg-violet-400/10 dark:text-violet-200">
+                                    <BriefcaseBusiness className="h-12 w-12" />
                                 </div>
-                            ))}
-                        </div>
-                        <div className="mt-4 grid gap-3 md:grid-cols-[1fr_0.86fr]">
-                            <div className="rounded-lg border border-white/10 bg-white/[0.05] p-5">
-                                <div className="flex items-center gap-5">
-                                    <div className="grid h-24 w-24 place-items-center rounded-full bg-[conic-gradient(#8b5cf6_0_70%,rgba(255,255,255,0.12)_70%_100%)]">
-                                        <div className="h-14 w-14 rounded-full bg-[#14113d]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-xs text-white/55">Automation Impact</p>
-                                        <p className="mt-2 text-3xl font-black">+70%</p>
-                                        <p className="mt-1 text-[11px] text-white/55">Reduction in manual work</p>
-                                    </div>
+                                <div>
+                                    <h3 className="text-2xl font-black leading-tight text-slate-950 dark:text-white md:text-3xl">
+                                        Want to see how we&apos;ve helped businesses like yours?
+                                    </h3>
+                                    <p className="mt-4 text-sm font-semibold leading-7 text-slate-600 dark:text-slate-300">
+                                        Explore detailed case studies showing how ideas become scalable web apps, mobile apps, dashboards, and automation systems.
+                                    </p>
                                 </div>
                             </div>
-                            <div className="rounded-lg border border-white/10 bg-white/[0.05] p-5">
-                                <p className="text-xs font-extrabold">Top Categories</p>
-                                <div className="mt-4 space-y-3">
-                                    {[
-                                        ["Payments", "45%", "bg-violet-400"],
-                                        ["Transfers", "29%", "bg-orange-300"],
-                                        ["Refunds", "18%", "bg-blue-300"],
-                                        ["Others", "12%", "bg-emerald-300"],
-                                    ].map(([name, value, color]) => (
-                                        <div key={name} className="flex items-center justify-between text-[11px] text-white/70">
-                                            <span className="inline-flex items-center gap-2"><span className={cx("h-2 w-2 rounded-full", color)} />{name}</span>
-                                            <span>{value}</span>
+
+                            <div className="grid gap-7 border-slate-200 lg:grid-cols-[1fr_auto] lg:border-l lg:pl-9 dark:border-white/10">
+                                <div className="grid gap-5">
+                                    {highlights.map((highlight) => (
+                                        <div key={highlight.title} className="flex gap-4">
+                                            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-violet-600 dark:text-violet-300" />
+                                            <div>
+                                                <p className="text-sm font-black text-slate-950 dark:text-white">{highlight.title}</p>
+                                                <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{highlight.desc}</p>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
+                                <div className="flex flex-col justify-center gap-4">
+                                    <a
+                                        href="/projects"
+                                        className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-500 px-6 py-4 text-sm font-extrabold text-white shadow-[0_14px_34px_rgba(249,115,22,0.24)] transition hover:-translate-y-0.5 hover:bg-orange-400"
+                                    >
+                                        View All Case Studies
+                                        <ArrowRight className="h-4 w-4" />
+                                    </a>
+                                    <a
+                                        href="#process"
+                                        className="inline-flex items-center justify-center gap-2 rounded-md px-6 py-3 text-sm font-extrabold text-violet-600 transition hover:bg-violet-50 dark:text-violet-200 dark:hover:bg-white/[0.05]"
+                                    >
+                                        See Our Process
+                                        <ArrowRight className="h-4 w-4" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative mt-7 overflow-hidden rounded-xl border border-white/10 bg-[#020919] p-7 text-white shadow-[0_20px_70px_rgba(15,23,42,0.18)] md:p-8">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_26%,rgba(124,58,237,0.24),transparent_28%)]" />
+                        <div className="relative grid gap-7 md:grid-cols-[auto_1fr_auto] md:items-center">
+                            <div className="grid h-20 w-20 place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/20">
+                                <MessageCircle className="h-10 w-10" />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-black md:text-3xl">Have a project in mind?</h3>
+                                <p className="mt-2 max-w-xl text-sm font-medium leading-7 text-white/82">
+                                    Let&apos;s discuss how we can help you build the right solution for your business.
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-3 sm:flex-row">
+                                <a
+                                    href="https://wa.me/923330365252"
+                                    className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-400 px-6 py-3.5 text-sm font-extrabold text-[#160d02] transition hover:-translate-y-0.5 hover:bg-orange-300"
+                                >
+                                    <MessageCircle className="h-4 w-4" />
+                                    Chat on WhatsApp
+                                </a>
+                                <a
+                                    href="/contact"
+                                    className="inline-flex items-center justify-center gap-2 rounded-md border border-white/35 px-6 py-3.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-white/10"
+                                >
+                                    Get In Touch
+                                    <ArrowRight className="h-4 w-4" />
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -805,269 +901,6 @@ function CaseStudySection() {
         </section>
     );
 }
-
-function ProjectsSection({ projects }: { projects: Project[] }) {
-    const [selectedProject, setSelectedProject] = useState<Project | null>(projects[0] ?? null);
-    const detailRef = useRef<HTMLDivElement | null>(null);
-    const visibleProjects = projects;
-    const selectedProjectKey = selectedProject ? selectedProject._id ?? selectedProject.title : null;
-
-    const handleSelectProject = (project: Project) => {
-        setSelectedProject(project);
-        window.setTimeout(() => {
-            detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 80);
-    };
-
-    if (!visibleProjects.length) {
-        return null;
-    }
-
-    return (
-        <section id="work" className="bg-slate-50 px-5 py-24 dark:bg-slate-900">
-            <div className="mx-auto max-w-7xl">
-                <SectionHeading
-                    eyebrow="Selected Work"
-                    title="Practical systems built for"
-                    highlight="real operations."
-                    description="A few examples of custom software projects built for business management, team coordination, healthcare operations, HR workflows, and internal dashboards."
-                />
-
-                <motion.div
-                    className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-                    variants={staggerGroup}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.12 }}
-                >
-                    {visibleProjects.map((project, index) => {
-                        const imageSrc = project.desktopImg || project.mobileImg;
-                        const title = decodeText(project.title);
-                        const headline = decodeText(project.headline || project.description);
-                        const techItems = splitTechStack(project.techStack);
-                        const projectKey = project._id ?? project.title;
-                        const isSelected = selectedProjectKey === projectKey;
-
-                        return (
-                            <motion.article
-                                key={`${projectKey}-${index}`}
-                                variants={fadeUp}
-                                className={cx(
-                                    "group flex overflow-hidden rounded-xl border bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_24px_65px_rgba(15,23,42,0.1)] dark:bg-white/[0.04]",
-                                    isSelected
-                                        ? "border-violet-300 ring-2 ring-violet-200 dark:border-violet-300/40 dark:ring-violet-400/15"
-                                        : "border-slate-200 dark:border-white/10"
-                                )}
-                            >
-                                <div className="flex w-full flex-col">
-                                    <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800">
-                                        {imageSrc ? (
-                                            <>
-                                                <Image
-                                                    src={imageSrc}
-                                                    alt=""
-                                                    fill
-                                                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                                                    className="scale-110 object-cover object-center blur-xl"
-                                                    aria-hidden="true"
-                                                    unoptimized
-                                                />
-                                                <div className="absolute inset-0 bg-white/35 dark:bg-slate-950/25" />
-                                                <Image
-                                                    src={imageSrc}
-                                                    alt={`${title} project preview`}
-                                                    fill
-                                                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                                                    className="object-contain object-center transition duration-500 group-hover:scale-[1.02]"
-                                                    unoptimized
-                                                />
-                                            </>
-                                        ) : (
-                                            <div className="flex h-full items-center justify-center">
-                                                <PanelTop className="h-12 w-12 text-slate-300" />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="flex flex-1 flex-col p-6">
-                                        <div className="mb-4 flex items-center justify-between gap-3">
-                                            <span className="rounded-full bg-violet-100 px-3 py-1 text-[11px] font-bold text-violet-600 dark:bg-violet-500/10 dark:text-violet-300">
-                                                {project.type}
-                                            </span>
-                                            {techItems.length > 0 && (
-                                                <span className="text-right text-[11px] font-semibold text-slate-400">
-                                                    {techItems.slice(0, 2).join(", ")}
-                                                    {techItems.length > 2 ? " +" : ""}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <h3 className="text-xl font-extrabold leading-tight text-slate-950 dark:text-white">{title}</h3>
-                                        <p className="mt-3 line-clamp-2 text-sm font-semibold leading-6 text-slate-500 dark:text-slate-300">
-                                            {headline}
-                                        </p>
-                                        <button
-                                            type="button"
-                                            onClick={() => handleSelectProject(project)}
-                                            className={cx(
-                                                "mt-6 inline-flex w-fit items-center gap-2 rounded-md px-4 py-2 text-sm font-bold transition",
-                                                isSelected
-                                                    ? "bg-violet-600 text-white shadow-[0_14px_30px_rgba(124,58,237,0.24)]"
-                                                    : "border border-slate-200 text-slate-950 hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 dark:border-white/10 dark:text-white dark:hover:border-violet-300/30 dark:hover:bg-violet-500/10 dark:hover:text-violet-200"
-                                            )}
-                                        >
-                                            {isSelected ? "Selected" : "View project"}
-                                            <ArrowRight className="h-4 w-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </motion.article>
-                        );
-                    })}
-                </motion.div>
-
-                <AnimatePresence mode="wait">
-                    {selectedProject && (
-                        <ProjectDetailPanel key={selectedProject._id ?? selectedProject.title} project={selectedProject} detailRef={detailRef} />
-                    )}
-                </AnimatePresence>
-            </div>
-        </section>
-    );
-}
-
-function ProjectDetailPanel({ project, detailRef }: { project: Project; detailRef: RefObject<HTMLDivElement | null> }) {
-    const title = decodeText(project.title);
-    const headline = decodeText(project.headline);
-    const description = decodeText(project.description);
-    const techItems = splitTechStack(project.techStack);
-    const hasVisuals = Boolean(project.desktopImg || project.mobileImg);
-
-    return (
-        <motion.div
-            ref={detailRef}
-            initial={{ opacity: 0, y: 28, scale: 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.99 }}
-            transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-12 scroll-mt-28 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_28px_90px_rgba(15,23,42,0.1)] dark:border-white/10 dark:bg-slate-950"
-        >
-            <div className="border-b border-slate-200 bg-slate-950 px-6 py-4 text-white dark:border-white/10 md:px-8">
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                        <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-300">Selected case study</p>
-                        <h3 className="mt-2 text-2xl font-black md:text-3xl">{title}</h3>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        <span className="rounded-full bg-violet-500/15 px-3 py-1 text-[11px] font-bold text-violet-100">
-                            {project.type}
-                        </span>
-                        {techItems.slice(0, 3).map((tech) => (
-                            <span key={`${title}-${tech}-top`} className="rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-white/80">
-                                {tech}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            <div className="grid lg:grid-cols-[1.02fr_0.98fr]">
-                <div className="bg-slate-100 p-4 dark:bg-slate-900">
-                        {hasVisuals ? (
-                            <div className="grid gap-4">
-                                {project.desktopImg && (
-                                    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-white/10 dark:bg-slate-800">
-                                        <div className="relative aspect-[16/10]">
-                                            <Image
-                                                src={project.desktopImg}
-                                                alt={`${title} desktop screen`}
-                                                fill
-                                                sizes="(min-width: 1024px) 52vw, 100vw"
-                                                className="object-cover object-top"
-                                                unoptimized
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                                {project.mobileImg && (
-                                    <div className="mx-auto w-full max-w-[220px] overflow-hidden rounded-[1.5rem] border-[6px] border-slate-800 bg-slate-950 shadow-2xl">
-                                        <div className="relative aspect-[9/19]">
-                                            <Image
-                                                src={project.mobileImg}
-                                                alt={`${title} mobile screen`}
-                                                fill
-                                                sizes="220px"
-                                                className="object-cover object-top"
-                                                unoptimized
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div className="grid min-h-[420px] place-items-center rounded-lg border border-dashed border-slate-300 bg-white text-slate-400 dark:border-white/10 dark:bg-white/[0.03]">
-                                <PanelTop className="h-14 w-14" />
-                            </div>
-                        )}
-                </div>
-
-                <div className="p-6 md:p-8 lg:p-10">
-                        <div className="flex flex-wrap items-center gap-3">
-                            <span className="rounded-full bg-violet-100 px-3 py-1 text-[11px] font-bold text-violet-700 dark:bg-violet-500/10 dark:text-violet-200">
-                                {project.type}
-                            </span>
-                            <span className="text-xs font-bold uppercase tracking-[0.18em] text-orange-500">
-                                Project details
-                            </span>
-                        </div>
-
-                        <h3 id="project-detail-title" className="mt-5 text-3xl font-black leading-tight text-slate-950 dark:text-white md:text-4xl">
-                            {title}
-                        </h3>
-                        {headline && (
-                            <p className="mt-4 text-lg font-semibold leading-8 text-slate-700 dark:text-slate-200">
-                                {headline}
-                            </p>
-                        )}
-                        <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                            {description}
-                        </p>
-
-                        {project.features?.length > 0 && (
-                            <div className="mt-8">
-                                <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-slate-400">What we built</h4>
-                                <div className="mt-4 grid gap-3">
-                                    {project.features.map((feature) => (
-                                        <div key={`${title}-${feature.title}`} className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-white/[0.04]">
-                                            <div className="flex items-start gap-3">
-                                                <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
-                                                <div>
-                                                    <p className="font-extrabold text-slate-950 dark:text-white">{decodeText(feature.title)}</p>
-                                                    <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">{decodeText(feature.desc)}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {techItems.length > 0 && (
-                            <div className="mt-8">
-                                <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-slate-400">Tech stack</h4>
-                                <div className="mt-4 flex flex-wrap gap-2">
-                                    {techItems.map((tech) => (
-                                        <span key={`${title}-${tech}`} className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200">
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                </div>
-            </div>
-        </motion.div>
-    );
-}
-
 function ProcessSection() {
     return (
         <section id="process" className="bg-white px-5 py-16 dark:bg-slate-950">
@@ -1285,15 +1118,15 @@ function CTAFooter() {
     return (
         <footer className="bg-[#020919] text-white">
             <div className="mx-auto max-w-7xl px-5 py-8 lg:px-8">
-                <div className="grid items-center gap-8 rounded-2xl bg-gradient-to-r from-violet-600 via-fuchsia-500 to-orange-400 p-8 md:grid-cols-[auto_1fr_auto] md:p-10">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#32148a] text-white shadow-xl">
+                <div className="grid items-center gap-8 rounded-2xl border border-white/10 bg-[#0d1630] p-8 shadow-[0_24px_70px_rgba(0,0,0,0.22)] md:grid-cols-[auto_1fr_auto] md:p-10">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/16 text-violet-200 shadow-xl ring-1 ring-violet-300/20">
                         <Send className="h-8 w-8" />
                     </div>
                     <div>
                         <h2 className="text-3xl font-black">Ready to build software for your business?</h2>
                         <p className="mt-2 text-sm font-medium text-white/82">Tell us what you want to manage, automate, or improve. We&apos;ll help turn it into a clear software plan.</p>
                     </div>
-                    <a href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-4 text-sm font-extrabold text-slate-950 transition hover:-translate-y-0.5">
+                    <a href="/contact" className="inline-flex items-center justify-center gap-2 rounded-md bg-orange-400 px-6 py-4 text-sm font-extrabold text-[#160d02] transition hover:-translate-y-0.5 hover:bg-orange-300">
                         Contact Us
                         <ArrowRight className="h-4 w-4" />
                     </a>
@@ -1401,7 +1234,6 @@ export default function WebsiteHome({
             <ServicesSection />
             <WhySection />
             <ProblemsSection />
-            <CaseStudySection />
             <ProjectsSection projects={projects} />
             <ProcessSection />
             <FreeDemoOfferSection />

@@ -108,8 +108,7 @@ export default function ContactSection({
     };
 
     return (
-        <section id={id} className={cx("relative scroll-mt-20 overflow-hidden border-t border-slate-200 bg-slate-50 px-5 py-20 dark:border-white/10 dark:bg-slate-900", className)}>
-            <div className="pointer-events-none absolute right-0 top-10 h-72 w-72 rounded-full bg-orange-200/20 blur-3xl dark:bg-orange-400/8" />
+        <section id={id} className={cx("relative scroll-mt-20 overflow-hidden border-t border-slate-200 bg-white px-5 py-20 dark:border-white/10 dark:bg-slate-950", className)}>
             <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
                 <div>
                     <p className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-orange-500">Get in touch</p>
