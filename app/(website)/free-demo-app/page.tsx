@@ -6,8 +6,9 @@ export const metadata: Metadata = {
     title: "Free 1-Feature Demo App Terms | Imadi Innovations",
     description: "Terms and conditions for the Imadi Innovations free 1-feature demo app offer.",
     alternates: {
-        canonical: "/free-demo-app",
+        canonical: "/free-demo-app/",
     },
+    robots: { index: false, follow: false },
 };
 
 const sections = [

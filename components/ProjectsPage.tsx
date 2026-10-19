@@ -90,10 +90,7 @@ function ProjectsHeader() {
                     <span className="relative flex h-11 w-11 overflow-hidden rounded-full border border-white/15 bg-white/10">
                         <Image src="/logo.jpg" alt="Imadi Innovations" width={44} height={44} className="h-full w-full object-cover" priority />
                     </span>
-                    <span className="leading-none">
-                        <span className="block text-base font-extrabold tracking-wide text-orange-400">IMADI</span>
-                        <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-white">Innovations</span>
-                    </span>
+                    <span className="text-sm font-extrabold tracking-wide text-orange-400 sm:text-base">Imadi Innovations</span>
                 </Link>
 
                 <nav className="hidden items-center gap-7 md:flex">
@@ -591,10 +588,7 @@ function ProjectsFooter() {
             <div className="mx-auto flex max-w-7xl flex-col justify-between gap-5 md:flex-row md:items-center">
                 <div className="flex items-center gap-3">
                     <Image src="/logo.jpg" alt="Imadi Innovations" width={42} height={42} className="rounded-full" />
-                    <div>
-                        <p className="font-black text-orange-400">IMADI</p>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white">Innovations</p>
-                    </div>
+                    <p className="font-black text-orange-400">Imadi Innovations</p>
                 </div>
                 <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-white/60">
                     <Link href="/" className="hover:text-orange-300">Home</Link>

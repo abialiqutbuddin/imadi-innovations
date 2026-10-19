@@ -1,0 +1,870 @@
+.page {
+  overflow: hidden;
+  background: var(--color-canvas);
+}
+
+.hero,
+.storySection,
+.evidenceSection,
+.related,
+.cta {
+  padding-inline: var(--gutter);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px),
+    var(--color-ink);
+  background-size: 3.5rem 3.5rem;
+  color: var(--color-on-ink);
+}
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  content: "";
+  mask-image: linear-gradient(to right, black, transparent);
+  pointer-events: none;
+}
+
+.heroInner,
+.sectionInner,
+.evidenceInner,
+.relatedInner,
+.ctaInner {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+}
+
+.heroInner {
+  position: relative;
+  display: grid;
+  min-height: 38rem;
+  align-items: center;
+  gap: clamp(3rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1.35fr) minmax(19rem, 0.55fr);
+  padding-block: clamp(5rem, 10vw, 8rem);
+}
+
+.backLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-verified-light);
+  font-weight: 700;
+  text-underline-offset: 0.3em;
+}
+
+.eyebrow,
+.darkEyebrow,
+.heroMeta dt,
+.sectionMarker,
+.evidenceRail > li > span,
+.outcomeList dt,
+.approvedMeta dt,
+.nextCase > span {
+  font-family: var(--font-utility), monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.heroCopy > .eyebrow {
+  margin-top: 2rem;
+  color: var(--color-verified-light);
+}
+
+.hero h1 {
+  max-width: 15ch;
+  margin-top: 1rem;
+  font-family: var(--font-display), sans-serif;
+  color: var(--color-on-ink);
+  font-size: clamp(3.15rem, 5.7vw, 5.75rem);
+  font-weight: 680;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.hero h1.longTitle {
+  max-width: 24ch;
+  font-size: clamp(3rem, 4.6vw, 4.9rem);
+}
+
+.heroLead {
+  max-width: 46rem;
+  margin-top: 1.5rem;
+  color: color-mix(in srgb, var(--color-on-ink) 72%, transparent);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+.heroMeta {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--color-verified-light) 40%, transparent);
+  background: color-mix(in srgb, var(--color-ink) 74%, transparent);
+}
+
+.heroMeta div {
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 16%, transparent);
+}
+
+.heroMeta div:last-child {
+  border-bottom: 0;
+}
+
+.heroMeta dt {
+  color: var(--color-verified-light);
+}
+
+.heroMeta dd {
+  margin-top: 0.35rem;
+  color: color-mix(in srgb, var(--color-on-ink) 82%, transparent);
+  text-transform: capitalize;
+}
+
+.storySection {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sectionInner {
+  display: grid;
+  gap: clamp(2.5rem, 7vw, 7rem);
+  grid-template-columns: minmax(8rem, 0.25fr) minmax(0, 1fr);
+  padding-block: clamp(5rem, 10vw, 9rem);
+}
+
+.sectionMarker {
+  display: grid;
+  height: max-content;
+  align-items: center;
+  gap: 0.8rem;
+  grid-template-columns: auto 1fr;
+  color: var(--color-blueprint);
+}
+
+.sectionMarker i {
+  height: 1px;
+  background: var(--color-border-strong);
+}
+
+.sectionMarker small {
+  grid-column: 1 / -1;
+  color: var(--color-copy);
+  font-size: inherit;
+  letter-spacing: inherit;
+}
+
+.storyContent {
+  min-width: 0;
+}
+
+.storyContent > .eyebrow {
+  color: var(--color-blueprint);
+}
+
+.storyContent > h2,
+.evidenceHeading h2,
+.related h2,
+.cta h2 {
+  max-width: 20ch;
+  margin-top: 0.8rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.7rem);
+  font-weight: 650;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.primaryNarrative {
+  max-width: 46rem;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--color-copy);
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.missingContent {
+  display: grid;
+  max-width: 46rem;
+  min-height: 7rem;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  margin-top: 2.5rem;
+  padding: 1.2rem;
+  border: 1px dashed var(--color-border-strong);
+  background:
+    linear-gradient(to right, color-mix(in srgb, var(--color-blueprint) 5%, transparent) 1px, transparent 1px),
+    var(--color-surface);
+  background-size: 1.5rem 100%;
+  color: var(--color-copy);
+}
+
+.missingContent svg {
+  width: 1.65rem;
+  height: 1.65rem;
+  color: var(--color-blueprint);
+}
+
+.problemSection {
+  background: var(--color-surface);
+}
+
+.problemDetails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-border-strong);
+  border-left: 1px solid var(--color-border);
+}
+
+.problemDetails > div {
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.problemDetails h3,
+.technologyBlock > h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.25rem;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.problemDetails > div > p {
+  margin-top: 1rem;
+  color: var(--color-copy);
+}
+
+.problemDetails ul {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.problemDetails li {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 1.15rem;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-copy);
+}
+
+.problemDetails li::before {
+  position: absolute;
+  top: 1.34rem;
+  left: 0;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: var(--color-verified);
+  content: "";
+}
+
+.problemDetails .missingContent {
+  min-height: 8rem;
+  grid-template-columns: 1fr;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-canvas);
+}
+
+.evidenceSection,
+.outcomeSection,
+.cta {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+.evidenceInner {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+}
+
+.evidenceHeading {
+  display: grid;
+  align-items: end;
+  gap: 2rem;
+  grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1fr);
+}
+
+.darkEyebrow {
+  color: var(--color-verified-light);
+}
+
+.evidenceHeading h2 {
+  margin-top: 0;
+}
+
+.evidenceRail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: clamp(3rem, 6vw, 5rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.evidenceRail li {
+  position: relative;
+  min-width: 0;
+  padding-right: clamp(1rem, 3vw, 2.5rem);
+}
+
+.evidenceRail li::after {
+  position: absolute;
+  z-index: 0;
+  top: 1.45rem;
+  right: 0;
+  left: 2.9rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-verified-light) 48%, transparent);
+  content: "";
+}
+
+.evidenceRail li:last-child::after {
+  display: none;
+}
+
+.railIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-verified-light) 65%, transparent);
+  border-radius: 0.5rem;
+  background: var(--color-ink);
+  color: var(--color-verified-light);
+}
+
+.railIcon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.evidenceRail > li > span {
+  display: block;
+  margin-top: 1.2rem;
+  color: var(--color-verified-light);
+}
+
+.evidenceRail h3 {
+  margin-top: 0.35rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.evidenceRail p {
+  margin-top: 0.6rem;
+  color: color-mix(in srgb, var(--color-on-ink) 66%, transparent);
+}
+
+.decisionList {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.decisionList article {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 2.5rem minmax(11rem, 0.55fr) minmax(18rem, 1fr);
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.decisionList article > span {
+  color: var(--color-blueprint);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.65rem;
+}
+
+.decisionList h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+
+.decisionList p {
+  color: var(--color-copy);
+}
+
+.technologyBlock {
+  margin-top: 4rem;
+}
+
+.technologyBlock dl {
+  margin-top: 1rem;
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.technologyBlock dl > div {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.technologyBlock dt {
+  font-weight: 700;
+}
+
+.technologyBlock dd {
+  color: var(--color-copy);
+}
+
+.deliverySection {
+  background: var(--color-surface);
+}
+
+.workflowList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--color-border-strong);
+  border-left: 1px solid var(--color-border);
+}
+
+.workflowList article {
+  min-height: 14rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.workflowList article > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-verified);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.65rem;
+}
+
+.workflowList svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.workflowList h3 {
+  margin-top: 2rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.12;
+}
+
+.workflowList p {
+  margin-top: 0.75rem;
+  color: var(--color-copy);
+}
+
+.mediaSection {
+  background:
+    linear-gradient(to right, color-mix(in srgb, var(--color-blueprint) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-blueprint) 6%, transparent) 1px, transparent 1px),
+    #dfe8ed;
+  background-size: 2rem 2rem;
+}
+
+.mediaGallery {
+  display: grid;
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 3fr) minmax(14rem, 1fr);
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.mediaGallery figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.desktopMedia {
+  grid-column: 1;
+}
+
+.mobileMedia {
+  width: min(100%, 22rem);
+  grid-column: 2;
+  justify-self: center;
+}
+
+.desktopMedia:only-child,
+.mobileMedia:only-child {
+  grid-column: 1 / -1;
+}
+
+.deviceFrame {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-ink) 48%, transparent);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+  box-shadow: 0 1.5rem 3.5rem color-mix(in srgb, var(--color-ink) 18%, transparent);
+}
+
+.mediaChrome {
+  display: flex;
+  min-height: 2.3rem;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--color-ink);
+}
+
+.mediaChrome i {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-on-ink) 42%, transparent);
+}
+
+.mediaCanvas {
+  position: relative;
+  aspect-ratio: var(--media-aspect);
+  overflow: hidden;
+  background: #edf1f3;
+}
+
+.mediaCanvas img {
+  object-fit: contain;
+  object-position: top center;
+}
+
+.mobileMedia .deviceFrame {
+  border-width: 0.5rem;
+  border-color: var(--color-ink);
+  border-radius: 1.75rem;
+}
+
+.mobileMedia .mediaChrome {
+  min-height: 1.2rem;
+  padding: 0.35rem;
+}
+
+.mobileMedia .mediaChrome span {
+  width: 27%;
+  height: 0.25rem;
+  margin: 0 auto;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-on-ink) 45%, transparent);
+}
+
+.mediaGallery figcaption {
+  max-width: 48rem;
+  padding: 0.85rem 0.2rem 0;
+  color: var(--color-copy);
+  font-size: 0.85rem;
+}
+
+.outcomeSection {
+  border-bottom: 0;
+}
+
+.outcomeSection .sectionMarker {
+  color: var(--color-verified-light);
+}
+
+.outcomeSection .sectionMarker i {
+  background: color-mix(in srgb, var(--color-on-ink) 28%, transparent);
+}
+
+.outcomeSection .sectionMarker small {
+  color: color-mix(in srgb, var(--color-on-ink) 66%, transparent);
+}
+
+.outcomeList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-verified-light) 58%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent);
+}
+
+.outcomeList > div {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-right: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent);
+}
+
+.outcomeList dt {
+  color: var(--color-verified-light);
+}
+
+.outcomeList dd {
+  margin-top: 1rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  line-height: 1.2;
+}
+
+.outcomeList small,
+.outcomeList a {
+  display: block;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--color-on-ink) 66%, transparent);
+}
+
+.outcomeList a {
+  color: var(--color-verified-light);
+}
+
+.outcomeEmpty {
+  display: grid;
+  max-width: 52rem;
+  min-height: 12rem;
+  align-items: center;
+  gap: 1.5rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px dashed color-mix(in srgb, var(--color-verified-light) 55%, transparent);
+  background: color-mix(in srgb, var(--color-verified) 9%, transparent);
+}
+
+.outcomeEmpty > svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-verified-light);
+}
+
+.outcomeEmpty h3 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.outcomeEmpty p {
+  margin-top: 0.65rem;
+  color: color-mix(in srgb, var(--color-on-ink) 68%, transparent);
+}
+
+.approvedMeta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 3rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent);
+}
+
+.approvedMeta > div {
+  padding: 1.2rem 1.2rem 1.2rem 0;
+}
+
+.approvedMeta dt {
+  color: var(--color-verified-light);
+}
+
+.approvedMeta dd {
+  margin-top: 0.35rem;
+  color: color-mix(in srgb, var(--color-on-ink) 76%, transparent);
+}
+
+.relatedInner {
+  display: grid;
+  align-items: end;
+  gap: clamp(3rem, 8vw, 8rem);
+  grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.55fr);
+  padding-block: clamp(5rem, 9vw, 8rem);
+}
+
+.related .eyebrow {
+  color: var(--color-blueprint);
+}
+
+.related nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.related nav a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--color-blueprint);
+  font-weight: 700;
+  text-underline-offset: 0.3em;
+}
+
+.nextCase {
+  position: relative;
+  display: grid;
+  min-height: 15rem;
+  align-content: end;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--color-border-strong);
+  background:
+    linear-gradient(to right, color-mix(in srgb, var(--color-blueprint) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-blueprint) 7%, transparent) 1px, transparent 1px),
+    var(--color-surface);
+  background-size: 1.75rem 1.75rem;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.nextCase > span {
+  color: var(--color-blueprint);
+}
+
+.nextCase strong {
+  margin-top: 0.75rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  line-height: 1;
+}
+
+.nextCase small {
+  margin-top: 0.5rem;
+  color: var(--color-copy);
+  font-size: 0.9rem;
+}
+
+.nextCase b {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: var(--color-signal-dark);
+  font-size: 1.5rem;
+}
+
+.ctaInner {
+  display: grid;
+  align-items: center;
+  gap: 3rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-block: clamp(5rem, 9vw, 8rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 16%, transparent);
+}
+
+.cta a {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-signal-dark);
+  border-radius: 0.4rem;
+  background: var(--color-signal);
+  color: var(--color-on-signal);
+  font-weight: 750;
+  text-decoration: none;
+}
+
+@media (max-width: 64rem) {
+  .heroInner,
+  .sectionInner,
+  .evidenceHeading,
+  .relatedInner,
+  .ctaInner {
+    grid-template-columns: 1fr;
+  }
+
+  .heroInner {
+    min-height: auto;
+  }
+
+  .sectionMarker {
+    max-width: 14rem;
+  }
+
+  .problemDetails {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .problemDetails > div:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .decisionList article {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+
+  .decisionList p {
+    grid-column: 2;
+  }
+
+  .mediaGallery {
+    grid-template-columns: minmax(0, 2fr) minmax(12rem, 0.7fr);
+  }
+}
+
+@media (max-width: 46rem) {
+  .problemDetails,
+  .workflowList,
+  .outcomeList,
+  .approvedMeta,
+  .mediaGallery {
+    grid-template-columns: 1fr;
+  }
+
+  .problemDetails > div:first-child {
+    grid-column: 1;
+  }
+
+  .evidenceRail {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .evidenceRail li {
+    min-height: 8.5rem;
+    padding: 0 0 1.5rem 4.25rem;
+  }
+
+  .evidenceRail li::after {
+    top: 2.9rem;
+    bottom: 0;
+    left: 1.42rem;
+    width: 1px;
+    height: auto;
+  }
+
+  .railIcon {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .evidenceRail > li > span {
+    margin-top: 0;
+  }
+
+  .decisionList article {
+    gap: 0.65rem 1rem;
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .technologyBlock dl > div {
+    grid-template-columns: 1fr;
+  }
+
+  .desktopMedia,
+  .mobileMedia,
+  .desktopMedia:only-child,
+  .mobileMedia:only-child {
+    grid-column: 1;
+  }
+
+  .mobileMedia {
+    width: min(76vw, 21rem);
+  }
+
+  .outcomeEmpty {
+    grid-template-columns: 1fr;
+  }
+}

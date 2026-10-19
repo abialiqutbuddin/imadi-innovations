@@ -20,7 +20,7 @@ export default function Navbar() {
                         {/* Ensure you have a logo.jpg in your public folder */}
                         <img
                             src="/logo.jpg"
-                            alt="Imadi Logo"
+                            alt="Imadi Innovations logo"
                             className="w-full h-full object-cover"
                         />
                     </div>

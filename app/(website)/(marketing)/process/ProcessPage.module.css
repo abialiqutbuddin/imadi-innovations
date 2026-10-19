@@ -1,0 +1,99 @@
+.page { overflow: hidden; background: var(--color-canvas); color: var(--color-ink); }
+.hero, .rules, .stages, .changeControl, .artifacts, .cta { padding-inline: var(--gutter); }
+.inner, .heroInner, .ctaInner { width: 100%; max-width: var(--layout-max); margin: 0 auto; }
+.eyebrow, .darkEyebrow, .ledgerHeader, .stageIdentity > span, .stageIdentity dt, .gate span, .ruleGrid article > span, .changeRail span, .artifactRegister article > span { font-family: var(--font-utility), monospace; font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.hero { position: relative; background: var(--color-ink); color: var(--color-on-ink); }
+.hero::before { position: absolute; inset: 0; background-image: linear-gradient(90deg, color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px), linear-gradient(color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px); background-size: 3.5rem 3.5rem; content: ""; mask-image: linear-gradient(to right, transparent, black); pointer-events: none; }
+.heroInner { position: relative; display: grid; min-height: 38rem; align-items: center; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(0, 1.15fr) minmax(19rem, .65fr); padding-block: clamp(5rem, 10vw, 8rem); }
+.hero .eyebrow { display: flex; align-items: center; gap: .65rem; color: var(--color-verified-light); }
+.hero .eyebrow span { width: .55rem; height: .55rem; border-radius: 50%; background: var(--color-signal); box-shadow: 0 0 0 .3rem color-mix(in srgb, var(--color-signal) 18%, transparent); }
+.hero h1 { max-width: 14ch; margin-top: 1rem; font-family: var(--font-display), sans-serif; font-size: clamp(3.25rem, 6.4vw, 6rem); font-weight: 680; letter-spacing: -.065em; line-height: .92; text-wrap: balance; }
+.heroCopy > p:last-child { max-width: 42rem; margin-top: 1.45rem; color: color-mix(in srgb, var(--color-on-ink) 72%, transparent); font-size: 1.1rem; }
+.decisionLedger { border: 1px solid color-mix(in srgb, var(--color-verified-light) 40%, transparent); background: var(--color-surface); color: var(--color-ink); box-shadow: 1rem 1rem 0 color-mix(in srgb, var(--color-verified) 12%, transparent); }
+.ledgerHeader { display: flex; min-height: 3.4rem; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1rem; background: var(--color-ink); color: var(--color-on-ink); }
+.ledgerHeader b { color: var(--color-verified-light); }
+.decisionLedger ol { padding: 1rem; }
+.decisionLedger li { display: grid; align-items: center; gap: 1rem; grid-template-columns: 2rem 1fr .65rem; min-height: 2.85rem; border-bottom: 1px solid var(--color-border); }
+.decisionLedger li > span { color: var(--color-blueprint); font-family: var(--font-utility), monospace; font-size: .65rem; }
+.decisionLedger li p { font-weight: 650; }
+.decisionLedger li i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--color-verified); }
+.decisionLedger li:nth-child(-n + 3) i { background: var(--color-signal-dark); }
+.ledgerNote { padding: 1rem; border-top: 1px solid var(--color-border-strong); color: var(--color-copy); font-size: .9rem; }
+.rules .inner, .artifacts .inner { padding-block: clamp(4.5rem, 8vw, 7.5rem); }
+.sectionHeading { display: grid; align-items: end; gap: 2rem; grid-template-columns: minmax(10rem, .35fr) 1fr; }
+.sectionHeading .eyebrow, .stageIntro .eyebrow { color: var(--color-blueprint); }
+.sectionHeading h2, .stageIntro h2, .changeIntro h2, .artifactIntro h2 { max-width: 18ch; font-family: var(--font-display), sans-serif; font-size: clamp(2.35rem, 4.8vw, 4.7rem); font-weight: 650; letter-spacing: -.055em; line-height: .96; text-wrap: balance; }
+.ruleGrid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 3rem; border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.ruleGrid article { min-height: 16rem; padding: 1.5rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); background: var(--color-surface); }
+.ruleGrid article > span { color: var(--color-blueprint); }
+.ruleGrid h3 { margin-top: 3rem; font-family: var(--font-display), sans-serif; font-size: 1.55rem; }
+.ruleGrid p { margin-top: .6rem; color: var(--color-copy); }
+.stages { background: var(--color-surface); }
+.stages .inner { display: grid; align-items: start; gap: clamp(3rem, 7vw, 7rem); grid-template-columns: minmax(17rem, .48fr) minmax(0, 1fr); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.stageIntro { position: sticky; top: 7rem; }
+.stageIntro h2 { margin-top: .85rem; }
+.stageIntro > p:last-child { max-width: 34rem; margin-top: 1.2rem; color: var(--color-copy); }
+.stageList { border-top: 1px solid var(--color-border-strong); }
+.stageList > li { display: grid; gap: 1.5rem; padding-block: clamp(2rem, 5vw, 3.5rem); border-bottom: 1px solid var(--color-border-strong); }
+.stageIdentity { display: grid; align-items: start; gap: .65rem 1rem; grid-template-columns: 2.5rem 2.5rem 1fr; }
+.stageIdentity > span { padding-top: .3rem; color: var(--color-blueprint); }
+.stageIdentity > svg { width: 2rem; height: 2rem; color: var(--color-signal-dark); }
+.stageIdentity h3 { font-family: var(--font-display), sans-serif; font-size: clamp(1.7rem, 3vw, 2.6rem); letter-spacing: -.03em; line-height: 1; }
+.stageIdentity > p { max-width: 48rem; grid-column: 3; color: var(--color-copy); }
+.stageList dl { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--color-border); border-left: 1px solid var(--color-border); }
+.stageList dl div { min-width: 0; padding: 1rem; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.stageList dt { color: var(--color-blueprint); font-family: var(--font-utility), monospace; font-size: .62rem; letter-spacing: .07em; text-transform: uppercase; }
+.stageList dd { margin-top: .55rem; color: var(--color-copy); }
+.gate { display: grid; gap: .5rem 1rem; grid-template-columns: 8rem 1fr; padding: 1rem; border-left: 3px solid var(--color-verified); background: color-mix(in srgb, var(--color-verified) 7%, white); }
+.gate span { color: var(--color-verified); }
+.gate p { font-weight: 650; }
+.changeControl { background: var(--color-ink); color: var(--color-on-ink); }
+.changeControl .inner { display: grid; gap: clamp(3rem, 7vw, 7rem); grid-template-columns: minmax(17rem, .55fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.changeIntro .eyebrow, .artifacts .eyebrow { color: var(--color-verified-light); }
+.changeIntro h2 { margin-top: .85rem; }
+.changeRail { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 25%, transparent); border-left: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent); }
+.changeRail li { min-height: 12rem; padding: 1.4rem; border-right: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent); }
+.changeRail span { color: var(--color-verified-light); }
+.changeRail p { max-width: 20rem; margin-top: 3rem; font-family: var(--font-display), sans-serif; font-size: 1.25rem; font-weight: 650; line-height: 1.15; }
+.artifacts { background: var(--color-blueprint); color: var(--color-on-ink); }
+.artifactIntro { display: grid; align-items: end; gap: 2rem; grid-template-columns: minmax(10rem, .32fr) minmax(0, 1fr) minmax(15rem, .48fr); }
+.artifactIntro > p:last-child { color: color-mix(in srgb, var(--color-on-ink) 76%, transparent); }
+.artifactRegister { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 3rem; border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 35%, transparent); border-left: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent); }
+.artifactRegister article { min-height: 17rem; padding: 1.4rem; border-right: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent); }
+.artifactRegister article > span { color: var(--color-verified-light); }
+.artifactRegister svg { float: right; width: 2rem; color: var(--color-signal-light); }
+.artifactRegister h3 { clear: both; padding-top: 3.5rem; font-family: var(--font-display), sans-serif; font-size: 1.4rem; }
+.artifactRegister p { margin-top: .65rem; color: color-mix(in srgb, var(--color-on-ink) 76%, transparent); }
+.artifactEmpty { display: flex; align-items: center; gap: 1.25rem; margin-top: 1.5rem; padding: 1.4rem; border: 1px solid color-mix(in srgb, var(--color-on-ink) 35%, transparent); background: color-mix(in srgb, var(--color-ink) 25%, transparent); }
+.artifactEmpty > svg { width: 2.5rem; flex: 0 0 auto; color: var(--color-verified-light); }
+.artifactEmpty h3 { font-family: var(--font-display), sans-serif; font-size: 1.25rem; }
+.artifactEmpty p { color: color-mix(in srgb, var(--color-on-ink) 76%, transparent); }
+.cta { background: var(--color-signal); color: var(--color-on-signal); }
+.ctaInner { display: grid; min-height: 24rem; align-items: center; gap: 3rem; grid-template-columns: 1fr auto; padding-block: 3rem; }
+.darkEyebrow { color: var(--color-on-signal); }
+.cta h2 { max-width: 16ch; margin-top: .75rem; font-family: var(--font-display), sans-serif; font-size: clamp(2.4rem, 5vw, 4.7rem); font-weight: 680; letter-spacing: -.055em; line-height: .95; }
+.ctaActions { display: grid; gap: .8rem; justify-items: stretch; }
+.ctaActions a { display: inline-flex; min-height: 3.15rem; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1rem; background: var(--color-ink); color: var(--color-on-ink); font-weight: 750; text-decoration: none; }
+.ctaActions a:last-child { border: 1px solid var(--color-on-signal); background: transparent; color: var(--color-on-signal); }
+@media (max-width: 68rem) {
+  .heroInner, .stages .inner, .changeControl .inner { grid-template-columns: 1fr; }
+  .heroInner { min-height: 0; }
+  .decisionLedger { max-width: 42rem; }
+  .stageIntro { position: static; }
+  .ruleGrid, .artifactRegister { grid-template-columns: repeat(2, 1fr); }
+  .artifactIntro { grid-template-columns: 1fr; }
+}
+@media (max-width: 48rem) {
+  .sectionHeading { grid-template-columns: 1fr; }
+  .stageList dl { grid-template-columns: 1fr; }
+  .changeRail { grid-template-columns: 1fr; }
+  .ctaInner { align-items: start; grid-template-columns: 1fr; justify-content: center; }
+}
+@media (max-width: 40rem) {
+  .hero h1 { font-size: clamp(2.85rem, 13vw, 4.2rem); }
+  .ruleGrid, .artifactRegister { grid-template-columns: 1fr; }
+  .stageIdentity { grid-template-columns: 2rem 2.25rem 1fr; }
+  .stageIdentity > p { grid-column: 1 / -1; }
+  .gate { grid-template-columns: 1fr; }
+  .artifactEmpty { align-items: flex-start; }
+}

@@ -103,7 +103,7 @@ html:not(.dark) .text-gray-600 {
    BASE STYLES
    ======================================== */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -160,7 +160,7 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(12px);
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), box-shadow var(--transition-base);
 }
 
 .card-base:hover {
@@ -182,7 +182,7 @@ body {
   backdrop-filter: blur(8px);
   border: 1px solid rgba(229, 231, 235, 1);
   /* gray-200 */
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
 .dark .card-service {
@@ -219,7 +219,7 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-full);
   color: var(--text-on-dark);
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .pill-base:hover {
@@ -245,7 +245,7 @@ body {
   background: var(--brand-primary);
   color: var(--text-on-primary);
   box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .btn-primary:hover {
@@ -258,7 +258,7 @@ body {
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .btn-secondary:hover {
@@ -360,7 +360,7 @@ body {
   width: 12px !important;
   height: 12px !important;
   border: 1px solid var(--border-subtle) !important;
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base), border-color var(--transition-base), opacity var(--transition-base), transform var(--transition-base);
   border-radius: var(--radius-full) !important;
   box-shadow: var(--shadow-sm);
 }
@@ -468,4 +468,94 @@ html body .swiper-pagination-vertical .swiper-pagination-bullet-active {
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ========================================
+   OPERATIONAL CLARITY FOUNDATION
+   ======================================== */
+:root {
+  --color-canvas: #eef3f6;
+  --color-surface: #ffffff;
+  --color-ink: #071624;
+  --color-copy: #425461;
+  --color-blueprint: #1f5f88;
+  --color-signal: #f2642a;
+  --color-signal-dark: #aa3b10;
+  --color-signal-light: #ffc6ad;
+  --color-verified: #0b706a;
+  --color-verified-light: #8ee8da;
+  --color-on-ink: #f7fafc;
+  --color-on-signal: #1d0b03;
+  --color-border: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  --color-border-strong: color-mix(in srgb, var(--color-ink) 28%, transparent);
+  --color-focus: #1d4e73;
+  --layout-max: 84rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+}
+
+html {
+  background: var(--color-canvas);
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body), sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: none;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-signal) 38%, white);
+  color: var(--color-ink);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.35rem;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform 120ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

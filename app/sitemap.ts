@@ -1,50 +1,38 @@
 import { MetadataRoute } from "next";
 
-export const dynamic = "force-static";
+import { getPublicCaseStudiesFromCms } from "@/lib/cms/case-studies";
+import { marketingServices } from "@/lib/content/marketing";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    return [
-        {
-            url: "https://imadi-innovations.com",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 1,
-        },
-        {
-            url: "https://imadi-innovations.com/privacy-policy",
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
-        },
-        {
-            url: "https://imadi-innovations.com/terms-of-service",
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
-        },
-        {
-            url: "https://imadi-innovations.com/contact",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.6,
-        },
-        {
-            url: "https://imadi-innovations.com/projects",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
-        {
-            url: "https://imadi-innovations.com/free-demo-app",
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
-        },
-        {
-            url: "https://imadi-innovations.com/submit-testimonial",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.4,
-        },
-    ];
+const siteUrl = "https://imadi-innovations.com";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const caseStudies = await getPublicCaseStudiesFromCms();
+  const corePages: MetadataRoute.Sitemap = [
+    { url: `${siteUrl}/`, changeFrequency: "monthly", priority: 1 },
+    { url: `${siteUrl}/services/`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/work/`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${siteUrl}/industries/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/process/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/about/`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${siteUrl}/products/`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${siteUrl}/tijarat/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${siteUrl}/contact/`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${siteUrl}/privacy-policy/`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${siteUrl}/terms-of-service/`, changeFrequency: "yearly", priority: 0.3 },
+  ];
+
+  const servicePages: MetadataRoute.Sitemap = marketingServices.map((service) => ({
+    url: `${siteUrl}/services/${service.slug}/`,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  const caseStudyPages: MetadataRoute.Sitemap = caseStudies.map((caseStudy) => ({
+    url: `${siteUrl}/work/${caseStudy.slug}/`,
+    lastModified: new Date(caseStudy.updatedAt),
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [...corePages, ...servicePages, ...caseStudyPages];
 }

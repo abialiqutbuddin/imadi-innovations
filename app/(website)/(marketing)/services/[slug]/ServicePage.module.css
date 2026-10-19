@@ -1,0 +1,107 @@
+.page { overflow: hidden; background: var(--color-canvas); color: var(--color-ink); }
+.hero, .fit, .outcomes, .deliverables, .workflow, .architecture, .related, .boundaries, .faq, .cta { padding-inline: var(--gutter); }
+.inner, .heroInner, .ctaInner { width: 100%; max-width: var(--layout-max); margin: 0 auto; }
+.eyebrow, .darkEyebrow, .heroMain nav, .problemList span, .outcomeGrid article > span, .deliverableList > li > span, .workflowRail > li > span, .case > p { font-family: var(--font-utility), monospace; font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.hero { position: relative; background: var(--color-ink); color: var(--color-on-ink); }
+.hero::after { position: absolute; inset: 0; background: radial-gradient(circle at 70% 10%, color-mix(in srgb, var(--color-verified) 20%, transparent), transparent 26rem); content: ""; pointer-events: none; }
+.heroInner { position: relative; z-index: 1; display: grid; min-height: 40rem; align-items: end; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .62fr); padding-block: clamp(4rem, 8vw, 7rem); }
+.heroMain nav { display: flex; min-height: 2rem; align-items: center; gap: .55rem; color: color-mix(in srgb, var(--color-on-ink) 60%, transparent); }
+.heroMain nav a { display: inline-flex; min-height: 2rem; align-items: center; color: var(--color-verified-light); }
+.heroGlyph { width: 3.5rem; height: 3.5rem; margin-top: clamp(3rem, 7vw, 6rem); color: var(--color-signal-light); }
+.hero h1 { max-width: 13ch; margin-top: 1rem; font-family: var(--font-display), sans-serif; font-size: clamp(3.2rem, 6.3vw, 6rem); font-weight: 680; letter-spacing: -.065em; line-height: .92; text-wrap: balance; }
+.heroMain > p { max-width: 42rem; margin-top: 1.35rem; color: color-mix(in srgb, var(--color-on-ink) 72%, transparent); font-size: 1.1rem; }
+.situation { padding: 1.5rem; border-top: 3px solid var(--color-verified-light); background: color-mix(in srgb, var(--color-on-ink) 7%, transparent); }
+.situation .eyebrow { color: var(--color-verified-light); }
+.situation h2 { margin-top: 1rem; font-family: var(--font-display), sans-serif; font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 600; line-height: 1.18; }
+.situation a { display: inline-flex; gap: .6rem; margin-top: 1.5rem; color: var(--color-verified-light); font-weight: 700; text-underline-offset: .25em; }
+.fit .inner, .outcomes .inner, .deliverables .inner, .architecture .inner, .related .inner { padding-block: clamp(4.5rem, 8vw, 7.5rem); }
+.fit .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(16rem, .7fr) 1fr; }
+.fit .eyebrow, .sectionHeading .eyebrow, .boundaryIntro .eyebrow, .faqIntro .eyebrow { color: var(--color-blueprint); }
+.fit h2, .sectionHeading h2, .workflowIntro h2, .boundaryIntro h2, .faqIntro h2 { max-width: 18ch; margin-top: .85rem; font-family: var(--font-display), sans-serif; font-size: clamp(2.25rem, 4.6vw, 4.55rem); font-weight: 650; letter-spacing: -.055em; line-height: .96; text-wrap: balance; }
+.problemList { border-top: 1px solid var(--color-border-strong); }
+.problemList li { display: grid; gap: 1rem; grid-template-columns: 2.5rem 1fr; padding-block: 1.4rem; border-bottom: 1px solid var(--color-border-strong); }
+.problemList span { color: var(--color-blueprint); }
+.problemList p { font-family: var(--font-display), sans-serif; font-size: clamp(1.2rem, 2.3vw, 1.7rem); font-weight: 600; line-height: 1.2; }
+.outcomes { background: #dfe9ed; }
+.sectionHeading { display: grid; align-items: end; gap: 1.5rem 3rem; grid-template-columns: minmax(10rem, .35fr) minmax(0, 1fr) minmax(14rem, .52fr); }
+.sectionHeading > p:last-child { max-width: 30rem; color: var(--color-copy); }
+.sectionHeading > a { justify-self: end; color: var(--color-blueprint); font-weight: 700; }
+.outcomeGrid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.outcomeGrid article { display: grid; min-height: 18rem; align-content: space-between; padding: 1.5rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); }
+.outcomeGrid article > span { color: var(--color-blueprint); }
+.outcomeGrid svg { width: 2.6rem; color: var(--color-verified); }
+.outcomeGrid p { max-width: 20rem; font-family: var(--font-display), sans-serif; font-size: 1.35rem; font-weight: 650; line-height: 1.15; }
+.deliverables { background: var(--color-surface); }
+.deliverables .sectionHeading, .architecture .sectionHeading { grid-template-columns: minmax(10rem, .35fr) 1fr; }
+.deliverableList { margin-top: 3rem; border-top: 1px solid var(--color-border-strong); }
+.deliverableList li { display: grid; gap: 2rem; grid-template-columns: minmax(4rem, .32fr) 1fr; padding-block: 2rem; border-bottom: 1px solid var(--color-border-strong); }
+.deliverableList > li > span { color: var(--color-signal-dark); }
+.deliverableList h3 { font-family: var(--font-display), sans-serif; font-size: clamp(1.6rem, 3vw, 2.6rem); line-height: 1.05; }
+.deliverableList p { max-width: 48rem; margin-top: .55rem; color: var(--color-copy); }
+.workflow { background: var(--color-ink); color: var(--color-on-ink); }
+.workflow .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(18rem, .7fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.workflow .eyebrow { color: var(--color-verified-light); }
+.workflowIntro > p:last-child { max-width: 34rem; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-on-ink) 68%, transparent); }
+.workflowRail { position: relative; }
+.workflowRail::before { position: absolute; top: 1rem; bottom: 1rem; left: 1rem; width: 1px; background: linear-gradient(var(--color-signal), var(--color-verified-light)); content: ""; }
+.workflowRail li { position: relative; display: grid; gap: 1.25rem; grid-template-columns: 2rem 1fr; padding-bottom: 2.2rem; }
+.workflowRail > li > span { z-index: 1; display: grid; width: 2rem; height: 2rem; place-content: center; border-radius: 50%; background: var(--color-ink); color: var(--color-verified-light); box-shadow: 0 0 0 1px var(--color-verified-light); }
+.workflowRail h3 { font-family: var(--font-display), sans-serif; font-size: 1.45rem; }
+.workflowRail p { margin-top: .35rem; color: color-mix(in srgb, var(--color-on-ink) 68%, transparent); }
+.architectureGrid { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); margin-top: 3rem; }
+.architectureGrid article { min-height: 16rem; padding: 1.5rem; border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+.architectureGrid svg { width: 2.5rem; color: var(--color-blueprint); }
+.architectureGrid h3 { margin-top: 3rem; font-family: var(--font-display), sans-serif; font-size: 1.6rem; }
+.architectureGrid p { margin-top: .55rem; color: var(--color-copy); }
+.related { background: #dfe9ed; }
+.caseGrid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+.case { padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-strong); color: inherit; text-decoration: none; }
+.caseMedia { position: relative; display: grid; min-height: 15rem; overflow: hidden; margin-bottom: 1.25rem; place-content: center; background: #cbdadd; }
+.caseMedia img { object-fit: cover; object-position: top; transition: transform 250ms ease; }
+.case:hover img { transform: scale(1.02); }
+.caseMedia svg { width: 2.5rem; color: var(--color-blueprint); }
+.case > p { color: var(--color-blueprint); }
+.case h3 { margin-top: .5rem; font-family: var(--font-display), sans-serif; font-size: 1.5rem; line-height: 1.08; }
+.emptyState { display: flex; align-items: center; gap: 1.25rem; margin-top: 3rem; padding: 1.5rem; border: 1px solid var(--color-border-strong); background: color-mix(in srgb, var(--color-surface) 78%, transparent); }
+.emptyState svg { width: 2.5rem; flex: 0 0 auto; color: var(--color-blueprint); }
+.emptyState h3 { font-family: var(--font-display), sans-serif; font-size: 1.35rem; }
+.emptyState p { color: var(--color-copy); }
+.boundaries { background: var(--color-surface); }
+.boundaries .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(17rem, .65fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.boundaryColumns { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.boundaryColumns > div { padding: 1.5rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); }
+.boundaryColumns h3 { min-height: 4.5rem; font-family: var(--font-display), sans-serif; font-size: 1.25rem; line-height: 1.2; }
+.boundaryColumns h3 span { margin-right: .4rem; color: var(--color-verified); }
+.boundaryColumns > div:last-child h3 span { color: var(--color-signal-dark); }
+.boundaryColumns li { position: relative; padding: .8rem 0 .8rem 1rem; border-top: 1px solid var(--color-border); color: var(--color-copy); }
+.boundaryColumns li::before { position: absolute; left: 0; content: "—"; }
+.faq .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(16rem, .55fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.faqList { border-top: 1px solid var(--color-border-strong); }
+.faqList details { border-bottom: 1px solid var(--color-border-strong); }
+.faqList summary { display: flex; min-height: 4.5rem; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; font-family: var(--font-display), sans-serif; font-size: 1.2rem; font-weight: 650; list-style: none; }
+.faqList summary::-webkit-details-marker { display: none; }
+.faqList summary span { color: var(--color-signal-dark); font-size: 1.5rem; }
+.faqList details[open] summary span { transform: rotate(45deg); }
+.faqList details p { padding: 0 2rem 1.5rem 0; color: var(--color-copy); }
+.cta { background: var(--color-signal); color: var(--color-on-signal); }
+.ctaInner { display: flex; min-height: 24rem; align-items: center; justify-content: space-between; gap: 3rem; padding-block: 3rem; }
+.darkEyebrow { color: var(--color-on-signal); }
+.cta h2 { max-width: 16ch; margin-top: .7rem; font-family: var(--font-display), sans-serif; font-size: clamp(2.4rem, 5vw, 4.7rem); font-weight: 680; letter-spacing: -.055em; line-height: .95; }
+.cta p:last-child { max-width: 42rem; margin-top: 1rem; }
+.cta a { display: inline-flex; min-height: 3.25rem; align-items: center; gap: .8rem; flex: 0 0 auto; padding: .85rem 1.15rem; background: var(--color-ink); color: var(--color-on-ink); font-weight: 750; text-decoration: none; }
+@media (max-width: 60rem) {
+  .heroInner, .fit .inner, .workflow .inner, .boundaries .inner, .faq .inner { grid-template-columns: 1fr; }
+  .heroInner { min-height: 0; }
+  .situation { max-width: 38rem; }
+  .sectionHeading { grid-template-columns: 1fr; }
+  .sectionHeading > a { justify-self: start; }
+  .caseGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 44rem) {
+  .hero h1 { font-size: clamp(3rem, 15vw, 4.8rem); }
+  .outcomeGrid, .architectureGrid, .caseGrid, .boundaryColumns { grid-template-columns: 1fr; }
+  .outcomeGrid article { min-height: 14rem; }
+  .deliverableList li { grid-template-columns: 2.5rem 1fr; gap: 1rem; }
+  .ctaInner { align-items: flex-start; flex-direction: column; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .caseMedia img { transition: none; } }

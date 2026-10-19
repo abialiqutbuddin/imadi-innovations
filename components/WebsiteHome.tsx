@@ -180,42 +180,6 @@ const demoFeatures = [
 
 const heroOutcomes = ["Dashboards", "Workflows", "One system"];
 
-const fallbackSocialProof: SocialProofContent = {
-    eyebrow: "Our Impact",
-    heading: "Trusted by teams around the world.",
-    stats: [
-        { value: "50+", label: "Projects Delivered" },
-        { value: "6+", label: "Countries Served" },
-        { value: "99.9%", label: "Uptime Delivered" },
-        { value: "40%", label: "Avg. Cost Reduction" },
-    ],
-    industries: ["Logistics", "Education", "Healthcare", "Retail", "Services", "Community Platforms"],
-};
-
-const fallbackTestimonials: Testimonial[] = [
-    {
-        name: "Sood Khan",
-        role: "CTO",
-        company: "PayLite",
-        quote: "Imadi Innovations built a system that completely transformed how we operate. The team is reliable, fast, and truly understands our needs.",
-        rating: 5,
-    },
-    {
-        name: "Dr. Ayesha Malik",
-        role: "Operations Head",
-        company: "eClinicAssist",
-        quote: "They turned our manual clinic workflow into a clear system our team can actually use every day.",
-        rating: 5,
-    },
-    {
-        name: "Usman Tariq",
-        role: "Founder",
-        company: "Restro",
-        quote: "Professional, proactive, and always deliver beyond expectations. Highly recommended.",
-        rating: 5,
-    },
-];
-
 const toneStyles: Record<string, string> = {
     violet: "bg-violet-100 text-violet-600 border-violet-200 dark:bg-violet-500/10 dark:text-violet-300 dark:border-violet-400/20",
     blue: "bg-blue-100 text-blue-600 border-blue-200 dark:bg-blue-500/10 dark:text-blue-300 dark:border-blue-400/20",
@@ -331,10 +295,7 @@ function SiteHeader() {
                     <span className="relative flex h-11 w-11 overflow-hidden rounded-full border border-white/15 bg-white/10">
                         <Image src="/logo.jpg" alt="Imadi Innovations" width={44} height={44} className="h-full w-full object-cover" priority />
                     </span>
-                    <span className="leading-none">
-                        <span className="block text-base font-extrabold tracking-wide text-orange-400">IMADI</span>
-                        <span className="block text-[10px] font-bold uppercase tracking-[0.22em] text-white">Innovations</span>
-                    </span>
+                    <span className="text-sm font-extrabold tracking-wide text-orange-400 sm:text-base">Imadi Innovations</span>
                 </a>
 
                 <nav className="hidden items-center gap-7 lg:flex">
@@ -1136,10 +1097,7 @@ function CTAFooter() {
                     <div>
                         <div className="flex items-center gap-3">
                             <Image src="/logo.jpg" alt="Imadi Innovations" width={44} height={44} className="rounded-full" />
-                            <div>
-                                <p className="font-black text-orange-400">IMADI</p>
-                                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white">Innovations</p>
-                            </div>
+                            <p className="font-black text-orange-400">Imadi Innovations</p>
                         </div>
                         <p className="mt-5 max-w-sm text-sm leading-7 text-white/62">
                             Imadi Innovations builds custom mobile apps, web apps, desktop software, AI integrations, and business automation systems for companies that want practical software built around their workflow.
@@ -1217,27 +1175,27 @@ export default function WebsiteHome({
     socialProof,
     testimonials = [],
 }: WebsiteHomeProps) {
-    const proof = {
-        ...fallbackSocialProof,
-        ...socialProof,
-        stats: socialProof?.stats?.length ? socialProof.stats : fallbackSocialProof.stats,
-        industries: socialProof?.industries?.length ? socialProof.industries : fallbackSocialProof.industries,
+    const proof: SocialProofContent = socialProof ?? {
+        eyebrow: "",
+        heading: "",
+        stats: [],
+        industries: [],
     };
-    const quotes = testimonials.length ? testimonials : fallbackTestimonials;
+    const quotes = testimonials;
 
     return (
         <main className="min-h-screen overflow-x-hidden bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
             <SmoothPageScroller />
             <SiteHeader />
             <HeroSection />
-            <StatStrip stats={proof.stats} />
+            {proof.stats.length > 0 ? <StatStrip stats={proof.stats} /> : null}
             <ServicesSection />
             <WhySection />
             <ProblemsSection />
             <ProjectsSection projects={projects} />
             <ProcessSection />
             <FreeDemoOfferSection />
-            <TestimonialsSection testimonials={quotes} />
+            {quotes.length > 0 ? <TestimonialsSection testimonials={quotes} /> : null}
             <AboutSection />
             <ContactSection />
             <CTAFooter />

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy | Imadi Innovations",
     description: "Privacy Policy for Imadi Innovations software development, AI automation, and digital product services.",
     alternates: {
-        canonical: "/privacy-policy",
+        canonical: "/privacy-policy/",
     },
 };
 

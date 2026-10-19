@@ -41,14 +41,9 @@ export default function MobileLayout({
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col justify-center">
-                        <span className="text-xs font-bold tracking-wide text-brand-orange leading-tight">
-                            IMADI
-                        </span>
-                        <span className="text-[9px] text-gray-400 tracking-wider uppercase font-medium">
-                            Innovations
-                        </span>
-                    </div>
+                    <span className="text-xs font-bold tracking-wide text-brand-orange leading-tight">
+                        Imadi Innovations
+                    </span>
                 </div>
 
                 <div className="flex items-center gap-3">

@@ -1,0 +1,80 @@
+.page { overflow: hidden; background: var(--color-canvas); color: var(--color-ink); }
+.hero, .origin, .accountability, .location, .continuity, .principles, .cta { padding-inline: var(--gutter); }
+.inner, .heroInner, .ctaInner { width: 100%; max-width: var(--layout-max); margin: 0 auto; }
+.eyebrow, .darkEyebrow, .thesis li span, .stateLabel, .capabilityMap article > span, .locationGrid dt, .continuityGrid article > span, .principleList article > span { font-family: var(--font-utility), monospace; font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.hero { position: relative; background: var(--color-ink); color: var(--color-on-ink); }
+.hero::before { position: absolute; inset: 0; background: radial-gradient(circle at 80% 35%, color-mix(in srgb, var(--color-verified) 22%, transparent), transparent 28rem); content: ""; }
+.heroInner { position: relative; display: grid; min-height: 40rem; align-items: end; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .62fr); padding-block: clamp(5rem, 10vw, 8rem); }
+.hero .eyebrow { display: flex; align-items: center; gap: .65rem; color: var(--color-verified-light); }
+.hero .eyebrow > span { width: .55rem; height: .55rem; border-radius: 50%; background: var(--color-signal); box-shadow: 0 0 0 .3rem color-mix(in srgb, var(--color-signal) 16%, transparent); }
+.hero h1 { max-width: 13ch; margin-top: 1rem; font-family: var(--font-display), sans-serif; font-size: clamp(3.2rem, 6.4vw, 6rem); font-weight: 680; letter-spacing: -.065em; line-height: .92; text-wrap: balance; }
+.heroCopy > p:last-child { max-width: 42rem; margin-top: 1.4rem; color: color-mix(in srgb, var(--color-on-ink) 72%, transparent); font-size: 1.1rem; }
+.thesis { padding: 1.5rem; border-top: 3px solid var(--color-verified-light); background: color-mix(in srgb, var(--color-on-ink) 7%, transparent); }
+.thesis > .eyebrow { color: var(--color-verified-light); }
+.thesis ol { margin-top: 1rem; border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent); }
+.thesis li { display: grid; gap: 1rem; grid-template-columns: 2.5rem 1fr; padding-block: .8rem; border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent); }
+.thesis li span { color: var(--color-signal-light); }
+.origin .inner, .accountability .inner, .continuity .inner { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.origin > .inner > .eyebrow, .sectionHeading > .eyebrow, .principleIntro .eyebrow { color: var(--color-blueprint); }
+.origin > .inner > div { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(16rem, .7fr) 1fr; margin-top: 1.25rem; }
+.origin h2, .sectionHeading h2, .locationIntro h2, .principleIntro h2 { max-width: 18ch; font-family: var(--font-display), sans-serif; font-size: clamp(2.3rem, 4.8vw, 4.7rem); font-weight: 650; letter-spacing: -.055em; line-height: .96; text-wrap: balance; }
+.originCopy { max-width: 50rem; border-top: 1px solid var(--color-border-strong); }
+.originCopy p { padding-block: 1.4rem; border-bottom: 1px solid var(--color-border-strong); color: var(--color-copy); font-size: 1.08rem; }
+.accountability { background: #dfe9ed; }
+.sectionHeading { display: grid; align-items: end; gap: 1.5rem 3rem; grid-template-columns: minmax(10rem, .35fr) 1fr; }
+.accountabilityGrid { display: grid; gap: 1rem; grid-template-columns: minmax(16rem, .58fr) 1.42fr; margin-top: 3rem; }
+.profileState { display: flex; min-height: 25rem; align-items: flex-start; flex-direction: column; padding: 1.5rem; border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+.profileState svg { width: 3rem; color: var(--color-blueprint); }
+.stateLabel { margin-top: auto; padding-top: 3rem; color: var(--color-blueprint); }
+.profileState h3 { margin-top: .6rem; font-family: var(--font-display), sans-serif; font-size: 1.65rem; line-height: 1.1; }
+.profileState > p:last-child { margin-top: .75rem; color: var(--color-copy); }
+.capabilityMap { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.capabilityMap article { min-height: 12rem; padding: 1.25rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); background: color-mix(in srgb, var(--color-surface) 62%, transparent); }
+.capabilityMap article > span { color: var(--color-blueprint); }
+.capabilityMap svg { float: right; width: 2.4rem; color: var(--color-signal-dark); }
+.capabilityMap h3 { clear: both; padding-top: 2rem; font-family: var(--font-display), sans-serif; font-size: 1.3rem; line-height: 1.1; }
+.capabilityMap p { margin-top: .5rem; color: var(--color-copy); }
+.capabilityNote { margin-top: 1rem; padding-left: 1rem; border-left: 3px solid var(--color-blueprint); color: var(--color-copy); }
+.location { background: var(--color-ink); color: var(--color-on-ink); }
+.location .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(17rem, .7fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.location .eyebrow { color: var(--color-verified-light); }
+.locationIntro h2 { margin-top: .85rem; }
+.locationGrid { border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent); }
+.locationGrid div { display: grid; gap: 1.5rem; grid-template-columns: 8rem 1fr; padding-block: 1.2rem; border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 22%, transparent); }
+.locationGrid dt { color: var(--color-verified-light); }
+.locationGrid dd { color: color-mix(in srgb, var(--color-on-ink) 78%, transparent); }
+.continuity { background: var(--color-surface); }
+.continuityGrid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 3rem; border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.continuityGrid article { min-height: 18rem; padding: 1.4rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); }
+.continuityGrid article > span { color: var(--color-blueprint); }
+.continuityGrid h3 { margin-top: 3rem; font-family: var(--font-display), sans-serif; font-size: 1.5rem; }
+.continuityGrid p { margin-top: .6rem; color: var(--color-copy); }
+.principles .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(17rem, .62fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.principleIntro h2 { margin-top: .85rem; }
+.principleList { border-top: 1px solid var(--color-border-strong); }
+.principleList article { display: grid; gap: 1rem 1.5rem; grid-template-columns: 2.5rem 1fr 9rem; padding-block: 1.5rem; border-bottom: 1px solid var(--color-border-strong); }
+.principleList article > span { color: var(--color-blueprint); }
+.principleList h3 { font-family: var(--font-display), sans-serif; font-size: 1.3rem; }
+.principleList p { margin-top: .4rem; color: var(--color-copy); }
+.principleList a { align-self: end; color: var(--color-blueprint); font-weight: 700; }
+.cta { background: var(--color-signal); color: var(--color-on-signal); }
+.ctaInner { display: flex; min-height: 23rem; align-items: center; justify-content: space-between; gap: 3rem; padding-block: 3rem; }
+.darkEyebrow { color: var(--color-on-signal); }
+.cta h2 { max-width: 16ch; margin-top: .75rem; font-family: var(--font-display), sans-serif; font-size: clamp(2.4rem, 5vw, 4.7rem); font-weight: 680; letter-spacing: -.055em; line-height: .95; }
+.cta a { display: inline-flex; min-height: 3.25rem; align-items: center; gap: .8rem; flex: 0 0 auto; padding: .85rem 1.15rem; background: var(--color-ink); color: var(--color-on-ink); font-weight: 750; text-decoration: none; }
+@media (max-width: 60rem) {
+  .heroInner, .origin > .inner > div, .location .inner, .principles .inner { grid-template-columns: 1fr; }
+  .heroInner { min-height: 0; }
+  .thesis { max-width: 38rem; }
+  .accountabilityGrid { grid-template-columns: 1fr; }
+  .continuityGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 44rem) {
+  .hero h1 { font-size: clamp(3rem, 15vw, 4.8rem); }
+  .sectionHeading { grid-template-columns: 1fr; }
+  .capabilityMap, .continuityGrid { grid-template-columns: 1fr; }
+  .locationGrid div { grid-template-columns: 1fr; gap: .3rem; }
+  .principleList article { grid-template-columns: 2.5rem 1fr; }
+  .principleList a { grid-column: 2; }
+  .ctaInner { align-items: flex-start; flex-direction: column; justify-content: center; }
+}

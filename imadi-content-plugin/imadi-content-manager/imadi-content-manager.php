@@ -2,7 +2,7 @@
 /**
  * Plugin Name: IMADI Content Manager
  * Description: Adds portfolio projects, testimonials, contact messages, and social proof content endpoints for the IMADI Innovations website.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Author: IMADI Innovations
  */
 
@@ -208,13 +208,63 @@ class Imadi_Content_Manager
         $desktop_id = absint(get_post_meta($post->ID, 'desktopImgId', true));
         $mobile_id = absint(get_post_meta($post->ID, 'mobileImgId', true));
         $hide_desktop = (bool) get_post_meta($post->ID, 'hideDesktop', true);
+        $industry = get_post_meta($post->ID, 'industry', true);
+        $situation = get_post_meta($post->ID, 'situation', true);
+        $problem = get_post_meta($post->ID, 'problem', true);
+        $objective = get_post_meta($post->ID, 'objective', true);
+        $success_criteria = get_post_meta($post->ID, 'successCriteria', true);
+        $constraints = get_post_meta($post->ID, 'constraints', true);
+        $decision_title = get_post_meta($post->ID, 'decisionTitle', true);
+        $decision_rationale = get_post_meta($post->ID, 'decisionRationale', true);
+        $outcome_statement = get_post_meta($post->ID, 'outcomeStatement', true);
+        $outcome_verified = (bool) get_post_meta($post->ID, 'outcomeVerified', true);
+        $outcome_verified_at = get_post_meta($post->ID, 'outcomeVerifiedAt', true);
+        $outcome_evidence_owner = get_post_meta($post->ID, 'outcomeEvidenceOwner', true);
+        $outcome_source_note = get_post_meta($post->ID, 'outcomeSourceNote', true);
+        $duration = get_post_meta($post->ID, 'duration', true);
+        $team = get_post_meta($post->ID, 'team', true);
+        $engagement_model = get_post_meta($post->ID, 'engagementModel', true);
 
         if (!is_array($features)) {
             $features = [];
         }
 
+        if (!is_array($success_criteria)) {
+            $success_criteria = [];
+        }
+
+        if (!is_array($constraints)) {
+            $constraints = [];
+        }
+
         $this->text_field('Headline', 'imadi_headline', $headline, 'Short large heading shown inside the project slide.');
         $this->textarea_field('Description', 'imadi_description', $description);
+        $this->text_field('Industry', 'imadi_industry', $industry, 'Used on the Work index and case-study page.');
+        $this->textarea_field('Operating Situation', 'imadi_situation', $situation);
+        $this->textarea_field('Operational Problem', 'imadi_problem', $problem);
+        $this->textarea_field('Project Objective', 'imadi_objective', $objective);
+        $this->textarea_field('Success Criteria', 'imadi_success_criteria', implode("\n", $success_criteria));
+        $this->textarea_field('Constraints and Risks', 'imadi_constraints', implode("\n", $constraints));
+        $this->text_field('Key Decision', 'imadi_decision_title', $decision_title, 'A product or technical choice that shaped the delivered system.');
+        $this->textarea_field('Decision Rationale', 'imadi_decision_rationale', $decision_rationale);
+        $this->textarea_field('Public Outcome', 'imadi_outcome_statement', $outcome_statement);
+        $this->text_field('Outcome Verification Date', 'imadi_outcome_verified_at', $outcome_verified_at, 'Use YYYY-MM-DD. The outcome remains unpublished without a valid date.');
+        $this->text_field('Outcome Evidence Owner', 'imadi_outcome_evidence_owner', $outcome_evidence_owner, 'Internal accountability field. Only its completion status is exposed by the public endpoint.');
+        $this->textarea_field('Private Outcome Source Note', 'imadi_outcome_source_note', $outcome_source_note);
+        ?>
+        <div class="imadi-field">
+            <label>
+                <input type="checkbox" name="imadi_outcome_verified" value="1" <?php checked($outcome_verified); ?> />
+                This public outcome has been verified and may appear on the website
+            </label>
+        </div>
+        <?php
+        $this->text_field('Approved Duration', 'imadi_duration', $duration, 'Leave blank when duration is not approved for publication.');
+        $this->text_field('Approved Team', 'imadi_team', $team, 'Leave blank when team information is not approved for publication.');
+        $this->text_field('Approved Engagement Model', 'imadi_engagement_model', $engagement_model, 'Leave blank when the engagement model is not approved for publication.');
+        ?>
+        <p class="imadi-help">Enter one Success Criteria or Constraints and Risks item per line. Screenshot alt text and captions are managed in the WordPress Media Library.</p>
+        <?php
         ?>
         <div class="imadi-field">
             <label for="imadi_type">Project Type</label>
@@ -366,6 +416,22 @@ class Imadi_Content_Manager
         update_post_meta($post_id, 'desktopImgId', absint($_POST['imadi_desktop_img_id'] ?? 0));
         update_post_meta($post_id, 'mobileImgId', absint($_POST['imadi_mobile_img_id'] ?? 0));
         update_post_meta($post_id, 'hideDesktop', isset($_POST['imadi_hide_desktop']) ? '1' : '0');
+        update_post_meta($post_id, 'industry', sanitize_text_field($_POST['imadi_industry'] ?? ''));
+        update_post_meta($post_id, 'situation', sanitize_textarea_field($_POST['imadi_situation'] ?? ''));
+        update_post_meta($post_id, 'problem', sanitize_textarea_field($_POST['imadi_problem'] ?? ''));
+        update_post_meta($post_id, 'objective', sanitize_textarea_field($_POST['imadi_objective'] ?? ''));
+        update_post_meta($post_id, 'successCriteria', $this->sanitize_lines($_POST['imadi_success_criteria'] ?? ''));
+        update_post_meta($post_id, 'constraints', $this->sanitize_lines($_POST['imadi_constraints'] ?? ''));
+        update_post_meta($post_id, 'decisionTitle', sanitize_text_field($_POST['imadi_decision_title'] ?? ''));
+        update_post_meta($post_id, 'decisionRationale', sanitize_textarea_field($_POST['imadi_decision_rationale'] ?? ''));
+        update_post_meta($post_id, 'outcomeStatement', sanitize_textarea_field($_POST['imadi_outcome_statement'] ?? ''));
+        update_post_meta($post_id, 'outcomeVerified', isset($_POST['imadi_outcome_verified']) ? '1' : '0');
+        update_post_meta($post_id, 'outcomeVerifiedAt', sanitize_text_field($_POST['imadi_outcome_verified_at'] ?? ''));
+        update_post_meta($post_id, 'outcomeEvidenceOwner', sanitize_text_field($_POST['imadi_outcome_evidence_owner'] ?? ''));
+        update_post_meta($post_id, 'outcomeSourceNote', sanitize_textarea_field($_POST['imadi_outcome_source_note'] ?? ''));
+        update_post_meta($post_id, 'duration', sanitize_text_field($_POST['imadi_duration'] ?? ''));
+        update_post_meta($post_id, 'team', sanitize_text_field($_POST['imadi_team'] ?? ''));
+        update_post_meta($post_id, 'engagementModel', sanitize_text_field($_POST['imadi_engagement_model'] ?? ''));
 
         $features = [];
         if (isset($_POST['imadi_features']) && is_array($_POST['imadi_features'])) {
@@ -650,6 +716,7 @@ class Imadi_Content_Manager
         $projects = array_map(function ($post) {
             return [
                 'id' => $post->ID,
+                'slug' => $post->post_name,
                 'title' => get_the_title($post),
                 'headline' => get_post_meta($post->ID, 'headline', true),
                 'description' => get_post_meta($post->ID, 'description', true),
@@ -658,7 +725,26 @@ class Imadi_Content_Manager
                 'techStack' => get_post_meta($post->ID, 'techStack', true),
                 'desktopImg' => $this->image_url(get_post_meta($post->ID, 'desktopImgId', true)),
                 'mobileImg' => $this->image_url(get_post_meta($post->ID, 'mobileImgId', true)),
+                'desktopMedia' => $this->image_data(get_post_meta($post->ID, 'desktopImgId', true)),
+                'mobileMedia' => $this->image_data(get_post_meta($post->ID, 'mobileImgId', true)),
                 'hideDesktop' => (bool) get_post_meta($post->ID, 'hideDesktop', true),
+                'industry' => get_post_meta($post->ID, 'industry', true),
+                'situation' => get_post_meta($post->ID, 'situation', true),
+                'problem' => get_post_meta($post->ID, 'problem', true),
+                'objective' => get_post_meta($post->ID, 'objective', true),
+                'successCriteria' => get_post_meta($post->ID, 'successCriteria', true) ?: [],
+                'constraints' => get_post_meta($post->ID, 'constraints', true) ?: [],
+                'decisionTitle' => get_post_meta($post->ID, 'decisionTitle', true),
+                'decisionRationale' => get_post_meta($post->ID, 'decisionRationale', true),
+                'outcomeStatement' => get_post_meta($post->ID, 'outcomeStatement', true),
+                'outcomeVerified' => (bool) get_post_meta($post->ID, 'outcomeVerified', true),
+                'outcomeVerifiedAt' => get_post_meta($post->ID, 'outcomeVerifiedAt', true),
+                'outcomeEvidenceOwnerRecorded' => get_post_meta($post->ID, 'outcomeEvidenceOwner', true) !== '',
+                'outcomeSourceRecorded' => get_post_meta($post->ID, 'outcomeSourceNote', true) !== '',
+                'duration' => get_post_meta($post->ID, 'duration', true),
+                'team' => get_post_meta($post->ID, 'team', true),
+                'engagementModel' => get_post_meta($post->ID, 'engagementModel', true),
+                'updatedAt' => get_post_modified_time('c', true, $post),
             ];
         }, $query->posts);
 
@@ -886,6 +972,33 @@ class Imadi_Content_Manager
     {
         $attachment_id = absint($attachment_id);
         return $attachment_id ? wp_get_attachment_url($attachment_id) : null;
+    }
+
+    private function image_data($attachment_id)
+    {
+        $attachment_id = absint($attachment_id);
+        if (!$attachment_id) {
+            return null;
+        }
+
+        $image = wp_get_attachment_image_src($attachment_id, 'full');
+        if (!$image) {
+            return null;
+        }
+
+        return [
+            'src' => $image[0],
+            'width' => absint($image[1]),
+            'height' => absint($image[2]),
+            'alt' => get_post_meta($attachment_id, '_wp_attachment_image_alt', true),
+            'caption' => wp_get_attachment_caption($attachment_id) ?: '',
+        ];
+    }
+
+    private function sanitize_lines($value)
+    {
+        $lines = preg_split('/\r\n|\r|\n/', sanitize_textarea_field($value));
+        return array_values(array_filter(array_map('trim', $lines)));
     }
 }
 

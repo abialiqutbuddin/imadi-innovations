@@ -1,0 +1,192 @@
+.page {
+  min-height: 70vh;
+  padding: clamp(3rem, 8vw, 7rem) var(--gutter);
+  background:
+    linear-gradient(to right, color-mix(in srgb, var(--color-blueprint) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-blueprint) 8%, transparent) 1px, transparent 1px),
+    var(--color-canvas);
+  background-size: 4.75rem 4.75rem;
+}
+
+.confirmation {
+  display: grid;
+  max-width: 64rem;
+  place-items: center;
+  margin: 0 auto;
+}
+
+.panel {
+  width: 100%;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.65rem;
+  background: var(--color-surface);
+  box-shadow: 0 2rem 5rem color-mix(in srgb, var(--color-blueprint) 12%, transparent);
+}
+
+.statusGraphic {
+  display: grid;
+  max-width: 25rem;
+  align-items: center;
+  grid-template-columns: 3.5rem 1fr 3.5rem 1fr 3.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.statusGraphic span {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  border: 1px solid var(--color-blueprint);
+  border-radius: 0.4rem;
+  background: var(--color-canvas);
+  color: var(--color-blueprint);
+}
+
+.statusGraphic span:last-child {
+  border-color: var(--color-verified);
+  color: var(--color-verified);
+}
+
+.statusGraphic svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.statusGraphic i {
+  height: 1px;
+  background: var(--color-blueprint);
+}
+
+.eyebrow,
+.links small {
+  color: var(--color-blueprint);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  max-width: 14ch;
+  margin-top: 0.9rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.6rem);
+  font-weight: 670;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 45rem;
+  margin-top: 1.4rem;
+  color: var(--color-copy);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.expectation {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2rem 1fr;
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  border-left: 3px solid var(--color-signal);
+  background: color-mix(in srgb, var(--color-signal) 7%, white);
+}
+
+.expectation > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-signal-dark);
+}
+
+.expectation h2 {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.25rem;
+}
+
+.expectation p {
+  margin-top: 0.4rem;
+  color: var(--color-copy);
+}
+
+.expectation a {
+  color: var(--color-blueprint);
+  font-weight: 700;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--color-border-strong);
+  border-left: 1px solid var(--color-border);
+}
+
+.links a {
+  display: grid;
+  min-height: 8rem;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: 2rem 1fr auto;
+  padding: 1.25rem;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.links a:hover {
+  background: var(--color-canvas);
+}
+
+.links svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-blueprint);
+}
+
+.links small {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.links b {
+  color: var(--color-signal-dark);
+}
+
+.homeLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  margin-top: 2rem;
+  color: var(--color-blueprint);
+  font-weight: 700;
+  text-underline-offset: 0.3em;
+}
+
+@media (max-width: 36rem) {
+  .statusGraphic {
+    grid-template-columns: 3rem 1fr 3rem 1fr 3rem;
+  }
+
+  .statusGraphic span {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .links {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .links a {
+    transition: none;
+  }
+}

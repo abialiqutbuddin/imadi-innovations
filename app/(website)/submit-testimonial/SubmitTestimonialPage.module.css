@@ -1,0 +1,55 @@
+.page {
+  background: var(--color-canvas);
+}
+
+.hero,
+.formSection {
+  padding-inline: var(--gutter);
+}
+
+.hero {
+  border-bottom: 1px solid var(--color-border);
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--color-blueprint) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--color-blueprint) 8%, transparent) 1px, transparent 1px);
+  background-size: 4.75rem 4.75rem;
+}
+
+.heroInner {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.eyebrow {
+  color: var(--color-blueprint);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 16ch;
+  margin-top: 1rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 670;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.hero p:last-child {
+  max-width: 47rem;
+  margin-top: 1.5rem;
+  color: var(--color-copy);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.formSection {
+  max-width: calc(var(--layout-max) + (2 * var(--gutter)));
+  margin: 0 auto;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}

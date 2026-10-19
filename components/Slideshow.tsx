@@ -86,14 +86,9 @@ export default function Slideshow({
                                     priority
                                 />
                             </div>
-                            <div className="leading-tight text-foreground flex flex-col justify-center">
-                                <p className="text-[14px] font-bold tracking-wide text-brand-orange">
-                                    IMADI
-                                </p>
-                                <p className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-                                    Innovations
-                                </p>
-                            </div>
+                            <p className="text-[14px] font-bold tracking-wide text-brand-orange">
+                                Imadi Innovations
+                            </p>
                         </div>
 
                         <div className="hidden items-center gap-6 md:flex pointer-events-auto">

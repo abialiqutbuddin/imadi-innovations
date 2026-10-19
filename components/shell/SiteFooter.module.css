@@ -1,0 +1,108 @@
+.footer {
+  padding: clamp(4rem, 8vw, 7rem) var(--gutter) max(1.5rem, env(safe-area-inset-bottom));
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+.grid,
+.legal {
+  max-width: var(--layout-max);
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(9rem, 1fr));
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.statement > p:nth-child(2) {
+  max-width: 28rem;
+  margin: 1rem 0 1.5rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.eyebrow,
+.grid nav > p {
+  color: var(--color-verified-light);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.statement a,
+.grid nav a,
+.legal a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-underline-offset: 0.25em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.statement a,
+.legal a {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+}
+
+.statement a:hover,
+.grid nav a:hover,
+.legal a:hover {
+  color: var(--color-signal-light);
+  text-decoration-color: currentColor;
+}
+
+.grid nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.grid nav > p {
+  margin-bottom: 0.4rem;
+}
+
+.grid nav a {
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.legal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 18%, transparent);
+  color: color-mix(in srgb, var(--color-on-ink) 68%, transparent);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.72rem;
+}
+
+.legal div {
+  display: flex;
+  gap: 1.25rem;
+}
+
+@media (max-width: 44rem) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .statement {
+    grid-column: 1 / -1;
+  }
+
+  .legal {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

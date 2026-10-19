@@ -1,0 +1,109 @@
+.page { overflow: hidden; background: var(--color-canvas); color: var(--color-ink); }
+.hero, .routes, .problemMap, .engagements, .work, .assurance, .faq, .cta { padding-inline: var(--gutter); }
+.inner, .heroInner, .ctaInner { width: 100%; max-width: var(--layout-max); margin: 0 auto; }
+.hero { position: relative; background: var(--color-ink); color: var(--color-on-ink); }
+.hero::before { position: absolute; inset: 0; background-image: linear-gradient(90deg, color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px), linear-gradient(color-mix(in srgb, var(--color-verified) 10%, transparent) 1px, transparent 1px); background-size: 3.5rem 3.5rem; content: ""; mask-image: linear-gradient(to right, transparent, black); }
+.heroInner { position: relative; display: grid; min-height: 38rem; align-items: center; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(0, 1.15fr) minmax(19rem, .65fr); padding-block: clamp(5rem, 10vw, 8rem); }
+.eyebrow, .darkEyebrow, .routeNumber, .routeAction, .mapRow span, .engagementGrid > li > span, .assuranceGrid article > span, .case > p { font-family: var(--font-utility), monospace; font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
+.hero .eyebrow { display: flex; align-items: center; gap: .65rem; color: var(--color-verified-light); }
+.hero .eyebrow span { width: .55rem; height: .55rem; border-radius: 50%; background: var(--color-signal); box-shadow: 0 0 0 .3rem color-mix(in srgb, var(--color-signal) 16%, transparent); }
+.hero h1 { max-width: 13ch; margin-top: 1rem; font-family: var(--font-display), sans-serif; font-size: clamp(3.25rem, 6.6vw, 6.25rem); font-weight: 680; letter-spacing: -.065em; line-height: .92; text-wrap: balance; }
+.heroCopy > p:last-child { max-width: 38rem; margin-top: 1.5rem; color: color-mix(in srgb, var(--color-on-ink) 72%, transparent); font-size: 1.1rem; }
+.routePreview { padding: clamp(1.25rem, 3vw, 2.25rem); border: 1px solid color-mix(in srgb, var(--color-verified-light) 40%, transparent); background: color-mix(in srgb, var(--color-ink) 74%, transparent); }
+.routePreview > p { font-family: var(--font-utility), monospace; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
+.routePreview > div { display: grid; align-items: center; grid-template-columns: .6rem 1fr .6rem; margin-block: 1rem 1.4rem; }
+.routePreview > div span { width: .6rem; height: .6rem; border-radius: 50%; background: var(--color-signal); }
+.routePreview > div span:last-child { background: var(--color-verified-light); }
+.routePreview > div i { height: 1px; background: linear-gradient(to right, var(--color-signal), var(--color-verified-light)); }
+.routePreview dl { border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 16%, transparent); }
+.routePreview dl div { display: grid; gap: 1rem; grid-template-columns: 7rem 1fr; padding-block: .85rem; border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 16%, transparent); }
+.routePreview dt { color: var(--color-verified-light); font-family: var(--font-utility), monospace; font-size: .65rem; text-transform: uppercase; }
+.routePreview dd { color: color-mix(in srgb, var(--color-on-ink) 82%, transparent); }
+.routes .inner, .problemMap .inner, .work .inner, .assurance .inner { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.sectionHeading { display: grid; align-items: end; gap: 1.5rem 3rem; grid-template-columns: minmax(9rem, .35fr) minmax(0, 1fr) minmax(12rem, .45fr); }
+.sectionHeading .eyebrow, .problemMap .eyebrow, .work .eyebrow, .assurance .eyebrow, .faq .eyebrow { color: var(--color-blueprint); }
+.sectionHeading h2, .engagementIntro h2, .faqIntro h2 { max-width: 18ch; font-family: var(--font-display), sans-serif; font-size: clamp(2.3rem, 4.7vw, 4.7rem); font-weight: 650; letter-spacing: -.055em; line-height: .96; text-wrap: balance; }
+.sectionHeading > p:last-child { max-width: 28rem; color: var(--color-copy); }
+.sectionHeading > a { justify-self: end; color: var(--color-blueprint); font-weight: 700; text-underline-offset: .25em; }
+.routeList { margin-top: clamp(2.5rem, 5vw, 4.5rem); border-top: 1px solid var(--color-border-strong); }
+.route { display: grid; min-height: 10rem; align-items: center; gap: 1.25rem 2rem; grid-template-columns: 3rem 3rem minmax(0, 1fr) 9rem; padding-block: 1.5rem; border-bottom: 1px solid var(--color-border-strong); color: inherit; text-decoration: none; transition: background 160ms ease, padding 160ms ease; }
+.route:hover { padding-inline: 1rem; background: var(--color-surface); }
+.routeNumber { color: var(--color-blueprint); }
+.routeIcon { width: 2.5rem; height: 2.5rem; color: var(--color-signal-dark); }
+.route h3 { font-family: var(--font-display), sans-serif; font-size: clamp(1.55rem, 3vw, 2.6rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.02; }
+.route p { max-width: 50rem; margin-top: .45rem; color: var(--color-copy); }
+.routeAction { display: flex; align-items: center; justify-content: space-between; color: var(--color-blueprint); }
+.routeAction b { color: var(--color-signal-dark); font-size: 1.1rem; }
+.problemMap { background: #dfe9ed; }
+.problemMap .sectionHeading { grid-template-columns: minmax(9rem, .35fr) 1fr; }
+.mapTable { margin-top: 3rem; border-top: 1px solid var(--color-border-strong); }
+.mapRow { display: grid; align-items: center; gap: 1.5rem; grid-template-columns: minmax(0, 1fr) minmax(3rem, .2fr) minmax(12rem, .55fr); padding-block: 1.25rem; border-bottom: 1px solid var(--color-border-strong); }
+.mapRow p, .mapRow a { display: grid; gap: .3rem; }
+.mapRow span { color: var(--color-blueprint); }
+.mapRow i { height: 1px; background: linear-gradient(to right, var(--color-border-strong), var(--color-signal)); }
+.mapRow a { color: var(--color-ink); font-family: var(--font-display), sans-serif; font-size: 1.1rem; font-weight: 650; }
+.engagements { background: var(--color-ink); color: var(--color-on-ink); }
+.engagements .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(16rem, .7fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.engagementIntro .eyebrow { color: var(--color-verified-light); }
+.engagementIntro h2 { margin-top: .9rem; }
+.engagementIntro > p:last-child { max-width: 34rem; margin-top: 1.25rem; color: color-mix(in srgb, var(--color-on-ink) 70%, transparent); }
+.engagementGrid { border-top: 1px solid color-mix(in srgb, var(--color-on-ink) 24%, transparent); }
+.engagementGrid li { display: grid; gap: .8rem 1.5rem; grid-template-columns: 2.5rem 7rem 1fr; padding-block: 1.5rem; border-bottom: 1px solid color-mix(in srgb, var(--color-on-ink) 24%, transparent); }
+.engagementGrid > li > span { color: var(--color-verified-light); }
+.engagementGrid h3 { font-family: var(--font-display), sans-serif; font-size: 1.4rem; }
+.engagementGrid p { color: color-mix(in srgb, var(--color-on-ink) 72%, transparent); }
+.caseGrid { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 3rem; }
+.case { padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-strong); color: inherit; text-decoration: none; }
+.caseMedia { position: relative; display: grid; min-height: 15rem; overflow: hidden; margin-bottom: 1.25rem; place-content: center; background: #dbe5e9; }
+.caseMedia::before { position: absolute; z-index: 1; top: .75rem; left: .75rem; width: 2.5rem; height: .5rem; border-radius: 999px; background: var(--color-ink); content: ""; }
+.caseMedia img { object-fit: cover; object-position: top; transition: transform 250ms ease; }
+.case:hover img { transform: scale(1.02); }
+.caseMedia svg { width: 2.5rem; color: var(--color-blueprint); }
+.case > p { color: var(--color-blueprint); }
+.case h3 { margin-top: .55rem; font-family: var(--font-display), sans-serif; font-size: 1.5rem; line-height: 1.08; }
+.emptyState { display: flex; align-items: center; gap: 1.25rem; margin-top: 3rem; padding: 1.5rem; border: 1px solid var(--color-border-strong); background: var(--color-surface); }
+.emptyState svg { width: 2.5rem; flex: 0 0 auto; color: var(--color-blueprint); }
+.emptyState h3 { font-family: var(--font-display), sans-serif; font-size: 1.35rem; }
+.emptyState p { color: var(--color-copy); }
+.assurance { background: var(--color-surface); }
+.assurance .sectionHeading { grid-template-columns: minmax(9rem, .35fr) 1fr; }
+.assuranceGrid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 3rem; border-top: 1px solid var(--color-border-strong); border-left: 1px solid var(--color-border-strong); }
+.assuranceGrid article { min-height: 16rem; padding: 1.5rem; border-right: 1px solid var(--color-border-strong); border-bottom: 1px solid var(--color-border-strong); }
+.assuranceGrid article > span { color: var(--color-blueprint); }
+.assuranceGrid h3 { margin-top: 3rem; font-family: var(--font-display), sans-serif; font-size: 1.6rem; }
+.assuranceGrid p { margin-top: .6rem; color: var(--color-copy); }
+.faq .inner { display: grid; gap: clamp(3rem, 8vw, 8rem); grid-template-columns: minmax(15rem, .55fr) 1fr; padding-block: clamp(4.5rem, 8vw, 7rem); }
+.faqIntro h2 { margin-top: .8rem; }
+.faqList { border-top: 1px solid var(--color-border-strong); }
+.faqList details { border-bottom: 1px solid var(--color-border-strong); }
+.faqList summary { display: flex; min-height: 4.5rem; align-items: center; justify-content: space-between; gap: 1rem; cursor: pointer; font-family: var(--font-display), sans-serif; font-size: 1.25rem; font-weight: 650; list-style: none; }
+.faqList summary::-webkit-details-marker { display: none; }
+.faqList summary span { color: var(--color-signal-dark); font-size: 1.5rem; }
+.faqList details[open] summary span { transform: rotate(45deg); }
+.faqList details p { max-width: 48rem; padding: 0 2rem 1.5rem 0; color: var(--color-copy); }
+.cta { background: var(--color-signal); color: var(--color-on-signal); }
+.ctaInner { display: flex; min-height: 22rem; align-items: center; justify-content: space-between; gap: 2rem; padding-block: 3rem; }
+.darkEyebrow { color: var(--color-on-signal); }
+.cta h2 { max-width: 15ch; margin-top: .75rem; font-family: var(--font-display), sans-serif; font-size: clamp(2.4rem, 5vw, 4.8rem); font-weight: 680; letter-spacing: -.055em; line-height: .95; }
+.cta a { display: inline-flex; min-height: 3.25rem; align-items: center; gap: .8rem; padding: .85rem 1.15rem; background: var(--color-ink); color: var(--color-on-ink); font-weight: 750; text-decoration: none; }
+@media (max-width: 60rem) {
+  .heroInner, .engagements .inner, .faq .inner { grid-template-columns: 1fr; }
+  .heroInner { min-height: 0; }
+  .routePreview { max-width: 36rem; }
+  .sectionHeading { grid-template-columns: 1fr; }
+  .sectionHeading > a { justify-self: start; }
+  .caseGrid { grid-template-columns: repeat(2, 1fr); }
+  .assuranceGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 44rem) {
+  .hero h1 { font-size: clamp(3rem, 15vw, 4.8rem); }
+  .route { grid-template-columns: 2.25rem 2.5rem 1fr; }
+  .routeAction { grid-column: 3; }
+  .mapRow { grid-template-columns: 1fr; gap: .7rem; }
+  .mapRow i { width: 3rem; }
+  .engagementGrid li { grid-template-columns: 2.5rem 1fr; }
+  .engagementGrid p { grid-column: 2; }
+  .caseGrid, .assuranceGrid { grid-template-columns: 1fr; }
+  .ctaInner { align-items: flex-start; flex-direction: column; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .route, .caseMedia img { transition: none; } }

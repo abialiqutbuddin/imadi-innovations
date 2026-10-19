@@ -1,4 +1,14 @@
+export interface ProjectMedia {
+    src: string;
+    width: number;
+    height: number;
+    alt: string;
+    caption?: string;
+}
+
 export interface Project {
+    id?: number;
+    slug?: string;
     title: string;
     headline: string;
     description: string;
@@ -7,7 +17,26 @@ export interface Project {
     techStack: string;
     desktopImg?: string;
     mobileImg?: string;
+    desktopMedia?: ProjectMedia;
+    mobileMedia?: ProjectMedia;
     hideDesktop?: boolean;
+    industry?: string;
+    situation?: string;
+    problem?: string;
+    objective?: string;
+    successCriteria?: string[];
+    constraints?: string[];
+    decisionTitle?: string;
+    decisionRationale?: string;
+    outcomeStatement?: string;
+    outcomeVerified?: boolean;
+    outcomeVerifiedAt?: string;
+    outcomeEvidenceOwnerRecorded?: boolean;
+    outcomeSourceRecorded?: boolean;
+    duration?: string;
+    team?: string;
+    engagementModel?: string;
+    updatedAt?: string;
     _id?: string;
 }
 

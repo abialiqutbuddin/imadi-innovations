@@ -1,11 +1,27 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import {
+  IBM_Plex_Mono,
+  Schibsted_Grotesk,
+  Source_Sans_3,
+} from "next/font/google";
 import "../globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import AppBackground from "@/components/AppBackground";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const display = Schibsted_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+const body = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+const utility = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-utility",
+  weight: ["500"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Imadi Innovations | Custom Business Software",
@@ -34,14 +50,6 @@ export const metadata: Metadata = {
     description: "We build practical software for businesses that want to reduce manual work, connect scattered data, and manage operations more clearly.",
     url: "https://imadi-innovations.com",
     siteName: "Imadi Innovations",
-    images: [
-      {
-        url: "/favicon.ico", // Using favicon as placeholder, ideally should be a dedicated OG image
-        width: 800,
-        height: 600,
-        alt: "Imadi Innovations Logo",
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -49,7 +57,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Imadi Innovations | Custom Business Software",
     description: "Practical mobile apps, web apps, desktop software, AI integrations, and automation systems built around your workflow.",
-    images: ["/favicon.ico"], // Using favicon as placeholder
   },
   robots: {
     index: true,
@@ -80,16 +87,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${outfit.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-        >
-          <AppBackground />
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body className={`${display.variable} ${body.variable} ${utility.variable}`}>
+        {children}
       </body>
     </html>
   );

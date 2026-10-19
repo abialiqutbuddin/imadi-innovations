@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     title: "Terms of Service | Imadi Innovations",
     description: "Terms of Service for using the Imadi Innovations website and engaging our software development services.",
     alternates: {
-        canonical: "/terms-of-service",
+        canonical: "/terms-of-service/",
     },
 };
 
