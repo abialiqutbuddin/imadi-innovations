@@ -13,6 +13,9 @@ source "$root/shared/.env"
 set +a
 export MEDIA_UPLOAD_DIR="$root/shared/media"
 cd "$release"
+if [[ -L "$root/current" ]]; then
+  sudo /usr/local/sbin/imadi-backup
+fi
 npm run payload -- migrate
 if [[ ! -f "$root/shared/.seeded" ]]; then
   npm run seed

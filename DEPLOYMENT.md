@@ -4,7 +4,7 @@ The website and Payload admin share https://imadi-innovations.com, with admin at
 
 The previous website is preserved on `legacy`. New development is kept on `main`. Promote reviewed changes by merging `main` into `prod` and pushing `prod`. Pushes to `prod` run `.github/workflows/deploy-production.yml`: unit/type checks, production build, clean PostgreSQL migrations and email access checks, then an SSH deployment. Builds run on GitHub rather than using the VPS's 4 GB RAM. Repository variable `HOSTHATCH_HOST` selects the host; secrets `HOSTHATCH_DEPLOY_KEY` and `HOSTHATCH_KNOWN_HOSTS` authenticate and verify SSH.
 
-Each release lives in `/srv/imadi/releases/<commit>`. `/srv/imadi/current` points to the running release; the preceding release is retained for code rollback. PostgreSQL migrations run before restart. An unsuccessful health check switches code back to the previous release, but does not undo migrations. Always review backwards compatibility before schema changes.
+Each release lives in `/srv/imadi/releases/<commit>`. `/srv/imadi/current` points to the running release; the preceding release is retained for code rollback. An encrypted database/media backup runs before migrations on subsequent releases. PostgreSQL migrations run before restart. An unsuccessful health check switches code back to the previous release, but does not undo migrations. Always review backwards compatibility before schema changes.
 
 Persistent files are `/srv/imadi/shared/.env` and `/srv/imadi/shared/media`. Production secrets never belong in Git. `PAYLOAD_DB_PUSH=false` is mandatory; reviewed migrations change the schema. Initial content and the private owner account are created once. Later releases preserve CMS edits.
 
