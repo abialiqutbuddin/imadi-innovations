@@ -2,43 +2,84 @@ name: Deploy Production
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: imadi-production-deploy
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: imadi_ci
+          POSTGRES_PASSWORD: ci_testing_only
+          POSTGRES_DB: imadi_migration_test_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U imadi_ci"
+          --health-interval 5s --health-timeout 5s --health-retries 12
+    env:
+      NEXT_PUBLIC_SERVER_URL: https://imadi-innovations.com
+      PAYLOAD_SECRET: ci-build-placeholder-not-a-production-secret
+      DATABASE_URL: postgresql://build:build@127.0.0.1:9/imadi_build
+      PAYLOAD_DB_PUSH: 'false'
+      NEXT_TELEMETRY_DISABLED: '1'
+      NODE_ENV: production
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
       - name: Install dependencies
-        run: npm ci
-
-      - name: Build static site
+        run: npm ci --include=dev
+      - name: Verify code
+        run: |
+          npm test
+          npm run typecheck
+      - name: Build the production application
         run: npm run build
-
-      - name: Deploy export to cPanel FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: server14.hndservers.net
-          port: 21
-          username: imadi-innovations@magnetcargouae.com
-          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
-          local-dir: ./out/
-          server-dir: /public_html/
-          state-name: .ftp-deploy-sync-state-imadi-production.json
-          log-level: standard
+      - name: Verify migrations and email credential access
+        env:
+          DATABASE_URL: postgresql://imadi_ci:ci_testing_only@127.0.0.1:5432/imadi_migration_test_ci
+          CMS_MIGRATION_TEST: '1'
+        run: |
+          node_modules/.bin/tsx tests/migration.integration.ts
+          node_modules/.bin/tsx tests/email.integration.ts
+      - name: Package Linux release and migration tools
+        run: |
+          mkdir -p /tmp/imadi-release/.next
+          cp -a .next/standalone/. /tmp/imadi-release/
+          cp -a .next/static /tmp/imadi-release/.next/
+          cp -a public src scripts package.json package-lock.json tsconfig.json next.config.ts next-env.d.ts /tmp/imadi-release/
+          rsync -a node_modules/ /tmp/imadi-release/node_modules/
+          printf '%s\n' "$GITHUB_SHA" > /tmp/imadi-release/RELEASE
+          tar -czf /tmp/imadi-release.tgz -C /tmp/imadi-release .
+      - name: Configure deployment SSH
+        env:
+          DEPLOY_KEY: ${{ secrets.HOSTHATCH_DEPLOY_KEY }}
+          HOST_KEYS: ${{ secrets.HOSTHATCH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/imadi
+          chmod 600 ~/.ssh/imadi
+          printf '%s\n' "$HOST_KEYS" > ~/.ssh/known_hosts
+      - name: Upload and deploy
+        env:
+          DEPLOY_HOST: ${{ vars.HOSTHATCH_HOST }}
+        run: |
+          scp -i ~/.ssh/imadi -o BatchMode=yes /tmp/imadi-release.tgz "imadi@$DEPLOY_HOST:/srv/imadi/releases/$GITHUB_SHA.tgz"
+          scp -i ~/.ssh/imadi -o BatchMode=yes deploy/deploy-release.sh "imadi@$DEPLOY_HOST:/srv/imadi/deploy-release.sh"
+          ssh -i ~/.ssh/imadi -o BatchMode=yes "imadi@$DEPLOY_HOST" "bash /srv/imadi/deploy-release.sh $GITHUB_SHA"
+      - name: Remove deployment key
+        if: always()
+        run: rm -f ~/.ssh/imadi

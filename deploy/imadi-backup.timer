@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily Imadi backup at 02:30 UTC
+[Timer]
+OnCalendar=*-*-* 02:30:00 UTC
+Persistent=true
+RandomizedDelaySec=600
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,446 @@
+/* The closed controls follow the Figma contact form's Satoshi type and subtle
+   underline. Interactive states use the same ink and purple design tokens. */
+.contact-form__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 2.083333vw, 40px) 32px;
+}
+.contact-form__fields > .form-field--full {
+  grid-column: 1 / -1;
+}
+.contact-form .form-message--notice {
+  color: var(--ink);
+  background: #f3f0fc;
+}
+.contact-form--revised .form-field .form-field__required {
+  display: inline;
+  color: var(--purple);
+}
+.contact-form--revised .form-field input:not([type='checkbox']):not([type='hidden']),
+.contact-form--revised .form-field textarea,
+.fc-trigger {
+  transition:
+    border-color 160ms ease-out,
+    background-color 160ms ease-out,
+    box-shadow 160ms ease-out;
+}
+.contact-form--revised
+  .form-field
+  input:not([type='checkbox']):not([type='hidden']):hover:not(:disabled),
+.contact-form--revised .form-field textarea:hover:not(:disabled),
+.fc-trigger:hover:not(:disabled) {
+  border-bottom-color: #b7a6ff;
+}
+.contact-form--revised .form-field input:not([type='checkbox']):not([type='hidden']):focus-visible,
+.contact-form--revised .form-field textarea:focus-visible,
+.fc-trigger:focus-visible,
+.fc-control[data-open] > .fc-trigger {
+  outline: 0;
+  border-bottom-color: var(--purple);
+  box-shadow: 0 2px 0 0 var(--purple);
+}
+.contact-form--revised .form-field input[aria-invalid='true'],
+.contact-form--revised .form-field textarea[aria-invalid='true'],
+.fc-trigger[aria-invalid='true'] {
+  border-bottom-color: #b2314c;
+}
+.contact-form--revised .form-field input[aria-invalid='true']:focus-visible,
+.contact-form--revised .form-field textarea[aria-invalid='true']:focus-visible,
+.fc-trigger[aria-invalid='true']:focus-visible {
+  box-shadow: 0 2px 0 0 #b2314c;
+}
+.contact-form--revised .form-field input:disabled,
+.contact-form--revised .form-field textarea:disabled,
+.fc-trigger:disabled {
+  color: #7d7d89;
+  border-bottom-color: #e4e4e9;
+  background: #f7f7fa;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+.contact-form--revised .form-field input::selection,
+.contact-form--revised .form-field textarea::selection {
+  color: var(--ink);
+  background: #e8e1ff;
+}
+.contact-form--revised .form-field--checkbox label {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.contact-form--revised .form-field input[type='checkbox'] {
+  appearance: none;
+  flex: none;
+  width: 21px;
+  height: 21px;
+  min-height: 0;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 1.5px solid #b5b3c3;
+  border-radius: 5px;
+  background: #fff;
+  cursor: pointer;
+}
+.contact-form--revised .form-field input[type='checkbox']:checked {
+  border-color: var(--purple);
+  background: var(--purple)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='m4 10 4 4 8-8' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    center / 17px no-repeat;
+}
+.contact-form--revised .form-field input[type='checkbox']:hover:not(:disabled) {
+  border-color: var(--purple);
+}
+.contact-form--revised .form-field input[type='checkbox']:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+.contact-form--revised .form-field input[type='checkbox'][aria-invalid='true'] {
+  border-color: #b2314c;
+}
+.fc-control {
+  min-width: 0;
+  width: 100%;
+}
+.fc-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 0 14px;
+  border: 0;
+  border-bottom: 1px solid #efeff3;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: clamp(16px, 1.042vw, 20px);
+  font-weight: 400;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+.fc-trigger > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.fc-trigger > svg {
+  flex: none;
+  color: var(--ink);
+}
+.fc-trigger[data-placeholder] {
+  color: #6b6b76;
+}
+.fc-chevron {
+  transition: transform 160ms ease-out;
+}
+.fc-control[data-open] .fc-chevron--down {
+  transform: rotate(180deg);
+}
+.fc-chevron--left {
+  transform: rotate(90deg);
+}
+.fc-chevron--right {
+  transform: rotate(-90deg);
+}
+.fc-select-menu,
+.fc-date-dialog {
+  z-index: 100;
+  border: 1px solid #e9e5f4;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 40px #27283c1f;
+  color: var(--ink);
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.fc-select-menu {
+  position: fixed;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  max-height: 320px;
+  padding: 6px;
+  scrollbar-color: #b7a6ff #f6f3ff;
+  scrollbar-width: thin;
+}
+.fc-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 44px;
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.fc-option > span {
+  min-width: 0;
+}
+.fc-option > svg {
+  flex: none;
+  color: var(--purple);
+}
+.fc-option[data-placeholder] {
+  color: #6b6b76;
+}
+.fc-option[data-active] {
+  background: #f1edff;
+}
+.fc-option[aria-selected='true'] {
+  color: #5941ce;
+  font-weight: 600;
+}
+.fc-option[aria-selected='true'][data-active] {
+  background: #eae3ff;
+}
+.fc-option[aria-disabled='true'] {
+  color: #9b98a7;
+  cursor: not-allowed;
+}
+.fc-date-dialog {
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  width: min(352px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  margin: 0;
+  padding: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fc-date-dialog::backdrop {
+  background: transparent;
+}
+.fc-date-title,
+.fc-month-nav,
+.fc-time,
+.fc-date-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fc-date-title {
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.fc-date-title h2 {
+  margin: 0;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+}
+.fc-icon-button,
+.fc-day,
+.fc-text-button,
+.fc-apply-button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.fc-icon-button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+.fc-date-title .fc-icon-button {
+  font-size: 27px;
+  line-height: 1;
+}
+.fc-icon-button:hover:not(:disabled),
+.fc-text-button:hover {
+  background: #f1edff;
+  color: #5941ce;
+}
+.fc-icon-button:disabled,
+.fc-day:disabled {
+  color: #bdbac7;
+  cursor: not-allowed;
+}
+.fc-month-nav {
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.fc-month-nav h3 {
+  margin: 0;
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+}
+.fc-calendar {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 2px;
+  text-align: center;
+}
+.fc-calendar th {
+  height: 28px;
+  color: #6b6b76;
+  font-size: 12px;
+  font-weight: 500;
+}
+.fc-calendar td {
+  padding: 0;
+}
+.fc-day {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 38px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.fc-day[data-outside-month] {
+  color: #96939f;
+}
+.fc-day[aria-current='date'] {
+  border-color: #b7a6ff;
+  color: #5941ce;
+  font-weight: 600;
+}
+.fc-day:hover:not(:disabled) {
+  background: #f1edff;
+  color: #5941ce;
+}
+.fc-day[data-selected],
+.fc-day[data-selected]:hover {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: white;
+  font-weight: 600;
+}
+.fc-icon-button:focus-visible,
+.fc-day:focus-visible,
+.fc-text-button:focus-visible,
+.fc-apply-button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+.fc-day[data-selected]:focus-visible {
+  outline-color: #4935ab;
+}
+.fc-time {
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #efeff3;
+}
+.fc-time-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.fc-timezone {
+  max-width: 170px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  color: #6b6b76;
+  font-size: 11px;
+}
+.fc-time-segments {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid #e9e5f4;
+  border-radius: 9px;
+}
+.fc-time-input {
+  box-sizing: border-box;
+  width: 36px;
+  min-width: 0;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: #faf9fe;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.fc-time-input:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 0;
+}
+.fc-time-input[aria-invalid='true'] {
+  outline: 1px solid #b2314c;
+}
+.fc-time-error {
+  margin: 8px 0 0;
+  color: #b2314c;
+  font-size: 12px;
+}
+.fc-date-actions {
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+.fc-text-button,
+.fc-apply-button {
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.fc-date-actions > .fc-text-button:first-child {
+  margin-right: auto;
+}
+.fc-apply-button {
+  background: var(--ink);
+  color: #fff;
+}
+.fc-apply-button:hover {
+  background: #4b3b88;
+}
+.fc-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 767px) {
+  .contact-form__fields {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .fc-trigger {
+    font-size: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-trigger,
+  .fc-chevron,
+  .contact-form--revised .form-field input,
+  .contact-form--revised .form-field textarea {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .fc-option[data-active],
+  .fc-day[data-selected] {
+    outline: 2px solid Highlight;
+  }
+  .contact-form--revised .form-field input[type='checkbox'] {
+    appearance: auto;
+  }
+}

@@ -1,0 +1,28 @@
+[Unit]
+Description=Imadi Innovations website and Payload CMS
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=imadi
+Group=imadi
+WorkingDirectory=/srv/imadi/current
+EnvironmentFile=/srv/imadi/shared/.env
+ExecStart=/usr/local/bin/node server.js
+Restart=always
+RestartSec=5
+KillSignal=SIGTERM
+TimeoutStopSec=45
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+MemoryHigh=1800M
+MemoryMax=2500M
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

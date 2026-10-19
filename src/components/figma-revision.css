@@ -1,0 +1,303 @@
+/* Updated Figma Contact frame 8377:568. These styles apply only to the
+   dedicated and reusable forms; each keeps its correct heading level. */
+.contact-section--revised {
+  padding-block: clamp(80px, 10.416667vw, 200px);
+  background:
+    radial-gradient(ellipse at 70% 10%, #e2e7ff, transparent 48%),
+    radial-gradient(ellipse at 100% 42%, #e5eaff, transparent 38%),
+    radial-gradient(ellipse at 2% 96%, #fff4fa, transparent 60%), #fbfdfd;
+}
+.contact-section--revised .contact-grid {
+  width: calc(100% - clamp(48px, 16.666667vw, 320px));
+  max-width: 1600px;
+  grid-template-columns: 620fr 780fr;
+  gap: clamp(48px, 10.416667vw, 200px);
+}
+.contact-section--revised .display {
+  font-size: clamp(40px, 3.958333vw, 76px);
+  line-height: 1.15;
+  text-align: left;
+}
+.contact-section--revised .gradient-text {
+  color: var(--ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+.contact-section--revised .contact-description {
+  margin: clamp(20px, 1.25vw, 24px) 0 clamp(32px, 3.125vw, 60px);
+  line-height: 1.35;
+}
+.contact-section--revised .contact-callout {
+  aspect-ratio: 620 / 390;
+  min-height: 0;
+  padding: clamp(24px, 1.875vw, 36px);
+  border-radius: clamp(16px, 1.25vw, 24px);
+  background: linear-gradient(125deg, #fff0e0, #f9f9ff 45%, #e9e4ff 78%, #ffe1f1);
+}
+.contact-section--revised .contact-callout h3 {
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: clamp(20px, 1.666667vw, 32px);
+  line-height: 1.4;
+  margin-bottom: 24px;
+}
+.contact-callout > .contact-callout__art {
+  position: absolute;
+  inset: auto -10% -6% auto;
+  z-index: 0;
+  width: 65%;
+  aspect-ratio: 1;
+  max-width: none;
+  mix-blend-mode: multiply;
+  filter: blur(clamp(3px, 0.416667vw, 8px));
+}
+.contact-callout__art img {
+  object-fit: contain;
+}
+.contact-section--revised .contact-form {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: clamp(24px, 2.083333vw, 40px);
+  gap: clamp(28px, 2.083333vw, 40px);
+}
+.contact-form--revised .form-field label span[aria-hidden] {
+  display: none;
+}
+.contact-form--revised .form-field input,
+.contact-form--revised .form-field select,
+.contact-form--revised .form-field textarea {
+  border-color: #efeff3;
+  font-weight: 400;
+  padding-block: 8px 14px;
+}
+.contact-form--revised .form-field input::placeholder,
+.contact-form--revised .form-field textarea::placeholder {
+  color: #6b6b76;
+}
+.contact-form--revised .form-field textarea {
+  min-height: clamp(120px, 7.708333vw, 148px);
+  line-height: 1.35;
+}
+.contact-form--revised .form-field input[type='datetime-local'] {
+  min-width: 0;
+}
+.contact-form--revised .form-field__hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.contact-form--revised .form-actions {
+  justify-content: flex-end;
+}
+.contact-form--revised .form-actions small {
+  margin-right: auto;
+}
+.contact-form--revised .form-actions .button {
+  border-radius: 14px;
+}
+
+/* The Contact email section keeps links and its full-width photograph editable. */
+.contact-channels-section {
+  padding: 0;
+  background: var(--black);
+  color: #fff;
+}
+.contact-channels {
+  padding-block: clamp(72px, 8.333333vw, 160px);
+}
+.contact-channels .display {
+  max-width: min(1320px, 68.75vw);
+  font-family: Satoshi, Arial, sans-serif;
+  font-size: clamp(32px, 3.333333vw, 64px);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  text-transform: none;
+  text-wrap: initial;
+  color: #f2f2f7;
+}
+.contact-channels .gradient-text {
+  color: inherit;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+.contact-channels__description {
+  margin-top: 24px;
+  color: #d2d2df;
+}
+.contact-channels__list {
+  margin-top: clamp(48px, 4.166667vw, 80px);
+}
+.contact-channel {
+  padding-block: clamp(30px, 2.5vw, 48px);
+  border-top: 2px solid #ffffff12;
+  border-radius: 12px 12px 0 0;
+}
+.contact-channel h3 {
+  font-size: clamp(17px, 1.25vw, 24px);
+  margin-bottom: 18px;
+}
+.contact-channel > a {
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 100%;
+  font-size: clamp(24px, 2.083333vw, 40px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+.contact-channel > a > span:last-child {
+  overflow-wrap: anywhere;
+}
+.contact-channel__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ffffff12;
+}
+.contact-channel__icon img {
+  width: 28px;
+  height: 28px;
+}
+.contact-channels__image {
+  width: 100%;
+  aspect-ratio: 1920 / 1000;
+}
+.contact-channels__image img {
+  object-fit: cover;
+}
+
+/* Shared CTA 8381:1325 and its repeated page instances: 1600×600 at 1920. */
+.cta-section--consultation {
+  padding-block: clamp(80px, 8.333333vw, 160px);
+  background: #fff;
+}
+.cta-section--consultation > .container {
+  width: calc(100% - clamp(48px, 16.666667vw, 320px));
+  max-width: 1600px;
+}
+.cta-panel--consultation {
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(420px, 31.25vw, 600px);
+  border: 0;
+  border-radius: clamp(24px, 2.5vw, 48px);
+  padding: clamp(64px, 5.208333vw, 100px) 24px;
+  background: #f4f1ff;
+}
+.cta-panel__image {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  mix-blend-mode: multiply;
+}
+.cta-panel__image img {
+  object-fit: cover;
+}
+.cta-panel--consultation .cta-panel__image {
+  opacity: 0.3;
+  filter: blur(4px);
+  transform: translateX(8%);
+}
+.cta-panel--consultation .display {
+  font-size: clamp(38px, 5vw, 96px);
+  line-height: 1.1;
+}
+.cta-panel--consultation > p {
+  max-width: 480px;
+  margin: clamp(24px, 1.666667vw, 32px) auto clamp(32px, 2.083333vw, 40px);
+  font-size: clamp(16px, 1.041667vw, 20px);
+  line-height: 1.35;
+}
+.cta-panel--consultation .button-group {
+  margin-top: 0;
+}
+
+.process-section .section-intro {
+  align-items: center;
+  margin-bottom: clamp(64px, 8.333333vw, 160px);
+}
+.process-section .section-intro .display br {
+  display: none;
+}
+.process-section .section-intro__aside {
+  width: auto;
+  padding-top: 0;
+}
+
+@media (max-width: 1100px) {
+  .contact-section--revised .contact-grid {
+    gap: 48px;
+  }
+}
+@media (max-width: 900px) {
+  .contact-channels .display {
+    max-width: 100%;
+  }
+  .contact-section--revised .contact-grid,
+  .cta-section--consultation > .container {
+    width: calc(100% - var(--gutter) * 2);
+  }
+  .contact-section--revised .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-section--revised .contact-callout {
+    max-width: 620px;
+  }
+  .contact-section--revised .contact-grid > div:first-child {
+    max-width: 680px;
+  }
+  .contact-channels__image {
+    aspect-ratio: 1.6;
+  }
+}
+@media (max-width: 600px) {
+  .statistics .stat-value {
+    font-size: clamp(26px, 8.5vw, 40px);
+    overflow-wrap: anywhere;
+  }
+  .contact-section--revised .contact-callout h3 {
+    font-size: 24px;
+  }
+  .contact-section--revised .display {
+    font-size: clamp(34px, 9.5vw, 48px);
+  }
+  .contact-section--revised .contact-description {
+    margin-block: 24px 32px;
+  }
+  .contact-section--revised .contact-callout > div:first-child {
+    max-width: 80%;
+  }
+  .contact-section--revised .contact-callout {
+    aspect-ratio: auto;
+    min-height: 280px;
+  }
+  .contact-form--revised .form-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .contact-form--revised .form-actions {
+    align-items: stretch;
+  }
+  .contact-form--revised .form-actions small {
+    max-width: none;
+  }
+  .contact-form--revised .form-actions .button {
+    align-self: flex-end;
+  }
+  .contact-channel > a {
+    gap: 12px;
+    font-size: clamp(20px, 5.4vw, 28px);
+  }
+  .contact-channel__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+  .contact-channel__icon img {
+    width: 24px;
+    height: 24px;
+  }
+}

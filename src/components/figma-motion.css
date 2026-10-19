@@ -1,0 +1,229 @@
+/* Figma ProblemCard 8035:632 → 8035:634: While hovering, Dissolve, 400ms, Ease out.
+   The background's 841×681 design layer sits at (-108, -155) in a 620×381 card.
+   Its percentages retain that geometry as CMS cards resize; only layer opacity changes. */
+.problem-card {
+  container-type: inline-size;
+  isolation: isolate;
+  overflow: hidden;
+  border: clamp(2px, 0.208333vw, 4px) solid #f9f8ff;
+  border-radius: clamp(14px, 1.041667vw, 20px);
+  background: #f9f8ff;
+  transition: none;
+}
+
+.problem-card:hover {
+  /* Neutralize the older generic hover fill, including sticky touch hover. */
+  background: #f9f8ff;
+}
+
+.service-benefit-card {
+  position: relative;
+  container-type: inline-size;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Card 2 8159:737 → 8159:739 and Card 3 8280:489 → 8280:491 use the
+   same verified Dissolve 400ms Ease-out background state. Ordinals/text stay still. */
+.problem-card::before,
+.service-benefit-card::before {
+  content: '';
+  position: absolute;
+  left: -17.419355%;
+  top: -25cqw;
+  width: 135.645161%;
+  height: max(109.83871cqw, calc(100% + 25cqw));
+  aspect-ratio: auto;
+  background: url('/figma/problem-card-hover-bg.svg') center / 100% 100% no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 400ms ease-out;
+}
+
+.problem-card .problem-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+}
+
+.problem-card .problem-icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* Exact Frame 12 (8035:641) export, including its two inner shadows.
+     The PNG includes the 2px outside stroke around the 88px design tile. */
+  background: url('/figma/problem-icon-hover.png') center / 104.545455% 104.545455% no-repeat;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 400ms ease-out;
+}
+
+.problem-card .problem-icon img {
+  width: 54.545455%;
+  height: 54.545455%;
+  transition: filter 400ms ease-out;
+}
+
+.problem-card:focus-within::before,
+.service-benefit-card:focus-within::before,
+.problem-card:focus-within .problem-icon::before {
+  opacity: 1;
+}
+
+/* Figma Service: 1760×206 row. Preview stays at x1100 (62.5%), size480×280,
+   and moves y67 → y-93 without rotation: Smart animate 200ms Ease out.
+   A row query container scales each design pixel against its own editable width. */
+.service-row {
+  container-type: inline-size;
+}
+
+/* White states belong to the verified dark service section. Other CMS themes
+   retain their existing readable typography. */
+.theme--dark .service-row h3,
+.theme--dark .service-row p,
+.theme--dark .service-row:hover h3 {
+  color: rgb(255 255 255 / 50%);
+  transition: color 200ms ease-out;
+}
+
+.theme--dark .service-row .service-arrow,
+.theme--dark .service-row:hover .service-arrow {
+  /* Full-size derivative preserves the original paths/100px viewBox. CSS changes
+     the purple master to white50 at rest, then restores exact Primary on hover. */
+  content: url('/figma/service-arrow-active.svg');
+  opacity: 0.5;
+  filter: brightness(0) invert(1);
+  transition:
+    opacity 200ms ease-out,
+    filter 200ms ease-out;
+}
+
+.service-row .service-preview,
+.service-row:hover .service-preview {
+  --service-design-pixel: clamp(0.4px, 0.056818182cqw, 1px);
+  left: 62.5%;
+  right: auto;
+  top: calc(67 * var(--service-design-pixel));
+  width: 27.272727%;
+  aspect-ratio: 480 / 280;
+  border: calc(3 * var(--service-design-pixel)) solid rgb(255 255 255 / 5%);
+  border-radius: calc(32 * var(--service-design-pixel));
+  opacity: 0;
+  transform: translateY(0);
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+.service-row .service-preview .picture {
+  border-radius: inherit;
+}
+
+.theme--dark .service-row:focus-visible h3,
+.theme--dark .service-row:focus-visible p {
+  color: #fff;
+}
+
+.theme--dark .service-row:focus-visible .service-arrow {
+  opacity: 1;
+  filter: none;
+}
+
+.service-row:focus-visible .service-preview {
+  opacity: 1;
+  transform: translateY(calc(-160 * var(--service-design-pixel)));
+}
+
+.problem-card:focus-within .problem-icon img {
+  filter: brightness(0) invert(1);
+}
+
+/* Figma ReadMore 8035:791 → 8035:793: Smart animate, 200ms, Ease out.
+   Default: gap 10, horizontal padding 0. Hover: gap 20, horizontal padding 12.
+   Both states: vertical padding 6 and a 20px content line (32px total height).
+   Width remains Hug so editable CMS labels are never forced into the sample's 153px. */
+.problem-card .text-link {
+  gap: 10px;
+  padding: 6px 0;
+  border: 0;
+  border-radius: 6px;
+  line-height: 20px;
+  color: var(--ink);
+  background-color: transparent;
+  transition:
+    color 200ms ease-out,
+    background-color 200ms ease-out,
+    column-gap 200ms ease-out,
+    padding-inline 200ms ease-out;
+}
+
+.problem-card .text-link:hover {
+  color: var(--ink);
+}
+
+.problem-card .text-link > span[aria-hidden='true'] {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  font-size: 0;
+  background: url('/figma/8024-252-imgFrame.svg') center / 20px 20px no-repeat;
+}
+
+.problem-card .text-link:focus-visible {
+  gap: 20px;
+  padding-inline: 12px;
+  color: var(--purple);
+  background-color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .problem-card:hover::before,
+  .service-benefit-card:hover::before,
+  .problem-card:hover .problem-icon::before {
+    opacity: 1;
+  }
+
+  .problem-card:hover .problem-icon img {
+    filter: brightness(0) invert(1);
+  }
+
+  .problem-card .text-link:hover {
+    gap: 20px;
+    padding-inline: 12px;
+    color: var(--purple);
+    background-color: #fff;
+  }
+
+  .theme--dark .service-row:hover h3,
+  .theme--dark .service-row:hover p {
+    color: #fff;
+  }
+
+  .theme--dark .service-row:hover .service-arrow {
+    opacity: 1;
+    filter: none;
+  }
+
+  .service-row:hover .service-preview {
+    opacity: 1;
+    transform: translateY(calc(-160 * var(--service-design-pixel)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .problem-card::before,
+  .service-benefit-card::before,
+  .problem-card .problem-icon::before,
+  .problem-card .problem-icon img,
+  .problem-card .text-link,
+  .service-row h3,
+  .service-row p,
+  .service-row .service-arrow,
+  .service-row .service-preview {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,79 @@
+name: imadi-website
+
+x-cms-environment: &cms-environment
+  NODE_ENV: production
+  DATABASE_URL: postgresql://${POSTGRES_USER:-imadi}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/${POSTGRES_DB:-imadi_website}
+  PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Set a unique PAYLOAD_SECRET in .env}
+  NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL:-http://localhost:3100}
+  MEDIA_UPLOAD_DIR: /app/media
+  PAYLOAD_DB_PUSH: "false"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+services:
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-imadi_website}
+      POSTGRES_USER: ${POSTGRES_USER:-imadi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-55432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+
+  web:
+    image: imadi-website:local
+    build:
+      context: .
+      target: runner
+      args:
+        NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL:-http://localhost:3100}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *cms-environment
+      PORT: "3100"
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "${HOST_BIND:-127.0.0.1}:${PORT:-3100}:3100"
+    volumes:
+      - media:/app/media
+      - next-cache:/app/.next/cache
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3100/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+
+  cms:
+    image: imadi-website-tools:local
+    profiles: [tools]
+    build:
+      context: .
+      target: tools
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *cms-environment
+    volumes:
+      - media:/app/media
+    command: ["npm", "run", "payload", "--", "migrate:status"]
+
+volumes:
+  postgres-data:
+  media:
+  next-cache:

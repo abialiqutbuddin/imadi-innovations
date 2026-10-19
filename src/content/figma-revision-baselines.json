@@ -1,0 +1,35 @@
+{
+  "pages/privacy": "7f6bea5cbaa1307450720f08a9da8f3a15e3154197c32e7019392b822a1666ea",
+  "pages/insights": "b680e1d9f8b685d1ad125ab9c4a77b3208fde219510fc0bd4117266948411786",
+  "pages/tijarat": "3afbd730784607a01f4a40ba13d51992375da18f852360cf9370310cb9b5e2dd",
+  "pages/contact": "6979a656bd7a85dba6df31bc35ad57bd9515c3b1ceb31d2887099a109ebda717",
+  "pages/projects": "4f30ce548bdbb77efe37963a8d9439313256d71eb26bcce6402fbd40b91f35b0",
+  "pages/services": "5869790b5525feb0993e0078ef54c0655f09bbd4d3f912ca132284d319fc8114",
+  "pages/about": [
+    "175253a1cd39da5ef60246f6e1687ced88b9dacc8adc1f99e797f774fd7bfbb4",
+    "99417ed18528c21b3a6f5e6d8e7d51f44c7b00e7194692baa49b10b17a9f6fe9"
+  ],
+  "pages/home": [
+    "dbdc45ca6dc5dd381baf85c47fce64a5a84cf686458abbd613889be8beef42fc",
+    "daf419923fa96c73a37f2fd140e213dcf68966a75651df60e68832be78e2f84a"
+  ],
+  "shared-sections/contact": "679d1a8bb2340070ed5ad6c6043ee4cf909168f8eadf44a655abd9ff3355574b",
+  "shared-sections/faqs": "2b6a6899b4ee7e9273c1d6f868972dc2643903cb4aee8320e1e92b13423820a0",
+  "shared-sections/call-to-action": "6f462212dd9c259007ab1b7836cfbe4c253b95b41b5a9f0e9b8cc92a83810f2b",
+  "services/mobile-applications": "2d156da31933bf9b4779f15d29b36d904c20abc9425c64c5a2ba73e32d97989c",
+  "services/custom-web-software": "b78c7f6e9654489e1136808c19a10b7fd8520c0dea27934a3d71ef74d7ce4047",
+  "services/desktop-systems": "548bfbf29907c7444144195eacc1fb670b167226a82db338c3346857ee8f03a2",
+  "services/saas-products": "44acd35f8ff7af74f040dea8685ea3e73794b9d6d88f967c39972a6e6b5203ef",
+  "services/ai-integrations": "a5e0610f083d262a8d1bb3b01a13dd49f5865d4cf28fdc4b1845bcc5393303a1",
+  "projects/dockiship": "2c8ef063c10be9c9e592a78bdf48db71c64fbd732a493aedeb4ddc157958e92e",
+  "projects/eclinicassist": "68762bbed391bb50e4eae18d746f613c718b7dfe716ee74a89003b773a29a5ba",
+  "projects/lynchr": "bff931e38d102936db38bc2bb745f79fa2a2480fb17b2d5aa07efdf844a9855c",
+  "projects/pmo-karachi": "631b77c741a636f7ae021b4f5b4fa03ef3656385dfef4835c44783d671d22dc8",
+  "projects/magnet-cargo": "8b5d5e13ca62e2c551f03f4d57d63157f0ce29d156511037e9b2074c28906072",
+  "projects/restro": "a24551fdfdf6de6b59c50f3f7368ca6b8757d8b62246202bd21da7411ffd9760",
+  "projects/one-window-system": "a24551fdfdf6de6b59c50f3f7368ca6b8757d8b62246202bd21da7411ffd9760",
+  "projects/nutrilife": "a24551fdfdf6de6b59c50f3f7368ca6b8757d8b62246202bd21da7411ffd9760",
+  "projects/whatsapp-worker": "235562060ab94bf93ede6a4f99ebce2d516ea74e09312b364f84accb114cb674",
+  "projects/codex-worker": "a30359e019f32e0d68a15e82451e1b55131dfc408923cc51f60500d6e2ccbd52",
+  "projects/attendance-system": "b96a02651ed9831eaaf1d3eb4ec84a66911b1223a82a9c4723c187459eca28ef"
+}

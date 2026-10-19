@@ -1,0 +1,5 @@
+[Unit]
+Description=Encrypted Imadi database and media backup
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/imadi-backup

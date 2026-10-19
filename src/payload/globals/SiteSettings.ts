@@ -1,0 +1,80 @@
+import type { GlobalConfig } from 'payload'
+import { isEditor } from '../access'
+import { actionField, imageField } from '../fields'
+
+export const SiteSettings: GlobalConfig = {
+  slug: 'site-settings', label: 'Site settings',
+  admin: { group: 'Website', description: 'Shared branding, menus, contact details, footer, and interface copy.',
+    preview: () => '/api/preview?collection=pages&slug=home' },
+  // Public delivery uses the server Local API with draft:false. Keeping this endpoint private
+  // prevents an unauthenticated ?draft=true request from exposing unpublished global changes.
+  access: { read: isEditor, update: isEditor, readVersions: isEditor },
+  versions: { drafts: { autosave: { interval: 1500 } }, max: 30 },
+  fields: [
+    { type: 'tabs', tabs: [
+      { label: 'Brand & contact', fields: [
+        { name: 'companyName', type: 'text', required: true, defaultValue: 'Imadi Innovations' },
+        { name: 'tagline', type: 'text' }, { name: 'description', type: 'textarea' }, imageField('logo'),
+        { name: 'contact', type: 'group', fields: [
+          { name: 'email', type: 'email' }, { name: 'phone', type: 'text' }, { name: 'address', type: 'textarea' },
+        ] },
+        { name: 'socials', type: 'array', fields: [{ name: 'label', type: 'text', required: true }, { name: 'url', type: 'text', required: true }] },
+      ] },
+      { label: 'Navigation', fields: [
+        { name: 'navigation', type: 'array', fields: [{ name: 'label', type: 'text', required: true }, { name: 'href', type: 'text', required: true }] },
+        { name: 'footerNavigation', type: 'array', fields: [{ name: 'label', type: 'text', required: true }, { name: 'href', type: 'text', required: true }] },
+        actionField('booking', 'Header call to action'),
+      ] },
+      { label: 'Footer', fields: [{ name: 'footer', type: 'group', fields: [
+        imageField('logo', 'Footer brand mark'),
+        { name: 'headline', type: 'text' }, { name: 'highlight', type: 'text' },
+        { name: 'description', type: 'textarea' }, { name: 'copyright', type: 'text' },
+      ] }] },
+      { label: 'Interface labels', fields: [{ name: 'labels', type: 'group', fields: [
+        { name: 'projectsLink', type: 'text', defaultValue: 'Explore all projects' },
+        { name: 'servicesLink', type: 'text', defaultValue: 'Explore our services' },
+        { name: 'postsLink', type: 'text', defaultValue: 'View all insights' },
+        { name: 'contactLink', type: 'text', defaultValue: 'Let’s talk' },
+        { name: 'projectReadMore', type: 'text', defaultValue: 'View case study' },
+        { name: 'serviceReadMore', type: 'text', defaultValue: 'Explore service' },
+        { name: 'postReadMore', type: 'text', defaultValue: 'Read article' },
+        { name: 'allFilter', type: 'text', defaultValue: 'All projects' },
+        { name: 'filterLabel', type: 'text', defaultValue: 'Filter by service' },
+        { name: 'openMenu', type: 'text', defaultValue: 'Open menu' },
+        { name: 'closeMenu', type: 'text', defaultValue: 'Close menu' },
+        { name: 'previousSlide', type: 'text', defaultValue: 'Previous testimonial' },
+        { name: 'nextSlide', type: 'text', defaultValue: 'Next testimonial' },
+        { name: 'formError', type: 'text', defaultValue: 'Please check the highlighted fields.' },
+        { name: 'formNameError', type: 'text', defaultValue: 'Enter your name.' },
+        { name: 'formEmailError', type: 'text', defaultValue: 'Enter a valid email address.' },
+        { name: 'formMessageError', type: 'text', defaultValue: 'Please tell us a little more (at least 20 characters).' },
+        { name: 'backToProjects', type: 'text', defaultValue: 'Back to projects' },
+        { name: 'backToInsights', type: 'text', defaultValue: 'Back to insights' },
+        { name: 'relatedProjects', type: 'text', defaultValue: 'Related projects' },
+        { name: 'relatedServices', type: 'text', defaultValue: 'Related services' },
+        { name: 'challengeHeading', type: 'text', defaultValue: 'The challenge' },
+        { name: 'solutionHeading', type: 'text', defaultValue: 'Our approach' },
+        { name: 'resultsHeading', type: 'text', defaultValue: 'The outcome' },
+        { name: 'clientLabel', type: 'text', defaultValue: 'Client' },
+        { name: 'servicesLabel', type: 'text', defaultValue: 'Services' },
+        { name: 'yearLabel', type: 'text', defaultValue: 'Year' },
+        { name: 'previewNotice', type: 'text', defaultValue: 'Draft preview — unpublished content' },
+        { name: 'exitPreview', type: 'text', defaultValue: 'Exit preview' },
+        { name: 'emptyProjects', type: 'text', defaultValue: 'More projects are on the way.' },
+        { name: 'emptyPosts', type: 'text', defaultValue: 'New insights are coming soon.' },
+        { name: 'notFoundTitle', type: 'text', defaultValue: 'This page has moved.' },
+        { name: 'notFoundDescription', type: 'text', defaultValue: 'Let’s get you back to exploring what we can build together.' },
+        { name: 'homeLink', type: 'text', defaultValue: 'Back to home' },
+        { name: 'serviceBenefitsHeading', type: 'text', defaultValue: 'Built around your business' },
+        { name: 'industryLabel', type: 'text', defaultValue: 'Industry' },
+        { name: 'galleryHeading', type: 'text', defaultValue: 'The experience' },
+        { name: 'visitProject', type: 'text', defaultValue: 'Visit project' },
+        { name: 'moreInsights', type: 'text', defaultValue: 'Keep exploring' },
+        { name: 'exploreLabel', type: 'text', defaultValue: 'Explore' },
+        { name: 'privacyLabel', type: 'text', defaultValue: 'Privacy policy' },
+        { name: 'skipLink', type: 'text', defaultValue: 'Skip to content' },
+        { name: 'homeBreadcrumb', type: 'text', defaultValue: 'Home' },
+      ] }] },
+    ] },
+  ],
+}
